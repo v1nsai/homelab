@@ -35,4 +35,4 @@ terraform.rc
 
 # Ignore kolla-ansible generated files
 .venv/
-setup/all-in-one
+all-in-one
