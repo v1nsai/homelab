@@ -1,2 +1,2 @@
 # homelab
-Configs for my Openstack powered homelab
+Configs for my containerized homelab
