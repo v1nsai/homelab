@@ -36,3 +36,8 @@ terraform.rc
 # Ignore kolla-ansible generated files
 .venv/
 all-in-one
+
+# Ignore config files
+projects/*/config
+*.secret.txt
+*.secret.env

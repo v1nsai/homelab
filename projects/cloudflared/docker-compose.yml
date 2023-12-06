@@ -2,4 +2,10 @@ services:
   cloudflared:
     container_name: cloudflared
     image: cloudflare/cloudflared:latest
-    command: tunnel --no-autoupdate run --token eyJhIjoiMDA1NjZiYmUyYjg3YzBmMmJiNzA5MmE0ZDY1ZDRiMzciLCJ0IjoiNGRjYTczNzYtNzYxNC00MjgwLThkNjktZTZjYWNmMWQwMzVkIiwicyI6Ik5HUm1ZelJtTURNdE5UWmxOeTAwTnpCa0xUbGtNRFF0T0Rsak5tTTNNR1ExTWpRMiJ9
+    command: tunnel --no-autoupdate run --token eyJhIjoiMDA1NjZiYmUyYjg3YzBmMmJiNzA5MmE0ZDY1ZDRiMzciLCJ0IjoiMTlkOWY3ZTktM2VkNS00MWNjLWJkN2UtNTdlYmMxYjI4ZmU0IiwicyI6Ik1UZzBaV1pqTjJVdFpHVmlOUzAwWWpKbUxUazROV1V0TURNNVltTTJORE01TlRRMyJ9
+    networks:
+      - cloudflared
+
+networks:
+  cloudflared:
+
