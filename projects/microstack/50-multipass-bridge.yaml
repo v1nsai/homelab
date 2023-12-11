@@ -1,0 +1,15 @@
+network:
+  ethernets:
+    enx7cc2c6487c34:
+      dhcp4: true
+      dhcp4-overrides:
+        route-metric: 200
+  bridges:
+    bridge0:
+      dhcp4: true
+      interfaces:
+        - eno1
+    bridge1:
+      dhcp4: true
+      interfaces:
+        - enx7cc2c6487c34

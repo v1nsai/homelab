@@ -19,12 +19,28 @@ services:
       - 51820:51820/udp
       - 8112:8112
       - 6881:6881
-      # - 6881:6881/udp
+      - 6881:6881/udp
       - 9091:9091
       - 51413:51413
-      # - 51413:51413/udp
+      - 51413:51413/udp
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
+    networks:
+      - wireguard
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - WEBUI_PORT=9091
+    volumes:
+      - ./config:/config
+      - /mnt/blackbox:/downloads
+    network_mode: service:wireguard
     restart: unless-stopped
 
   # deluge:
@@ -37,26 +53,28 @@ services:
   #     - DELUGE_LOGLEVEL=error #optional
   #   volumes:
   #     - ./config/deluge:/config
-  #     - /mnt/blackbox/media/tv:/downloads/tv
-  #     - /mnt/blackbox/media/movies:/downloads/movies
+  #     - /mnt/blackbox/:/downloads/
   #   network_mode: service:wireguard
   #   restart: unless-stopped
 
-  transmission:
-    image: lscr.io/linuxserver/transmission:latest
-    container_name: transmission
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
-      - TRANSMISSION_WEB_HOME= #optional
-      - USER=
-      - PASS= #optional
-      - WHITELIST= #optional
-      - PEERPORT= #optional
-      - HOST_WHITELIST= #optional
-    volumes:
-      - ./config:/config
-      - /mnt/blackbox/:/downloads
-    network_mode: service:wireguard
-    restart: unless-stopped
+  # transmission:
+  #   image: lscr.io/linuxserver/transmission:latest
+  #   container_name: transmission
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - TZ=Etc/UTC
+  #     - TRANSMISSION_WEB_HOME= #optional
+  #     - USER=
+  #     - PASS= #optional
+  #     - WHITELIST= #optional
+  #     - PEERPORT= #optional
+  #     - HOST_WHITELIST= #optional
+  #   volumes:
+  #     - ./config:/config
+  #     - /mnt/blackbox/:/downloads
+  #   network_mode: service:wireguard
+  #   restart: unless-stopped
+
+networks:
+  wireguard:
