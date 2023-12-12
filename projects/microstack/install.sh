@@ -17,8 +17,8 @@ multipass launch \
     --disk 50G \
     --mount /mnt/blackbox:/mnt/blackbox \
     --mount ./projects/microstack/:/home/ubuntu/microstack \
-    --network bridged
-    # --network "name=bridge1"
+    --network bridged \
+    --network "name=bridge1"
 # multipass exec microstack -- sudo snap install multipass
 multipass shell microstack
 
