@@ -1,9 +1,9 @@
 bootstrap:
   # Management networks shared by hosts (CIDRs, separated by comma)
-  management_cidr: 192.168.122.0/24
+  management_cidr: 192.168.1.0/27
 addons:
   # MetalLB address allocation range (supports multiple ranges, comma separated)
-  metallb: 192.168.122.2-192.168.122.254
+  metallb: 192.168.1.2-192.168.1.30
 user:
   # Populate OpenStack cloud with demo user, default images, flavors etc
   run_demo_setup: True
@@ -12,7 +12,7 @@ user:
   # Password to use for access to OpenStack
   password: ${USER_PASSWORD}
   # Network range to use for project network
-  cidr: 192.168.122.0/24
+  cidr: 192.168.1.0/27
   # List of nameservers guests should use for DNS resolution
   nameservers: 192.168.1.1
   # Enable ping and SSH access to instances?
@@ -38,15 +38,15 @@ external_network:
   # IP address of default gateway for external network
   gateway: 192.168.1.1
   # Start of IP allocation range for external network
-  start: 192.168.1.222
+  start: 192.168.1.2
   # End of IP allocation range for external network
-  end: 192.168.1.253
+  end: 192.168.1.34
   # Network type for access to external network
   network_type: flat
   # VLAN ID to use for external network
   segmentation_id: 
   # Free network interface that will be configured for external traffic
-  nic: enx7cc2c6487c34
+  nic: bridge1
 # MicroCeph config
 microceph_config:
   microstack:
