@@ -39,4 +39,4 @@ all-in-one
 
 # Ignore config files
 projects/*/config
-secrets.env
+*.env

@@ -1,0 +1,40 @@
+version: "2.1"
+services:
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    ports:
+      - 51820:51820/udp
+      - 9091:9091
+      - 8112:8112
+      - 6881:6881
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - VPN_SERVICE_PROVIDER=custom
+      - VPN_TYPE=wireguard
+      - FIREWALL_OUTBOUND_SUBNETS=192.168.1.0/24
+    volumes:
+      - ./wg0.conf:/gluetun/wireguard/wg0.conf
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - WEBUI_PORT=9091
+    volumes:
+      - ./config/qbittorrent:/config
+      - /mnt/blackbox:/downloads
+    restart: unless-stopped
+    network_mode: service:gluetun
+
+# networks:
+#   blackpearl:
+#     ipam:
+#       driver: default
+#       config:
+#         - subnet: 172.24.0.0/16
+#           gateway: 172.24.0.1
