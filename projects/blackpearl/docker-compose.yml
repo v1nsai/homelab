@@ -15,7 +15,7 @@ services:
       - VPN_TYPE=wireguard
       - FIREWALL_OUTBOUND_SUBNETS=192.168.1.0/24
     volumes:
-      - ./wg0.conf:/gluetun/wireguard/wg0.conf
+      - ./config/gluetun/wg0.conf:/gluetun/wireguard/wg0.conf
 
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
@@ -27,7 +27,7 @@ services:
       - WEBUI_PORT=9091
     volumes:
       - ./config/qbittorrent:/config
-      - /mnt/blackbox:/downloads
+      - /mnt/blackbox:/downloads/
     restart: unless-stopped
     network_mode: service:gluetun
 
