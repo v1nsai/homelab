@@ -1,0 +1,54 @@
+---
+version: "2.1"
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - VERSION=docker
+      - PLEX_CLAIM=${PLEX_CLAIM}
+    volumes:
+      - /mnt/blackbox/plex/config:/config
+      - /mnt/blackbox/plex/tv:/tv
+      - /mnt/blackbox/plex/movies:/movies
+    restart: unless-stopped
+    networks:
+     - cloudflared
+    ports:
+      - 32400:32400/tcp
+      - 8324:8324/tcp
+      - 32469:32469/tcp
+      - 1900:1900/udp
+      - 32410:32410/udp
+      - 32412:32412/udp
+      - 32413:32413/udp
+      - 32414:32414/udp
+
+  # swag:
+  #   image: lscr.io/linuxserver/swag:latest
+  #   container_name: swag
+  #   cap_add:
+  #     - NET_ADMIN
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - TZ=US/Eastern
+  #     - URL=${URL}
+  #     - VALIDATION=http
+  #     # - SUBDOMAINS= #optional
+  #     - EMAIL= #optional
+  #     - ONLY_SUBDOMAINS=false #optional
+  #     - EXTRA_DOMAINS= #optional
+  #     - STAGING=false #optional
+  #     - NGINX_ENVSUBST_TEMPLATE_SUFFIX=".template"
+  #   volumes:
+  #     - /etc/swag:/config
+  #   restart: unless-stopped
+  #   network_mode: host
+
+networks:
+  cloudflared:
+    external: true
