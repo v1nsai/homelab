@@ -40,3 +40,6 @@ all-in-one
 # Ignore config files
 projects/*/config
 *.env
+
+# Ignore images
+diagrams/*.png
