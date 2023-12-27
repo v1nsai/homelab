@@ -42,4 +42,4 @@ projects/*/config
 *.env
 
 # Ignore images
-diagrams/*.png
+*.png
