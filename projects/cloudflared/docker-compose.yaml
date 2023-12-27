@@ -6,9 +6,10 @@ services:
     restart: unless-stopped
     environment:
       - CF_TUNNEL_TOKEN=${CF_TUNNEL_TOKEN}
-    networks:
-      - cloudflared
+    # networks:
+    #   - cloudflared
+    network_mode: host
 
-networks:
-  cloudflared:
-    name: cloudflared
+# networks:
+#   cloudflared:
+#     name: cloudflared
