@@ -56,7 +56,3 @@ helm install nextcloud nextcloud/nextcloud \
     --set mariadb.auth.existingSecret=$MARIADB_SECRET_NAME \
     --set persistence.enabled=true \
     --set persistence.storageClass=nfs
-
-MountVolume.SetUp failed for volume "pvc-1517830f-3016-4793-8c7c-ad04b444f9c1" : mount failed: exit status 32 Mounting command: mount Mounting arguments: -t nfs -o vers=3 10.152.183.242:/export/pvc-1517830f-3016-4793-8c7c-ad04b444f9c1 /var/snap/microk8s/common/var/lib/kubelet/pods/bf9c6c4e-f3b5-4706-877b-d8cb8eee066a/volumes/kubernetes.io~nfs/pvc-1517830f-3016-4793-8c7c-ad04b444f9c1 Output: mount.nfs: Connection timed out
-
-kubectl get pods -n nextcloud -o=jsonpath='{range .items[*]}{.metadata.name}{"\t"}{range .spec.volumes[*]}{.persistentVolumeClaim.claimName}{"\n"}{end}{end}' | grep nextcloud

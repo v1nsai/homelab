@@ -1,0 +1,10 @@
+services:
+  nfs-server:
+    volumes:
+      - /mnt/k8s_volumes:/mnt/k8s_volumes
+      - ./exports.txt:/etc/exports:ro
+    cap_add:
+      - SYS_ADMIN
+    ports:
+      - 2049:2049
+    image: erichough/nfs-server
