@@ -1,0 +1,14 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-ceph
+  labels:
+    vol: pvc-ceph
+  namespace: default
+spec:
+  storageClassName: ceph-rbd
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
