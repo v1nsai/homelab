@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-
+source projects/plex/.env
 # kubectl apply -f projects/plex/blackbox.yaml
 # kubectl logs --selector app=csi-nfs-controller -n kube-system -c nfs
 
@@ -21,6 +21,6 @@ helm install plex ./projects/plex/kube-plex/charts/kube-plex \
     # --set persistence.data.storageClass=nfs \
     # --set persistence.config.storageClass=nfs 
     # --set ingress.enabled=false \
-    # --set ingress.hosts[0]=plex.doctor-ew.com \
+    # --set ingress.hosts[0]=$URL \
     # --set ingress.annotations."kubernetes\.io/ingress\.class"=nginx \
     # --set ingress.annotations."kubernetes\.io/tls-acme"=false \
