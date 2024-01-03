@@ -10,6 +10,7 @@ source projects/nextcloud/secrets.env
 NC_ADMIN_SECRET_NAME=nextcloud-admin
 NC_NAMESPACE=nextcloud
 MARIADB_SECRET_NAME=mariadb-passwords
+STORAGECLASS=ceph-rbd
 
 if kubectl get secrets -n nextcloud | grep -q "$NC_ADMIN_SECRET_NAME"; then
     echo "Secret $NC_ADMIN_SECRET_NAME already exists"
@@ -45,14 +46,19 @@ helm repo add nextcloud https://nextcloud.github.io/helm/
 helm repo update
 helm install nextcloud nextcloud/nextcloud \
     --namespace nextcloud \
-    --set ingress.enabled=true \
+    --set ingress.enabled=false \
     --set nextcloud.host=$NC_HOST \
     --set nextcloud.username=admin \
     --set nextcloud.existingSecret.enabled=true \
     --set nextcloud.existingSecret.secretName=$NC_ADMIN_SECRET_NAME \
-    --set nextcloud.mail.enabled=false \
     --set externalDatabase.enabled=true \
     --set mariadb.enabled=true \
     --set mariadb.auth.existingSecret=$MARIADB_SECRET_NAME \
     --set persistence.enabled=true \
-    --set persistence.storageClass=nfs
+    --set persistence.storageClass=$STORAGECLASS 
+    # --set mariadb.primary.persistence.enabled=true \
+    # --set mariadb.primary.persistence.storageClass=$STORAGECLASS \
+    # --set persistence.nextcloudData.enabled=true \
+    # --set persistence.nextcloudData.storageClass=$STORAGECLASS 
+
+kubectl get events -n nextcloud -w

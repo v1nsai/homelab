@@ -3,7 +3,8 @@
 set -e
 
 echo "Setting up microk8s ceph addon..."
-microk8s enable rook-ceph
+sudo microk8s enable rook-ceph
+sudo microk8s helm repo add rook-release https://charts.rook.io/release
 sudo microk8s connect-external-ceph
 #     --ceph-conf /var/snap/microceph/current/conf/ceph.conf \
 #     --keyring /var/snap/microceph/current/conf/ceph.keyring \

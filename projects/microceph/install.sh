@@ -19,8 +19,9 @@ sudo microceph init
 ## Use for master node
 echo "Setting up microceph..."
 sudo snap install microceph
-sudo snap refresh --hold microceph # hold updates
-sudo microceph cluster bootstrap
+# sudo snap refresh --hold microceph # hold updates
+# only run on master node
+# sudo microceph cluster bootstrap
 
 echo "Creating and adding virtual disks to microceph cluster..."
 CEPH_DATA_DIR="/mnt/ceph"
