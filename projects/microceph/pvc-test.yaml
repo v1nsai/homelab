@@ -1,14 +1,33 @@
-kind: PersistentVolumeClaim
+
+# kubectl apply -f - <<EOF
 apiVersion: v1
+kind: PersistentVolumeClaim
 metadata:
-  name: pvc-ceph
-  labels:
-    vol: pvc-ceph
-  namespace: default
+  name: ceph-test-pvc
 spec:
   storageClassName: ceph-rbd
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 3Gi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: task-pv-pod
+spec:
+  volumes:
+    - name: task-pv-storage
+      persistentVolumeClaim:
+        claimName: ceph-test-pvc
+  containers:
+    - name: task-pv-container
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: task-pv-storage
+# EOF

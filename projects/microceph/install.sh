@@ -3,8 +3,10 @@
 set -e
 # source projects/microk8s/.env
 
+# Most of this is intended as copy/paste.  Too much of a pain to automate for now.
+
 # Windows
-## Run this after setting up master node.  Don't use windows node for master.  Just....don't.
+## Run this after setting up master node
 winget install multipass --classic
 multipass delete --purge $WINDOWS_NODE_NAME
 WINDOWS_NODE_NAME=""
@@ -20,15 +22,22 @@ sudo microceph init
 echo "Setting up microceph..."
 sudo snap install microceph
 # sudo snap refresh --hold microceph # hold updates
+
 # only run on master node
 # sudo microceph cluster bootstrap
+# sudo microceph cluster add $hostname_of_node
 
 echo "Creating and adding virtual disks to microceph cluster..."
+# burn it down first
+# sudo snap remove --purge microceph
+# sudo snap install microceph
+# sudo losetup -d $(sudo losetup | grep "$CEPH_DATA_DIR" | awk '{print $1}')
+
 CEPH_DATA_DIR="/mnt/ceph"
 sudo mkdir -p $CEPH_DATA_DIR
 for i in {0..4}; do
-    echo "Creating virtual disk $CEPH_DATA_DIR/loop$i..."
-    sudo dd if=/dev/zero of=$CEPH_DATA_DIR/loop$i bs=1M count=10240
+    # echo "Creating virtual disk $CEPH_DATA_DIR/loop$i..."
+    # sudo dd if=/dev/zero of=$CEPH_DATA_DIR/loop$i bs=1M count=10240
     CEPH_LOOP_DISK=$(sudo losetup -f)
     sudo losetup $CEPH_LOOP_DISK $CEPH_DATA_DIR/loop$i
     echo "Adding virtual disk $CEPH_DATA_DIR/loop$i to ceph..."
@@ -36,17 +45,17 @@ for i in {0..4}; do
 done
 
 # Add external disks here
-# sudo microceph disk add --wipe /dev/sdc
+sudo microceph disk add --wipe /dev/sdc
 
-# Too lazy to figure out why microceph times out when trying to remove nodes that are down
-# CEPH_DATA_DIR="/mnt/ceph"
-# CEPH_LOOP_DISKS=$(sudo losetup -a | grep "$CEPH_DATA_DIR" | awk '{print $1}' | tr -d ":")
-# echo $CEPH_LOOP_DISKS
-# for CEPH_LOOP_DISK in $CEPH_LOOP_DISKS; do
-#     echo "Adding virtual disk $CEPH_LOOP_DISK to ceph..."
-#     sudo microceph disk add --wipe $CEPH_LOOP_DISK
-# done
+# Force remove a node that is down
+## Delete OSDs
+# sudo ceph health detail
+# OSD_ID= # Find OSD ID's in the output, eg. osd.1 osd.2
+# sudo ceph osd out $OSD_ID
+# sudo ceph osd crush remove $OSD_ID
+# ceph auth del $OSD_ID
+# ceph osd rm $OSD_ID
 
-# echo "Adding nodes..."
-# sudo microceph cluster add bigrig
-# sudo microceph cluster add asusan
+# # Delete MONs
+# MON_ID= # hostname of the node by default
+# sudo ceph mon remove $MON_ID
