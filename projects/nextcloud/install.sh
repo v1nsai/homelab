@@ -3,7 +3,7 @@
 set -e
 
 # REMOVE FOR TESTING ONLY
-helm -n nextcloud uninstall nextcloud || true
+# helm -n nextcloud uninstall nextcloud || true
 
 echo "Generating or retrieving credentials..."
 source projects/nextcloud/secrets.env
@@ -35,7 +35,7 @@ else
     MARIADB_PASSWORD=$(openssl rand -base64 20)
     MARIADB_ROOT_PASSWORD=$(openssl rand -base64 20)
     MARIADB_REPLICATION_PASSWORD=$(openssl rand -base64 20)
-    kubectl create secret -n nextcloud generic mariadb-passwords \
+    kubectl create secret -n nextcloud generic $MARIADB_SECRET_NAME \
         --from-literal=mariadb-password=$MARIADB_PASSWORD \
         --from-literal=password=$MARIADB_PASSWORD \
         --from-literal=mariadb-root-password=$MARIADB_ROOT_PASSWORD \
@@ -44,18 +44,21 @@ fi
 
 helm repo add nextcloud https://nextcloud.github.io/helm/
 helm repo update
-helm install nextcloud nextcloud/nextcloud \
+helm upgrade nextcloud nextcloud/nextcloud \
     --namespace nextcloud \
-    --set ingress.enabled=false \
+    --set ingress.enabled=true \
     --set nextcloud.host=$NC_HOST \
     --set nextcloud.username=admin \
     --set nextcloud.existingSecret.enabled=true \
     --set nextcloud.existingSecret.secretName=$NC_ADMIN_SECRET_NAME \
+    --set internalDatabase.enabled=false \
     --set externalDatabase.enabled=true \
     --set mariadb.enabled=true \
-    --set mariadb.auth.existingSecret=$MARIADB_SECRET_NAME \
+    --set service.type=NodePort \
+    --set service.nodePort=30080 \
     --set persistence.enabled=true \
-    --set persistence.storageClass=$STORAGECLASS 
+    --set persistence.storageClass=$STORAGECLASS
+    # --set mariadb.auth.existingSecret=$MARIADB_SECRET_NAME \
     # --set mariadb.primary.persistence.enabled=true \
     # --set mariadb.primary.persistence.storageClass=$STORAGECLASS \
     # --set persistence.nextcloudData.enabled=true \

@@ -15,7 +15,9 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: task-pv-pod
+  name: nginx-test-pod
+  labels:
+    podName: nginx-test-pod
 spec:
   volumes:
     - name: task-pv-storage
@@ -30,4 +32,23 @@ spec:
       volumeMounts:
         - mountPath: "/usr/share/nginx/html"
           name: task-pv-storage
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-svc-nodeport
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    podName: nginx-test-pod
+  ports:
+    - port: 80
+      # By default and for convenience, the `targetPort` is set to
+      # the same value as the `port` field.
+      targetPort: 80
+      # Optional field
+      # By default and for convenience, the Kubernetes control plane
+      # will allocate a port from a range (default: 30000-32767)
+      nodePort: 30055
 # EOF

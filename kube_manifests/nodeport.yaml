@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-dash-svc
+  namespace: kube-system
+spec:
+  type: NodePort
+  selector:
+    k8s-app: kubernetes-dashboard
+  ports:
+    - port: 443
+      targetPort: 8443
+      nodePort: 30007  # You can specify any available port in the NodePort range (default: 30000-32767)
