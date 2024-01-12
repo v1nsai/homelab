@@ -1,0 +1,73 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: cert-manager-egress
+  namespace: cert-manager
+spec:
+  podSelector:
+    matchLabels:
+      app: cert-manager
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: cert-manager-ingress
+  namespace: cert-manager
+spec:
+  podSelector:
+    matchLabels:
+      app: cert-manager
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+      ports:
+        - protocol: TCP
+          port: 80
+        - protocol: TCP
+          port: 443
+        - protocol: TCP
+          port: 53
+        - protocol: UDP
+          port: 53
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: test-network-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      role: db
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+        - namespaceSelector:
+            matchLabels:
+              project: myproject
+        - podSelector:
+            matchLabels:
+              role: frontend
+      ports:
+        - protocol: TCP
+          port: 6379
+  egress:
+    - to:
+        - ipBlock:
+            cidr: 10.0.0.0/24
+      ports:
+        - protocol: TCP
+          port: 5978
