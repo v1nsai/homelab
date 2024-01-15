@@ -8,6 +8,6 @@ spec:
   selector:
     k8s-app: kubernetes-dashboard
   ports:
-    - port: 443
-      targetPort: 8443
-      nodePort: 30007  # You can specify any available port in the NodePort range (default: 30000-32767)
+    - port: 443 # internal cluster traffic port
+      targetPort: 8443 # port exposed by the container
+      nodePort: 30007 # port exposed externally by the node

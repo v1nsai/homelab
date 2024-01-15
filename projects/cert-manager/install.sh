@@ -11,9 +11,9 @@ helm upgrade --install cert-manager jetstack/cert-manager \
     --namespace cert-manager \
     --create-namespace \
     --version v1.12.7 \
-    --set installCRDs=true \
-    --set networkPolicy.enabled=true \
-    --set webhook.networkPolicy.enabled=true
+    --set installCRDs=true
+    # --set networkPolicy.enabled=true \
+    # --set webhook.networkPolicy.enabled=true
 
 echo "Setting up ClusterIssuers for staging and prod..."
 kubectl apply -f projects/cert-manager/clusterissuers.yaml
