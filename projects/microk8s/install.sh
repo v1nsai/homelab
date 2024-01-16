@@ -11,7 +11,13 @@ sudo snap install microk8s --classic
 sudo snap install microceph
 
 # aliasing
-echo "alias microceph='sudo microceph'" | tee -a ~/.bashrc
+sudo snap alias microk8s.kubectl kubectl
+sudo snap alias microk8s.kubectl k
+sudo snap alias microk8s.helm helm
 echo "alias ceph='sudo ceph'" | tee -a ~/.bashrc
-echo "alias kubectl='microk8s kubectl'" | tee -a ~/.bashrc
-echo "alias helm='microk8s helm'" | tee -a ~/.bashrc
+echo "alias microceph='sudo microceph'" | tee -a ~/.bashrc
+
+# enable microk8s addons
+microk8s enable metallb:192.168.1.2-192.168.1.34
+
+# add other nodes to the cluster

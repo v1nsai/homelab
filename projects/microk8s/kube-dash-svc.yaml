@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-dash-svc
+  namespace: kube-system
+spec:
+  type: NodePort
+  selector:
+    k8s-app: kubernetes-dashboard
+  ports:
+    - port: 443 # internal cluster traffic port
+      targetPort: 8443 # port exposed by the container
+      nodePort: 30007 # port exposed externally by the node

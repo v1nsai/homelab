@@ -38,11 +38,12 @@ kind: Deployment
 metadata:
   name: nginx
 spec:
+  replicas: 2 # TEST
   selector:
     matchLabels:
       app: nginx
   strategy:
-    type: Recreate
+    type: RollingUpdate # default
   template:
     metadata:
       labels:
