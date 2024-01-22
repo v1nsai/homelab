@@ -2,19 +2,36 @@
 # Access it with the API as a proxy:
 # $ kubectl proxy
 # Then in you browser: http://localhost:8001/api/v1/namespaces/default/services/nginx:/proxy/#!/
-
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx
+  name: nginx-svc
 spec:
-  type: NodePort
-  ports:
-  - port: 80
-    targetPort: 80
-    # nodePort: 30001
+  type: LoadBalancer
   selector:
     app: nginx
+  ports:
+    - port: 80 # internal cluster traffic port
+      targetPort: 80 # port exposed by the container
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - http: 
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-svc
+            port:
+              number: 80
+    # host: nginx-lb.local
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -36,9 +53,9 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx
+  name: nginx-deployment
 spec:
-  replicas: 2 # TEST
+  replicas: 3 # TEST
   selector:
     matchLabels:
       app: nginx

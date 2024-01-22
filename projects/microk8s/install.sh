@@ -18,6 +18,16 @@ echo "alias ceph='sudo ceph'" | tee -a ~/.bashrc
 echo "alias microceph='sudo microceph'" | tee -a ~/.bashrc
 
 # enable microk8s addons
-microk8s enable metallb:192.168.1.2-192.168.1.34
+microk8s enable dns
+microk8s enable hostpath-storage
+microk8s enable ingress
+
+# enable dashboard
+microk8s enable dashboard
+kubectl apply -f projects/microk8s/dashboard-ingress.yaml
+
+# enable metallb
+microk8s enable metallb:10.13.55.0/24
+kubectl apply -f projects/microk8s/metallb-ingress.yaml
 
 # add other nodes to the cluster
