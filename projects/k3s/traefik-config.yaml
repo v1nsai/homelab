@@ -1,0 +1,41 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    additionalArguments:
+      - "--api"
+      - "--api.dashboard=true"
+      - "--api.insecure=true"
+      - "--log.level=DEBUG"
+    ports:
+      traefik:
+        expose: true
+      http:
+        expose: true
+        port: 80
+      https:
+        expose: true
+        port: 443
+    providers:
+      kubernetesCRD:
+        allowCrossNamespace: true
+    certificatesResolvers:
+      letsencrypt-prod:
+        acme:
+          email: "support@doctor-ew.com"
+          storage: "acme.json"
+          caServer: "https://acme-v02.api.letsencrypt.org/directory"
+          tlsChallenge:
+            httpChallenge:
+              entryPoint: web
+      letsencrypt-staging:
+        acme:
+          email: "support@doctor-ew.com"
+          storage: "acme.json"
+          caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
+          tlsChallenge:
+            httpChallenge:
+              entryPoint: web
