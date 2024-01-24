@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-source projects/cloudflared/k8s/.env
+source projects/cloudflared/.env
 # To create a new tunnel, follow official docs https://developers.cloudflare.com/cloudflare-one/tutorials/many-cfd-one-tunnel/#install-cloudflared
 
 # Use an existing tunnel created in the UI
@@ -12,6 +12,7 @@ helm repo add cloudflare https://cloudflare.github.io/helm-charts
 helm repo update
 helm upgrade --install cloudflared cloudflare/cloudflare-tunnel \
     --namespace cloudflare \
+    --create-namespace \
     --set cloudflare.account=$CLOUDFLARED_ACCOUNT_TAG \
     --set cloudflare.tunnelName=homelab \
     --set cloudflare.tunnelId=$CLOUDFLARED_TUNNEL_ID \
