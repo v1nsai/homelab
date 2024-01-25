@@ -14,6 +14,8 @@ services:
       - VPN_SERVICE_PROVIDER=custom
       - VPN_TYPE=wireguard
       - FIREWALL_OUTBOUND_SUBNETS=192.168.1.0/24
+      - VPN_PORT_FORWARDING=on
+      - VPN_PORT_FORWARDING_PROVIDER=protonvpn
     volumes:
       - ./config/gluetun/wg0.conf:/gluetun/wireguard/wg0.conf
 
@@ -27,7 +29,7 @@ services:
       - WEBUI_PORT=9091
     volumes:
       - ./config/qbittorrent:/config
-      - /mnt/blackbox:/downloads/
+      - /mnt/irene:/downloads/
     restart: unless-stopped
     network_mode: service:gluetun
 

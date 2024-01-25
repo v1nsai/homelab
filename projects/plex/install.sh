@@ -8,16 +8,20 @@ source projects/plex/.env
 helm uninstall -n plex plex || true
 
 git clone git@github.com:munnerz/kube-plex.git projects/plex/kube-plex || true
-source projects/plex/.env
-kubectl create namespace plex || true
 helm install plex ./projects/plex/kube-plex/charts/kube-plex \
     --namespace plex \
+    --create-namespace \
     --set claimToken=$PLEX_CLAIM \
     --set timezone=America/New_York \
     --set ingress.enabled=true \
-    --set ingress.hosts[0]=$URL \
     --set ingress.annotations."kubernetes\.io/ingress\.class"=traefik \
-    --set ingress.annotations."kubernetes\.io/tls-acme"=true 
+    --set ingress.annotations."kubernetes\.io/tls-acme"=true \
+    --set ingress.annotations."traefik\.ingress\.kubernetes.io/router\.tls"=true \
+    --set ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.entrypoints"=https \
+    --set ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.tls\.certresolver"=letsencrypt-staging \
+    --set ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.tls\.domains[0].main"=$PLEX_URL 
+
+    # --set ingress.hosts[0]=$PLEX_URL \
     # --set service.type=ClusterIP 
     # --set service.nodePort=32400
     # --set service.externalTrafficPolicy=Local

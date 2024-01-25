@@ -11,12 +11,12 @@ services:
       - VERSION=docker
       - PLEX_CLAIM=${PLEX_CLAIM}
     volumes:
-      - /mnt/blackbox/plex/config:/config
-      - /mnt/blackbox/plex/tv:/tv
-      - /mnt/blackbox/plex/movies:/movies
+      - /mnt/irene/plex/config:/config
+      - /mnt/irene/plex/tv:/tv
+      - /mnt/irene/plex/movies:/movies
     restart: unless-stopped
-    networks:
-     - cloudflared
+    # networks:
+    #  - cloudflared
     ports:
       - 32400:32400/tcp
       - 8324:8324/tcp
@@ -49,6 +49,6 @@ services:
   #   restart: unless-stopped
   #   network_mode: host
 
-networks:
-  cloudflared:
-    external: true
+# networks:
+#   cloudflared:
+#     external: true
