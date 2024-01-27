@@ -25,7 +25,7 @@ spec:
     certificatesResolvers:
       letsencrypt-prod:
         acme:
-          email: "support@doctor-ew.com"
+          email: "support@youdontneedtoemailme.com"
           storage: "acme.json"
           caServer: "https://acme-v02.api.letsencrypt.org/directory"
           tlsChallenge:
@@ -33,7 +33,7 @@ spec:
               entryPoint: web
       letsencrypt-staging:
         acme:
-          email: "support@doctor-ew.com"
+          email: "support@youdontneedtoemailme.com"
           storage: "acme.json"
           caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
           tlsChallenge:
