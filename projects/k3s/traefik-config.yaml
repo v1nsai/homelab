@@ -39,3 +39,5 @@ spec:
           tlsChallenge:
             httpChallenge:
               entryPoint: web
+
+# cp -f projects/k3s/traefik-config.yaml /var/lib/rancher/k3s/server/manifests/traefik-config.yaml

@@ -2,4 +2,4 @@
 
 set -e
 
-docker exec -itu root $1 $2 $3 $4
+docker exec -itu root ${@}
