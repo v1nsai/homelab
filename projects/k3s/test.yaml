@@ -37,29 +37,46 @@ spec:
       targetPort: 80
 
 ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: test-ingress
+#   annotations:
+#     nginx.ingress.kubernetes.io/rewrite-target: /
+# spec:
+#   ingressClassName: nginx
+#   tls:
+#   - hosts:
+#     - whoami.local
+#     secretName: tls-selfsigned
+#   rules:
+#   - host: whoami.local
+#     http:
+#       paths:
+#       - pathType: Prefix
+#         path: /whoami
+#         backend:
+#           service:
+#             name: whoami-service
+#             port:
+#               number: 80
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: test-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+  name: test-ingress-traefik
 spec:
-  ingressClassName: traefik
-  tls:
-  - hosts:
-    - whoami.local
-    secretName: tls-selfsigned
   rules:
-  - host: whoami.local
-    http:
-      paths:
-      - pathType: Prefix
-        path: /whoami
-        backend:
-          service:
-            name: whoami-service
-            port:
-              number: 80
+    - host: bigrig.local
+      http:
+        paths:
+          - path: /whoami
+            pathType: Exact
+            backend:
+              service:
+                name:  test-service
+                port:
+                  number: 80
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
