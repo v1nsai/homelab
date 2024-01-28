@@ -8,7 +8,6 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
     -subj "/CN=example.com"
 
 kubectl create secret tls tls-selfsigned \
-    --namespace kube-system \
     --key /tmp/tls.key \
     --cert /tmp/tls.crt
 

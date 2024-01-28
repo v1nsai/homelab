@@ -44,9 +44,13 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
+  tls:
+  - hosts:
+    - whoami.local
+    secretName: tls-selfsigned
   rules:
-  - host: bigrig.local
+  - host: whoami.local
     http:
       paths:
       - pathType: Prefix
