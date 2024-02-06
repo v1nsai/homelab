@@ -1,0 +1,16 @@
+http:
+  routers:
+    router:
+      rule: HostRegex(`test.techig.com`) && PathPrefix(`/whoami`)
+      service: service
+      entryPoints:
+        - websecure
+      tls: {}
+      # tls: 
+      #   certResolver: letsencrypt-staging
+
+  services:
+    service:
+      loadBalancer:
+        servers:
+          - url: http://127.0.0.1:11000

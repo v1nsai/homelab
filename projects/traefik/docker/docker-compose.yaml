@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  traefik:
+    image: traefik:latest
+    container_name: traefik
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./routes.yaml:/etc/traefik/routes.yaml
+      - ./traefik.yaml:/etc/traefik/traefik.yaml
+      - ./config/acme.json:/acme.json
+    network_mode: host
+    # networks: 
+    #   - traefik-net
+    ports:
+      - 80:80
+      - 443:443
+    labels:
+      traefik.http.services.traefik-dashboard-service.loadbalancer.server.port: 9999
+    
+  whoami:
+    image: traefik/whoami:latest
+    container_name: whoami
+    ports:
+      - 11000:80
+#     networks: 
+#       - traefik-net
+
+# networks:
+#   traefik-net:
