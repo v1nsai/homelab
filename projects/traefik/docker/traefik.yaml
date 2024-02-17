@@ -12,7 +12,7 @@ providers:
   docker:
     exposedByDefault: true
   file:
-    filename: /etc/traefik/routes.yaml
+    directory: /etc/traefik/dynamic-configs/
 certificatesResolvers:
   letsencrypt-prod:
     acme:

@@ -6,12 +6,14 @@ helm repo add windmill https://windmill-labs.github.io/windmill-helm-charts/
 helm upgrade --install windmill windmill/windmill \
     --namespace windmill \
     --create-namespace \
-    --set app.autoscaling.enabled=true \
-    --set ingress.enabled=true \
-    --set ingress.className=traefik \
-    --set "ingress.annotations.traefik\.ingress\.kubernetes\.io/router\.tls=true" \
-    --set "ingress.annotations.traefik\.ingress\.kubernetes\.io/router\.pathmatcher=Path('windmill')" \
-    --set "ingress.annotations.traefik\.ingress\.kubernetes\.io/router\.tls\.domains\.0\.main='windmill.local'"
+    --values projects/windmill/values.yaml
+    # --set app.autoscaling.enabled=true \
+    # --set ingress.enabled=true \
+    # --set ingress.className=traefik
+    # --set 'ingress.annotations=- traefik.ingress.kubernetes.io/router.tls: true'
+        # traefik.ingress.kubernetes.io/router.pathmatcher: Path("/")' #\
+    # --set ingress.annotations.traefik.ingress.kubernetes.io/router.pathmatcher='Path("/")' \
+    # --set ingress.annotations.traefik.ingress.kubernetes.io/router.tls.domains.0.main='windmill.local'
 
 # kubectl apply -f - <<EOF
 # apiVersion: networking.k8s.io/v1

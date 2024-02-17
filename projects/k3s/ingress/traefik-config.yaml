@@ -5,39 +5,34 @@ metadata:
   namespace: kube-system
 spec:
   valuesContent: |-
-    additionalArguments:
-      - "--api"
-      - "--api.dashboard=true"
-      - "--api.insecure=true"
-      - "--log.level=DEBUG"
-    ports:
-      traefik:
-        expose: true
-      http:
-        expose: true
-        port: 80
-      https:
-        expose: true
-        port: 443
-    providers:
-      kubernetesCRD:
-        allowCrossNamespace: true
+    log:
+      level: INFO
+
+    api:
+      dashboard: false
+      insecure: false
+
+    entryPoints:
+      web:
+        address: :80
+      websecure:
+        address: :443
+
     certificatesResolvers:
       letsencrypt-prod:
         acme:
-          email: "support@youdontneedtoemailme.com"
-          storage: "acme.json"
-          caServer: "https://acme-v02.api.letsencrypt.org/directory"
-          tlsChallenge:
-            httpChallenge:
-              entryPoint: web
+          email: support@techig.com
+          storage: /acme.json
+          httpChallenge:
+            entryPoint: web
+
       letsencrypt-staging:
         acme:
-          email: "support@youdontneedtoemailme.com"
-          storage: "acme.json"
-          caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
-          tlsChallenge:
-            httpChallenge:
-              entryPoint: web
+          email: support@techig.com
+          storage: /acme.json
+          caserver: https://acme-staging-v02.api.letsencrypt.org/directory
+          httpChallenge:
+            entryPoint: web
+
 
 # cp -f projects/k3s/traefik-config.yaml /var/lib/rancher/k3s/server/manifests/traefik-config.yaml

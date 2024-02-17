@@ -1,7 +1,7 @@
 http:
   routers:
     router:
-      rule: HostRegex(`test.techig.com`) && PathPrefix(`/whoami`)
+      rule: Host(`test.techig.com`)
       service: service
       entryPoints:
         - websecure

@@ -6,12 +6,15 @@ services:
     container_name: traefik
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./routes.yaml:/etc/traefik/routes.yaml
-      - ./traefik.yaml:/etc/traefik/traefik.yaml
-      - ./config/acme.json:/acme.json
-    network_mode: host
-    # networks: 
-    #   - traefik-net
+      - /etc/traefik/traefik.yaml:/etc/traefik/traefik.yaml
+      - /etc/traefik/routes.yaml:/etc/traefik/routes.yaml
+      - /etc/traefik/acme.json:/acme.json
+      - /etc/traefik/certs:/etc/traefik/certs
+    # network_mode: host
+    networks:
+      - traefik
+    environment:
+      - URL=${URL}
     ports:
       - 80:80
       - 443:443
@@ -23,8 +26,8 @@ services:
     container_name: whoami
     ports:
       - 11000:80
-#     networks: 
-#       - traefik-net
+    networks: 
+      - traefik-net
 
-# networks:
-#   traefik-net:
+networks:
+  traefik:
