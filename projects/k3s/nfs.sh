@@ -12,9 +12,9 @@ helm install csi-driver-nfs csi-driver-nfs/csi-driver-nfs \
 helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
 helm upgrade --install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner \
     --namespace kube-system \
-    --set nfs.server="192.168.1.198" \
-    --set nfs.path="/mnt/irene" \
-    --kubeconfig /etc/rancher/k3s/k3s.yaml 
+    --set nfs.server="192.168.1.152" \
+    --set nfs.path="/mnt/blackbox" \
+    --kubeconfig /etc/rancher/k3s/k3s.yaml
 
 kubectl apply -f - <<EOF
 apiVersion: v1

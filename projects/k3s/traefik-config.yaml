@@ -33,6 +33,3 @@ spec:
           caserver: https://acme-staging-v02.api.letsencrypt.org/directory
           httpChallenge:
             entryPoint: web
-
-
-# cp -f projects/k3s/traefik-config.yaml /var/lib/rancher/k3s/server/manifests/traefik-config.yaml
