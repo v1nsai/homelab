@@ -13,8 +13,8 @@ helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/
 helm upgrade --install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner \
     --namespace kube-system \
     --set nfs.server="192.168.1.152" \
-    --set nfs.path="/mnt/blackbox" \
-    --kubeconfig /etc/rancher/k3s/k3s.yaml
+    --set nfs.path="/mnt/silverstick"
+    # --kubeconfig /etc/rancher/k3s/k3s.yaml
 
 kubectl apply -f - <<EOF
 apiVersion: v1

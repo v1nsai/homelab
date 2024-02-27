@@ -17,17 +17,17 @@ spec:
         image: traefik/whoami
         ports:
         - containerPort: 80
-      volumes:
-      - name: test-volume
-        persistentVolumeClaim:
-          claimName: test-pvc       
+      # volumes:
+      # - name: test-volume
+      #   persistentVolumeClaim:
+      #     claimName: test-pvc       
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: test-service
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: whoami
   ports:
