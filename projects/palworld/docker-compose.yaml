@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  pwserver:
+    # image: gameservermanagers/gameserver:pw
+    image: ghcr.io/gameservermanagers/gameserver:pw
+    container_name: pwserver
+    restart: unless-stopped
+    volumes:
+      - ./config:/data
+    network_mode: host
+    # ports:
+    #   - 8211:8211
+    #   - 27015:27015
+    #   - 1985:1985
