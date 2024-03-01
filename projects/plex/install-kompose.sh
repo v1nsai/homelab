@@ -7,7 +7,7 @@ source projects/plex/.env
 
 yq e -i '.name = "plex"' projects/plex/kompose/Chart.yaml # set the name
 
-yq e -i '.spec.replicas = 3' projects/plex/kompose/templates/plex-deployment.yaml # set the replicas
+# yq e -i '.spec.replicas = 3' projects/plex/kompose/templates/plex-deployment.yaml # set the replicas
 yq e -i '.spec.template.spec.containers[0].env |= map(select(.name == "PLEX_CLAIM").value = "'$PLEX_CLAIM'")' projects/plex/kompose/templates/plex-deployment.yaml # Set the plex claim
 sed -i 's/plex-claim0/plex-media/g' projects/plex/kompose/templates/plex-deployment.yaml # set the pvc to the shared one
 
