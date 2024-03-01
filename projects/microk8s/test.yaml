@@ -21,6 +21,10 @@ spec:
           ports:
             - name: web
               containerPort: 80
+      # volumes:
+      # - name: test-volume
+      #   persistentVolumeClaim:
+      #     claimName: test-pvc       
 ---
 apiVersion: v1
 kind: Service
@@ -44,10 +48,10 @@ spec:
   rules:
   - http:
       paths:
-      - path: /
+      - path: /whoami
         pathType: Prefix
         backend:
           service:
             name: whoami
             port:
-              name: web
+              number: 80

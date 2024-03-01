@@ -22,18 +22,8 @@ sudo usermod -a -G microk8s $USER
 sudo mkdir -p ~/.kube
 sudo chown -f -R $USER ~/.kube
 
-# enable microk8s addons
-microk8s enable dns
-microk8s enable hostpath-storage
-microk8s enable ingress
-
-# enable dashboard
-microk8s enable dashboard
-kubectl apply -f projects/microk8s/dashboard-ingress.yaml
-
 # enable metallb
-microk8s enable metallb:10.13.55.0/24
-kubectl apply -f projects/microk8s/metallb-ingress.yaml
+microk8s enable metallb:192.168.1.2-192.168.1.99
 
 # enable traefik ingress
 helm install traefik traefik/traefik \
