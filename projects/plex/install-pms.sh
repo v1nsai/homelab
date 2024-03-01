@@ -13,3 +13,4 @@ helm upgrade --install plex plex/plex-media-server \
     --set extraVolumes[0].name=plex-media \
     --set extraVolumes[0].persistentVolumeClaim.claimName=plex-media \
     --set extraEnv.PLEX_CLAIM="$PLEX_CLAIM"
+
