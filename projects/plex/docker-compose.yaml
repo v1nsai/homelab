@@ -12,8 +12,8 @@ services:
       - VERSION=docker
       - PLEX_CLAIM=${PLEX_CLAIM}
       # - NVIDIA_VISIBLE_DEVICES=all 
-    # volumes:
-    #   - /mnt/irene/plex/config:/config
+    volumes:
+      - /mnt/irene/plex/config:/config
     #   - /mnt/irene/plex/tv:/tv
     #   - /mnt/irene/plex/movies:/movies
     restart: unless-stopped

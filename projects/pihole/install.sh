@@ -8,7 +8,7 @@ scripts/kompose.sh pihole
 echo "Updating config files..."
 yq e -i '.spec.template.spec.containers[0].env |= map(select(.name == "WEBPASSWORD").value = "'$WEBPASSWRD'")' projects/pihole/kompose/templates/pihole-deployment.yaml # Set the web password
 
-yq e -i '.spec.type = "NodePort"' projects/pihole/kompose/templates/pihole-service.yaml # Set the service type to NodePort so its accessible on all nodes
+yq e -i '.spec.type = "LoadBalancer"' projects/pihole/kompose/templates/pihole-service.yaml # Set the service type to NodePort so its accessible on all nodes
 
 for file in projects/pihole/kompose/templates/pihole-*.yaml; do
     if [[ $file == *"claim"* ]]; then
