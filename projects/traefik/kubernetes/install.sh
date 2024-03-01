@@ -1,20 +1,14 @@
 #!/bin/bash
 
 set -e
+source projects/traefik/kubernetes/.env
 
-helm delete -n traefik traefik || echo "traefik not found, skipping delete..."
-nodeIPs=$(kubectl get nodes -o jsonpath='{.items[*].status.addresses[?(@.type=="InternalIP")].address}' | tr ' ' ',')
 helm upgrade --install traefik traefik/traefik \
     --create-namespace \
     --namespace traefik \
-    --set hostNetwork=true \
-    --set service.externalIPs={${nodeIPs}}
-
-    # --set ports.web.port=80 \
-    # --set ports.web.hostPort=80 \
-    # --set ports.web.exposedPort=80 \
-    # --set ports.web.containerPort=80 \
-    # --set ports.websecure.port=443 \
-    # --set ports.websecure.hostPort=443 \
-    # --set ports.websecure.exposedPort=443 \
-    # --set ports.websecure.containerPort=443
+    --set certResolvers.letsencrypt-prod.email="${EMAIL}" \
+    --set certResolvers.letsencrypt-prod.storage="/data/acme.json" \
+    --set certResolvers.letsencrypt-prod.httpChallenge.entryPoint="web" \
+    --set certResolvers.letsencrypt-staging.email="${EMAIL}" \
+    --set certResolvers.letsencrypt-staging.storage="/data/acme.json" \
+    --set certResolvers.letsencrypt-staging.httpChallenge.entryPoint="web"

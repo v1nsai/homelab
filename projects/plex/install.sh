@@ -1,31 +1,20 @@
 #!/bin/bash
 
-set -e
-source projects/plex/.env
-# kubectl apply -f projects/plex/blackbox.yaml
-# kubectl logs --selector app=csi-nfs-controller -n kube-system -c nfs
+# set -e
+# source projects/plex/.env
 
-helm uninstall -n plex plex || true
+# scripts/kompose.sh plex
 
-git clone git@github.com:munnerz/kube-plex.git projects/plex/kube-plex || true
-helm install plex ./projects/plex/kube-plex/charts/kube-plex \
+# yq e -i '.name = "plex"' projects/plex/kompose/Chart.yaml # set the name
+# yq e -i '.spec.replicas = 3' projects/plex/kompose/templates/plex-deployment.yaml # set the replicas
+# yq e -i '.spec.template.spec.containers[0].env |= map(select(.name == "PLEX_CLAIM").value = "claim-RsCyecdLrx9o6szBzQsq")' projects/plex/kompose/templates/plex-deployment.yaml # Set the plex claim
+
+# for file in projects/plex/kompose/templates/*.yaml; do
+#     yq e -i '.metadata.namespace = "plex"' $file # set the namespace
+# done
+
+cp -f projects/plex/plex-ingress.yaml projects/plex/kompose/templates/plex-ingress.yaml # copy the ingress
+
+helm upgrade --install plex projects/plex/kompose \
     --namespace plex \
-    --create-namespace \
-    --set claimToken=$PLEX_CLAIM \
-    --set timezone=America/New_York \
-    --set ingress.enabled=true \
-    --set ingress.hosts[0]=$PLEX_URL
-
-    # --set ingress.annotations."kubernetes\.io/ingress\.class"=traefik \
-    # --set ingress.annotations."kubernetes\.io/tls-acme"=true \
-    # --set ingress.annotations."traefik\.ingress\.kubernetes.io/router\.tls"=true \
-    # --set ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.entrypoints"=https \
-    # --set ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.tls\.certresolver"=letsencrypt-staging \
-    # --set ingress.annotations."traefik\.ingress\.kubernetes\.io/router\.tls\.domains[0].main"=$PLEX_URL 
-
-    # --set service.type=ClusterIP 
-    # --set service.nodePort=32400
-    # --set service.externalTrafficPolicy=Local
-    # --set persistence.transcode.storageClass=nfs \
-    # --set persistence.data.storageClass=nfs \
-    # --set persistence.config.storageClass=nfs 
+    --create-namespace

@@ -29,7 +29,7 @@ services:
       - WEBUI_PORT=9091
     volumes:
       - ./config/qbittorrent:/config
-      - /mnt/irene:/downloads/
+      - /mnt/blackbox:/downloads/
     restart: unless-stopped
     network_mode: service:gluetun
 

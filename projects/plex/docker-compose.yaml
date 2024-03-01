@@ -4,18 +4,18 @@ services:
   plex:
     image: lscr.io/linuxserver/plex:latest
     container_name: plex
-    runtime: nvidia
+    # runtime: nvidia
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
       - VERSION=docker
       - PLEX_CLAIM=${PLEX_CLAIM}
-      - NVIDIA_VISIBLE_DEVICES=all 
-    volumes:
-      - /mnt/irene/plex/config:/config
-      - /mnt/irene/plex/tv:/tv
-      - /mnt/irene/plex/movies:/movies
+      # - NVIDIA_VISIBLE_DEVICES=all 
+    # volumes:
+    #   - /mnt/irene/plex/config:/config
+    #   - /mnt/irene/plex/tv:/tv
+    #   - /mnt/irene/plex/movies:/movies
     restart: unless-stopped
     # networks:
     #  - cloudflared
@@ -28,29 +28,3 @@ services:
       - 32412:32412/udp
       - 32413:32413/udp
       - 32414:32414/udp
-
-  # swag:
-  #   image: lscr.io/linuxserver/swag:latest
-  #   container_name: swag
-  #   cap_add:
-  #     - NET_ADMIN
-  #   environment:
-  #     - PUID=1000
-  #     - PGID=1000
-  #     - TZ=US/Eastern
-  #     - URL=${URL}
-  #     - VALIDATION=http
-  #     # - SUBDOMAINS= #optional
-  #     - EMAIL= #optional
-  #     - ONLY_SUBDOMAINS=false #optional
-  #     - EXTRA_DOMAINS= #optional
-  #     - STAGING=false #optional
-  #     - NGINX_ENVSUBST_TEMPLATE_SUFFIX=".template"
-  #   volumes:
-  #     - /etc/swag:/config
-  #   restart: unless-stopped
-  #   network_mode: host
-
-# networks:
-#   cloudflared:
-#     external: true
