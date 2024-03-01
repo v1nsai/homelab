@@ -2,10 +2,9 @@
 
 set -e
 source projects/plex/.env
-# kubectl apply -f projects/plex/blackbox.yaml
-# kubectl logs --selector app=csi-nfs-controller -n kube-system -c nfs
+# kubectl apply -f projects/plex/plex-media-pvc.yaml
 
-helm uninstall -n plex plex || true
+# helm uninstall -n plex plex || true
 
 git clone git@github.com:munnerz/kube-plex.git projects/plex/kube-plex || true
 helm install plex ./projects/plex/kube-plex/charts/kube-plex \
@@ -13,5 +12,6 @@ helm install plex ./projects/plex/kube-plex/charts/kube-plex \
     --create-namespace \
     --set claimToken=$PLEX_CLAIM \
     --set timezone=America/New_York \
-    --set ingress.enabled=true \
-    --set ingress.hosts[0]=$PLEX_URL
+    --set service.type=LoadBalancer \
+    --set persistence.extraData[0].name=plex-media \
+    --set persistence.extraData[0].claimName=plex-media 
