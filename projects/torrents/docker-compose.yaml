@@ -29,7 +29,7 @@ services:
       - WEBUI_PORT=9091
     volumes:
       - ./config/qbittorrent:/config
-      - /mnt/blackbox/kubernetes/plex-media:/downloads/plex-media
+      - /mnt/blackbox/kubernetes/plex-media:/downloads
     restart: unless-stopped
     network_mode: service:gluetun
 

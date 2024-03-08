@@ -9,7 +9,7 @@ services:
     volumes:
       - ./config/data:/config
       - ./config/tvseries:/tv #optional
-      - ./config/downloads:/downloads #optional
+      - /mnt/blackbox/kubernetes/plex-media:/downloads #optional
     ports:
       - 8989:8989
     restart: unless-stopped
