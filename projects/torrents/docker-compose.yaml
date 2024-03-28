@@ -3,6 +3,7 @@ services:
   gluetun:
     image: qmcgaw/gluetun
     container_name: gluetun
+    restart: unless-stopped
     ports:
       - 51820:51820/udp
       - 9091:9091
