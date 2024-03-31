@@ -31,13 +31,6 @@ services:
     volumes:
       - ./config/qbittorrent:/config
       - /mnt/blackbox/kubernetes/plex-media:/downloads
+      - /mnt/blackbox/kubernetes/calibre-media:/books
     restart: unless-stopped
     network_mode: service:gluetun
-
-# networks:
-#   blackpearl:
-#     ipam:
-#       driver: default
-#       config:
-#         - subnet: 172.24.0.0/16
-#           gateway: 172.24.0.1
