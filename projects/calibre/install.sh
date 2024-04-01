@@ -26,7 +26,6 @@ yq e -i '.spec.template.spec.containers[0].env |= map(select(.name == "PASSWORD"
 
 echo "Configuring services..."
 yq e -i '.spec.type = "LoadBalancer"' projects/calibre/kompose/templates/calibre-service.yaml
-# yq e -i '.spec.type = "LoadBalancer"' projects/calibre/kompose/templates/calibre-web-service.yaml
 
 echo "Configuring storage..."
 for file in projects/calibre/kompose/templates/calibre-*.yaml; do
