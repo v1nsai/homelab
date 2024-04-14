@@ -1,7 +1,7 @@
 http:
   routers:
     router:
-      rule: Host(`test.techig.com`)
+      rule: Host(`test.somewhere.host`)
       service: service
       entryPoints:
         - websecure

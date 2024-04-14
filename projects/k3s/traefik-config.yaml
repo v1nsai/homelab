@@ -21,14 +21,14 @@ spec:
     certificatesResolvers:
       letsencrypt-prod:
         acme:
-          email: support@techig.com
+          email: support@madeupwebsitewhoknows.com
           storage: /acme.json
           httpChallenge:
             entryPoint: web
 
       letsencrypt-staging:
         acme:
-          email: support@techig.com
+          email: support@madeupwebsitewhoknows.com
           storage: /acme.json
           caserver: https://acme-staging-v02.api.letsencrypt.org/directory
           httpChallenge:
