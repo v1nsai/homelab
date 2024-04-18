@@ -27,11 +27,13 @@ fi
 echo "Checking if helmify is installed..."
 if ! command -v helmify &> /dev/null; then
     echo "Helmify could not be found. Installing now..."
-    URL=$(curl -s -L -I -o /dev/null -w '%{url_effective} https://github.com/arttor/helmify/releases/latest')
+    URL=$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/arttor/helmify/releases/latest)
     URL="$URL/helmify_Linux_x86_64.tar.gz"
-    curl -O $URL
-    sudo tar -xvf helmify_Linux_x86_64.tar.gz /usr/bin/helmify
+    echo "URL=$URL"
+    wget $URL
+    sudo tar -xvf helmify_Linux_x86_64.tar.gz -C /usr/bin/
     sudo chmod +x /usr/bin/helmify
+    rm helmify_Linux_x86_64.tar.gz
 fi
 
 echo "Generating kube manifests from project $PROJECT..."
@@ -41,5 +43,5 @@ kompose convert \
 
 if $CHART; then
     echo "Converting kube manifests to helm chart..."
-    cat projects/$PROJECT/kompose | helmify projects/$PROJECT/helmify -cert-manager-as-subchart
+    cat projects/$PROJECT/kompose.yaml | helmify projects/$PROJECT/helmify -cert-manager-as-subchart
 fi
