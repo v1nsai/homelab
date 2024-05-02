@@ -1,18 +1,25 @@
-import transformers
-import torch
+from torch import float16
+from json import load as json_load
+from transformers import pipeline
+from time import time as current_time
 from huggingface_hub import login
-import json
-import time
+from os import environ
 
 def main():
-    login(token=json.load(open("projects/tinyllama/token.env"))["huggingface_token"])
-    model_id = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+    login(token=json_load(open("projects/localllama/token.env"))["huggingface_token"])
+    environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
+    
+    # model_id = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+    model_id = "meta-llama/Meta-Llama-3-8B"
+    # model_id = "meta-llama/Meta-Llama-3-8B-Instruct"
+    print(f"Using model: {model_id}")
 
-    chatbot = transformers.pipeline(
+    chatbot = pipeline(
         "text-generation",
         model=model_id,
-        torch_dtype=torch.float16,
+        torch_dtype=float16,
         device_map="auto",
+        # offload_buffers=True
     )
 
     messages = [
@@ -21,7 +28,7 @@ def main():
             "content": "You are a friendly chatbot who answers questions with concise, short answers. You can also ask questions to the user."
         }
     ]
-    # Start chatting
+
     print("Hello! I am your chatbot. You can start chatting with me now. Type 'quit' to exit.")
     while True:
         user_input = input("You: ")
@@ -29,10 +36,10 @@ def main():
         if user_input.lower() == 'quit':
             exit(0)
         
-        start_time = time.time()
+        start_time = current_time()
         prompt = chatbot.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
         outputs = chatbot(prompt, max_new_tokens=256, do_sample=True, temperature=0.7, top_k=50, top_p=0.95)
-        stop_time = time.time()
+        stop_time = current_time()
 
         print(outputs[0]["generated_text"])
         print(f"Response time: {stop_time - start_time:.2f}s")
