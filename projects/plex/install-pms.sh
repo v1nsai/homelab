@@ -3,6 +3,10 @@
 set -e
 source projects/plex/.env
 
+# if [ $(kubectl get pvc -n plex plex-media | wc -l) -lt 2 ]; then
+#     kubectl apply -f projects/plex/plex-media-pvc.yaml
+# fi
+
 helm repo add plex https://raw.githubusercontent.com/plexinc/pms-docker/gh-pages
 helm upgrade --install plex plex/plex-media-server \
     --create-namespace \
@@ -14,3 +18,5 @@ helm upgrade --install plex plex/plex-media-server \
     --set extraVolumes[0].persistentVolumeClaim.claimName=plex-media \
     --set extraEnv.PLEX_CLAIM="$PLEX_CLAIM"
 
+# PLEX_MEDIA_PATH=$(ls -d /mnt/silverstick/kubernetes/*plex-plex-media-pvc*)
+# ln -s /mnt/silverstick/torrents/ $PLEX_MEDIA_PATH/torrents

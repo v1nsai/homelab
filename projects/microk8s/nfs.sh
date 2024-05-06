@@ -13,7 +13,7 @@ helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/
 helm upgrade --install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner \
     --namespace kube-system \
     --set nfs.server="192.168.1.152" \
-    --set nfs.path="/mnt/blackbox/kubernetes"
+    --set nfs.path="/mnt/silverstick/kubernetes"
     # --kubeconfig /etc/rancher/k3s/k3s.yaml
 
 kubectl apply -f - <<EOF
@@ -29,3 +29,6 @@ spec:
     requests:
       storage: 1Gi
 EOF
+
+echo "/mnt/silverstick *(rw,sync,no_root_squash,no_subtree_check)" | sudo tee -a /etc/exports
+sudo exportfs -a
