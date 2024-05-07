@@ -20,3 +20,6 @@ helm upgrade --install plex plex/plex-media-server \
 
 # PLEX_MEDIA_PATH=$(ls -d /mnt/silverstick/kubernetes/*plex-plex-media-pvc*)
 # ln -s /mnt/silverstick/torrents/ $PLEX_MEDIA_PATH/torrents
+
+# get a shell inside the plex container
+kubectl exec -it -n plex plex-plex-media-server-0 -- /bin/bash

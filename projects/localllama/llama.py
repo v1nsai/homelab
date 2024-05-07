@@ -5,12 +5,17 @@ from time import time as current_time
 from huggingface_hub import login
 from os import environ
 
+# To run this script, you need to install the following packages:
+# python -m virtualenv projects/localllama/.env
+# source projects/localllama/.env/bin/activate
+# pip install -r projects/localllama/requirements.txt
+
 def main():
     login(token=json_load(open("projects/localllama/token.env"))["huggingface_token"])
     environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
     
-    # model_id = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
-    model_id = "meta-llama/Meta-Llama-3-8B"
+    model_id = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+    # model_id = "meta-llama/Meta-Llama-3-8B"
     # model_id = "meta-llama/Meta-Llama-3-8B-Instruct"
     print(f"Using model: {model_id}")
 

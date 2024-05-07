@@ -1,0 +1,52 @@
+name: "tinyllama-1.1b-chat-v1.0.Q8_0"
+
+description: |
+  TinyLLaMa 
+
+license: "https://ai.meta.com/llama/license/"
+urls:
+- https://ai.meta.com/llama/
+- https://huggingface.co/TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF
+
+config_file: |
+  #   name: tinyllama-1.1b-chat-v1.0.Q8_0
+  #   backend: "llama"
+  #   parameters:
+  #     top_k: 80
+  #     temperature: 0.2
+  #     top_p: 0.7
+  #   context_size: 4096
+  #   roles:
+  #     function: 'Function Result:'
+  #     assistant_function_call: 'Function Call:'
+  #     assistant: 'Assitant:'
+  #     user: 'User:'
+  #     system: 'System:'
+  #   template:
+  #     chat_message: chat_message
+  #   system_prompt: "You are a helpful assistant, below is a conversation, please respond with the next message and do not ask follow-up questions"
+  context_size: 1024
+  name: se-chat
+  parameters:
+    model: tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf
+    temperature: 0.2
+    top_k: 80
+    top_p: 0.7
+  template:
+    chat: chat
+    chat_message: chatml
+    completion: completion
+  threads: 1
+  gpu_layers: 100
+
+# prompt_templates:
+# - name: chat
+#   content: |
+#     <|system|>
+#     {system_message}</s>
+#     <|user|>
+#     {prompt}</s>
+#     <|assistant|>
+files:
+- filename: "tinyllama-1.1b-chat-v1.0.Q8_0.gguf"
+  uri: "https://huggingface.co/TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF/resolve/main/tinyllama-1.1b-chat-v1.0.Q8_0.gguf"
