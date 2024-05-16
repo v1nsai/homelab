@@ -13,4 +13,4 @@ sudo snap install microceph
 ## Network Diagram
 This diagram was generated using the `mingrammer diagrams` lib for Python. Major work in progress, I'm still learning how the placement algorithm works so I don't end up having to hardcode all the positions and other hacky nonsense.
 
-![homelab](https://github.com/v1nsai/homelab/assets/410443/79db0390-ed47-4cb6-ba57-100bc627e2d2)
+![homelab](https://github.com/v1nsai/homelab/projects/diagrams/homelab.png)
