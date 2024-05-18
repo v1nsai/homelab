@@ -1,43 +1,5 @@
 version: "3.9"
 services:
-  # api:
-  #   # AIO
-  #   # image: localai/localai:latest-aio-cpu
-  #   # image: localai/localai:v2.14.0-aio-gpu-nvidia-cuda-11
-  #   # image: localai/localai:v2.14.0-aio-gpu-nvidia-cuda-12
-  #   # image: localai/localai:latest-aio-gpu-nvidia-cuda-11
-  #   # image: localai/localai:latest-aio-gpu-nvidia-cuda-12
-  #   # CPU
-  #   # image: localai/localai:latest
-  #   # GPU
-  #   image: localai/localai:latest-gpu-nvidia-cuda-12
-  #   container_name: localai
-
-  #   healthcheck:
-  #     test: ["CMD", "curl", "-f", "http://localhost:8080/readyz"]
-  #     interval: 1m
-  #     timeout: 20m
-  #     retries: 5
-  #   ports:
-  #     - 44344:8080
-  #   environment:
-  #     - DEBUG=true
-  #     - MODELS_PATH=/models
-  #     - 'PRELOAD_MODELS=[{"url": "file:///tinyllama.yaml", "name": "tinyllama"}]'
-  #     - HUGGINGFACEHUB_API_TOKEN=${HUGGINGFACEHUB_API_TOKEN}
-  #   volumes:
-  #     - ./localai.env/models:/models:cached
-  #     # - ./llama3-8b-instruct.yaml:/models/llama3-8b-instruct.yaml # {"url": "file:///models/llama3-8b-instruct.yaml"},
-  #     - ./tinyllama.yaml:/tinyllama.yaml
-  #   # command: ["/usr/bin/local-ai"]
-  #   # decomment the following piece if running with Nvidia GPUs
-  #   deploy:
-  #     resources:
-  #       reservations:
-  #         devices:
-  #           - driver: nvidia
-  #             count: 1
-  #             capabilities: [gpu]
   localai:
     container_name: localai
     tty: true
