@@ -31,8 +31,8 @@ services:
       - WEBUI_PORT=9091
     volumes:
       - ./config/qbittorrent:/config
-      - /mnt/silverstick/torrents:/downloads
-      - /mnt/silverstick/torrents/calibre-media:/books
+      - /mnt/silverstick/kubernetes/plex-media:/downloads
+      - /mnt/silverstick/kubernetes/calibre-media:/books
     restart: unless-stopped
     network_mode: service:gluetun
 
