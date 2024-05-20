@@ -43,5 +43,5 @@ kompose convert \
 
 if $CHART; then
     echo "Converting kube manifests to helm chart..."
-    cat projects/$PROJECT/kompose.yaml | helmify projects/$PROJECT/helmify -cert-manager-as-subchart
+    cat projects/$PROJECT/kompose.yaml | helmify projects/$PROJECT/helmify
 fi

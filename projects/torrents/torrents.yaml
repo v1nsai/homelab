@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qbittorrent-gluetun
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qbittorrent-gluetun
+  template:
+    metadata:
+      labels:
+        app: qbittorrent-gluetun
+    spec:
+      initContainers:
+      containers:
+        - name: gluetun
+          image: qmcgaw/gluetun
+          env:
+            - name: FIREWALL_OUTBOUND_SUBNETS
+              value: "192.168.1.0/24,10.0.0.0/8"
+            - name: VPN_PORT_FORWARDING
+              value: "on"
+            - name: VPN_PORT_FORWARDING_PROVIDER
+              value: "protonvpn"
+            - name: VPN_SERVICE_PROVIDER
+              value: "custom"
+            - name: VPN_TYPE
+              value: "wireguard"
+            - name: DNS_KEEP_NAMESERVER
+              value: "on"
+            - name: TZ
+              value: "America/New_York"
+          securityContext:
+            capabilities:
+              add: ["NET_ADMIN"]
+          volumeMounts:
+            - name: wg-config
+              mountPath: /gluetun/wireguard/
+
+        - name: qbittorrent
+          image: linuxserver/qbittorrent
+          env:
+            - name: WEBUI_PORT
+              value: "9091"
+          ports:
+            - containerPort: 9091
+          volumeMounts:
+            - name: downloads
+              mountPath: /downloads
+
+      volumes:
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: plex-media
+        - name: wg-config
+          secret:
+            secretName: wireguard-config
+            items:
+              - key: wg0.conf
+                path: wg0.conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    metallb.universe.tf/allow-shared-ip: gluetun
+  name: gluetun
+spec:
+  type: LoadBalancer
+  ports:
+    - name: "9091"
+      port: 9091
+      targetPort: 9091
+  selector:
+    app: qbittorrent-gluetun
+
