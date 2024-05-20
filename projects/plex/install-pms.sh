@@ -12,6 +12,7 @@ helm repo add plex https://raw.githubusercontent.com/plexinc/pms-docker/gh-pages
 helm upgrade --install plex plex/plex-media-server \
     --create-namespace \
     --namespace plex \
+    --set image.pullPolicy=Always \
     --set service.type=LoadBalancer \
     --set extraVolumeMounts[0].name=plex-media \
     --set extraVolumeMounts[0].mountPath=/plex-media \

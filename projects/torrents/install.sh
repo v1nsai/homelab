@@ -8,8 +8,12 @@ kubectl create secret generic wireguard-config \
 kubectl apply \
     --namespace plex \
     --filename projects/torrents/torrents.yaml
-
-# forward port 9091
-kubectl port-forward \
+# Reboot qbittorrent container since it can't connect to network if both are started at the same time
+kubectl exec -it \
     --namespace plex \
-    container 9091:9091
+    $(kubectl get pods \
+        --namespace plex \
+        --selector=app=qbittorrent-gluetun \
+        --output=jsonpath='{.items[0].metadata.name}') \
+    --container qbittorrent \
+    -- reboot

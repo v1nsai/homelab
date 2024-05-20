@@ -18,7 +18,7 @@ spec:
           image: qmcgaw/gluetun
           env:
             - name: FIREWALL_OUTBOUND_SUBNETS
-              value: "192.168.1.0/24,10.0.0.0/8"
+              value: "192.168.1.0/24,10.0.0.0/8,172.16.0.0/12"
             - name: VPN_PORT_FORWARDING
               value: "on"
             - name: VPN_PORT_FORWARDING_PROVIDER
@@ -27,10 +27,10 @@ spec:
               value: "custom"
             - name: VPN_TYPE
               value: "wireguard"
-            - name: DNS_KEEP_NAMESERVER
-              value: "on"
             - name: TZ
               value: "America/New_York"
+          # ports:
+          #   - containerPort: 9091
           securityContext:
             capabilities:
               add: ["NET_ADMIN"]
@@ -48,6 +48,8 @@ spec:
           volumeMounts:
             - name: downloads
               mountPath: /downloads
+            - name: qbittorrent-config
+              mountPath: /config
 
       volumes:
         - name: downloads
@@ -59,12 +61,13 @@ spec:
             items:
               - key: wg0.conf
                 path: wg0.conf
+        - name: qbittorrent-config
+          persistentVolumeClaim:
+            claimName: qbittorrent-config
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    metallb.universe.tf/allow-shared-ip: gluetun
   name: gluetun
 spec:
   type: LoadBalancer
@@ -74,4 +77,16 @@ spec:
       targetPort: 9091
   selector:
     app: qbittorrent-gluetun
-
+---
+# Comment out to avoid destroying/recreating
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: qbittorrent-config
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 5Gi
+#   storageClassName: nfs-client
