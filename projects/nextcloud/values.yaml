@@ -1,24 +1,9 @@
-ingress:
-  enabled: true
-  className: traefik
-  annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    traefik.ingress.kubernetes.io/router.tls: "true"
-  tls:
-    - hosts:
-      - nextcloud.internal
-      secretName: nextcloud-tls
 nextcloud:
-  username: admin
-  existingSecret:
-    enabled: true
-externalDatabase:
-  enabled: true
-  existingSecret:
-    enabled: true
-    usernameKey: mariadb-username
-    passwordKey: mariadb-password
-mariadb:
-  enabled: true
-service:
-  type: LoadBalancer
+  configs:
+    mycustom.config.php: |
+      <?php
+      $CONFIG = array(
+        'trusted_proxies' => array('10.0.0.0/8'),
+        'default_phone_region' => 'US',
+        'maintenance_window_start' => 1,
+        );
