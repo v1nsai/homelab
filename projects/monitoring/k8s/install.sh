@@ -12,4 +12,6 @@ kubectl wait \
 	--namespace=monitoring
 kubectl apply -f projects/monitoring/k8s/kube-prometheus/manifests/
 kubectl patch svc grafana -n monitoring --type='json' -p '[{"op":"replace","path":"/spec/type","value":"LoadBalancer"}]'
+
+# teardown
 # kubectl delete --ignore-not-found=true -f projects/monitoring/k8s/kube-prometheus/manifests/ -f projects/monitoring/k8s/kube-prometheus/manifests/setup

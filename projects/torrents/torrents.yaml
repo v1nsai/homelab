@@ -12,7 +12,6 @@ spec:
       labels:
         app: qbittorrent-gluetun
     spec:
-      initContainers:
       containers:
         - name: gluetun
           image: qmcgaw/gluetun
