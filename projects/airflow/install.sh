@@ -27,30 +27,21 @@ else
     USER_PASSWORD="$(kubectl get secret airflow-auth -n airflow -o jsonpath='{.data.auth-password}' | base64 -d)"
 fi
 
-echo "Building airflow image..."
-echo "Rebasing airflow image on python:3.8-slim-bullseye..."
-git clone git@github.com:apache/airflow.git projects/airflow/airflow || true
-docker build -t apache/airflow:custom-bullseye projects/airflow/airflow --build-arg PYTHON_BASE_IMAGE=python:3.8-slim-bullseye
-echo "Building airflow image with nvidia support..."
-docker build -t apache/airflow:custom-nvidia projects/airflow
+echo "Rebasing airflow image on nvidia/cuda..."
+docker build -t doctor-ew/cuda-airflow:12.4.1-cudnn-runtime-ubuntu22.04 -f projects/airflow/Dockerfile.cuda-airflow projects/airflow
 
 echo "Installing Airflow..."
-# helm upgrade --install airflow airflow-stable/airflow \
-#     --namespace airflow \
-#     --create-namespace 
-#     # --values projects/airflow/values.yaml
-
-#     # --set airflow.config.AIRFLOW__CORE__FERNET_KEY="${AIRFLOW__CORE__FERNET_KEY}" \
-
 helm delete -n airflow airflow || true
 kubectl delete all --all -n airflow || true
 kubectl delete pvc --all -n airflow || true
 sleep 30
+# helm repo add apache-airflow https://airflow.apache.org
+# helm repo update
 helm upgrade --install airflow apache-airflow/airflow \
     --namespace airflow \
     --create-namespace \
     --set images.airflow.repository="apache/airflow" \
-    --set images.airflow.tag="custom-nvidia" \
+    --set images.airflow.tag="custom-cuda" \
     --set webserver.defaultUser.username="${USER_NAME}" \
     --set webserver.defaultUser.password="${USER_PASSWORD}" \
     --set webserver.defaultUser.email="${USER_EMAIL}" \
@@ -61,3 +52,16 @@ helm upgrade --install airflow apache-airflow/airflow \
     --set workers.waitForMigrations.enabled=true \
     --set config.core.load_examples="True" \
     --values projects/airflow/apache-airflow-values.yaml
+
+
+# # git clone git@github.com:apache/airflow.git projects/airflow/airflow || true
+# sed -i 's/debian/ubuntu/g' projects/airflow/airflow/Dockerfile
+# sed -i 's/DEBIAN/UBUNTU/g' projects/airflow/airflow/Dockerfile
+# sed -i 's/apt-get install -y --no-install-recommends/DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends/g' projects/airflow/airflow/Dockerfile
+# sed -i 's/COPY <<\"EOF\"/COPY --chmod=777 <<\"EOF\"/g' projects/airflow/airflow/Dockerfile
+# sed -i 's/USER .*/USER root\n/g' projects/airflow/airflow/Dockerfile
+# sed -i 's/SHELL .*$/SHELL \[ \"\/bin\/bash\", \"-c\" \]/g' projects/airflow/airflow/Dockerfile
+# sed -i '/^RUN --mount=type=cache.*\\$/ s/\\$/; \\/g' projects/airflow/airflow/Dockerfile
+# sed -i 's/ ;/;/g' projects/airflow/airflow/Dockerfile
+# sed -i 's/,uid=\$\{AIRFLOW_UID\};/;/g' projects/airflow/airflow/Dockerfile
+# BUILDX_EXPERIMENTAL=1 DOCKER_BUILDKIT=1 docker build -t apache/airflow:custom-cuda -f projects/airflow/airflow/Dockerfile projects/airflow/airflow --build-arg PYTHON_BASE_IMAGE=nvidia/cuda:custom-python --invoke /bin/bash

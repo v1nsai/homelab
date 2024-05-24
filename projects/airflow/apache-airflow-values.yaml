@@ -1,59 +1,9 @@
 workers:
-  resources:
-    limits:
-      nvidia.com/gpu: 1
-    requests:
-      nvidia.com/gpu: 1
-  tolerations:
-  - key: "nvidia.com/gpu"
-    operator: "Exists"
-    effect: "NoSchedule"
-  nodeSelector:
-    nvidia.com/gpu.present: "true"
-  extraInitContainers:
-  - name: install-packages
-    image: ubuntu:22.04
-    securityContext:
-      runAsUser: 0
-      runAsGroup: 0
-    command:
-      - /bin/bash
-      - -c
-      - |
-        apt update &&
-        apt install -y build-essential linux-headers-$(uname -r) wget &&
-        apt-key del 7fa2af80 &&
-        wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb &&
-        dpkg -i cuda-keyring_1.1-1_all.deb &&
-        apt update &&
-        apt install -y cuda-toolkit-12-5 cuda-drivers-555 nvidia-driver-555-open &&
-        echo "Nvidia driver installed" &&
-        exit 0
-# if [ command -v nvidia-smi ]; then
-#   echo "Nvidia driver found"
-#   nvidia-smi
-#   exit 0
-# else
-#   echo "Nvidia driver not installed"
-#   exit 1
-# fi
-  #   volumeMounts:
-  #   - name: worker-storage
-  #     mountPath: /
-  # extraVolumeMounts:
-  # - name: worker-storage
-  #   mountPath: /
-  # extraVolumes:
-  # - name: worker-storage
-  #   persistentVolumeClaim:
-  #     claimName: worker-storage
-  # volumeClaimTemplates:
-  #   - metadata:
-  #       name: worker-storage
-  #     spec:
-  #       # storageClassName: "storage-class-1"
-  #       accessModes:
-  #         - "ReadWriteMany"
-  #       resources:
-  #         requests:
-  #           storage: "10Gi"
+  extraContainers:
+  - name: cuda-sidecar
+    image: nvidia/cuda:11.2.2-base
+    command: ["sleep"]
+    args: ["infinity"]
+    resources:
+      limits:
+        nvidia.com/gpu: 1
