@@ -1,0 +1,18 @@
+driver:
+  enabled: "false"
+operator:
+  defaultRuntime: containerd
+toolkit:
+  enabled: "true"
+  env:
+  - name: CONTAINERD_CONFIG
+    value: /var/snap/microk8s/current/args/containerd-template.toml
+  - name: CONTAINERD_SOCKET
+    value: /var/snap/microk8s/common/run/containerd.sock
+  - name: CONTAINERD_SET_AS_DEFAULT
+    value: "0"
+# validator:
+#   plugin:
+#     env:
+#       - name: WITH_WORKLOAD
+#         value: "false"

@@ -1,0 +1,36 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: gpu-cuda-deployment
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: gpu-cuda
+#   template:
+#     metadata:
+#       labels:
+#         app: gpu-cuda
+#     spec:
+#       containers:
+#       - name: cuda-container
+#         image: nvidia/cuda:12.4.1-cudnn-runtime-ubuntu22.04
+#         command: ["sleep"]
+#         args: ["infinity"]
+#         resources:
+#           limits:
+#             nvidia.com/gpu: 1
+#       nodeSelector:
+#         nvidia.com/gpu.present: "true"
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vectoradd
+spec:
+  restartPolicy: OnFailure
+  containers:
+  - name: vectoradd
+    image: nvcr.io/nvidia/k8s/cuda-sample:vectoradd-cuda10.2
+    resources:
+      limits:
+        nvidia.com/gpu: 1

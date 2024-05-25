@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -e
+
+helm repo add nvidia https://helm.ngc.nvidia.com/nvidia
+helm repo update
+helm upgrade --install gpu-operator nvidia/gpu-operator \
+    --create-namespace \
+    --namespace gpu-operator-resources \
+    --values projects/nvidia-gpu-operator/values.yaml
+
+# sudo vim /var/snap/microk8s/current/args/containerd.toml
+# sudo systemctl restart snap.microk8s.daemon-containerd.service
