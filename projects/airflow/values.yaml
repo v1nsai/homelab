@@ -1,9 +1,7 @@
 workers:
   extraContainers:
   - name: cuda-sidecar
-    image: nvidia/cuda:11.2.2-base
-    command: ["sleep"]
-    args: ["infinity"]
+    image: nvidia/cuda:12.4.1-cudnn-runtime-ubuntu22.04
     resources:
       limits:
         nvidia.com/gpu: 1

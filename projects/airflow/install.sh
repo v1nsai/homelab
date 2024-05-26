@@ -3,6 +3,11 @@
 set -e
 source projects/airflow/secrets.env
 
+if [ -z "$USER_EMAIL" ] || [ -z "$USER_NAME" ] || [ -z "$USER_FIRSTNAME" ] || [ -z "$USER_LASTNAME" ]; then
+    echo "Please set USER_EMAIL, USER_NAME, USER_FIRSTNAME and USER_LASTNAME in projects/airflow/secrets.env"
+    exit 1
+fi
+
 # helm repo add airflow-stable https://airflow-helm.github.io/charts
 # helm repo add apache-airflow https://airflow.apache.org
 # helm repo update
@@ -27,21 +32,34 @@ else
     USER_PASSWORD="$(kubectl get secret airflow-auth -n airflow -o jsonpath='{.data.auth-password}' | base64 -d)"
 fi
 
-echo "Rebasing airflow image on nvidia/cuda..."
-docker build -t doctor-ew/cuda-airflow:12.4.1-cudnn-runtime-ubuntu22.04 -f projects/airflow/Dockerfile.cuda-airflow projects/airflow
+# echo "Building custom airflow image with nvidia support..."
+AIRFLOW_VERSION=2.8.3
+AIRFLOW_REPO='apache/airflow'
+AIRFLOW_TAG="$AIRFLOW_VERSION"
+# BUILDX_EXPERIMENTAL=1 DOCKER_BUILDKIT=1 docker build -t $AIRFLOW_REPO:$AIRFLOW_TAG -f projects/airflow/Dockerfile projects/airflow
+# K8S_CLUSTER_SSH_NAMES=( "bigrig" "ASUSan" "oppenheimer" )
+# for i in "${K8S_CLUSTER_SSH_NAMES[@]}"
+# do
+#     echo "Copying airflow image to $i..."
+#     docker save $AIRFLOW_REPO:$AIRFLOW_TAG | bzip2 | pv | ssh $i docker load
+# done
+
+# echo "Removing airflow before installing..."
+# helm delete -n airflow airflow || true
+# kubectl delete all --all -n airflow || true
+# kubectl delete pvc --all -n airflow || true
+# sleep 10
 
 echo "Installing Airflow..."
-helm delete -n airflow airflow || true
-kubectl delete all --all -n airflow || true
-kubectl delete pvc --all -n airflow || true
-sleep 30
 # helm repo add apache-airflow https://airflow.apache.org
 # helm repo update
 helm upgrade --install airflow apache-airflow/airflow \
     --namespace airflow \
     --create-namespace \
-    --set images.airflow.repository="apache/airflow" \
-    --set images.airflow.tag="custom-cuda" \
+    --set images.airflow.repository="$AIRFLOW_REPO" \
+    --set images.airflow.tag="$AIRFLOW_TAG" \
+    --set airflowVersion="${AIRFLOW_VERSION}" \
+    --set workers.resources.limits."nvidia\.com/gpu"=1 \
     --set webserver.defaultUser.username="${USER_NAME}" \
     --set webserver.defaultUser.password="${USER_PASSWORD}" \
     --set webserver.defaultUser.email="${USER_EMAIL}" \
@@ -50,10 +68,9 @@ helm upgrade --install airflow apache-airflow/airflow \
     --set webserver.service.type=LoadBalancer \
     --set webserverSecretKeyName=airflow-auth \
     --set workers.waitForMigrations.enabled=true \
-    --set config.core.load_examples="True" \
-    --values projects/airflow/apache-airflow-values.yaml
-
-
+    --set config.core.load_examples="True" #\
+    # --values projects/airflow/apache-airflow-values.yaml
+    
 # # git clone git@github.com:apache/airflow.git projects/airflow/airflow || true
 # sed -i 's/debian/ubuntu/g' projects/airflow/airflow/Dockerfile
 # sed -i 's/DEBIAN/UBUNTU/g' projects/airflow/airflow/Dockerfile
@@ -64,4 +81,7 @@ helm upgrade --install airflow apache-airflow/airflow \
 # sed -i '/^RUN --mount=type=cache.*\\$/ s/\\$/; \\/g' projects/airflow/airflow/Dockerfile
 # sed -i 's/ ;/;/g' projects/airflow/airflow/Dockerfile
 # sed -i 's/,uid=\$\{AIRFLOW_UID\};/;/g' projects/airflow/airflow/Dockerfile
-# BUILDX_EXPERIMENTAL=1 DOCKER_BUILDKIT=1 docker build -t apache/airflow:custom-cuda -f projects/airflow/airflow/Dockerfile projects/airflow/airflow --build-arg PYTHON_BASE_IMAGE=nvidia/cuda:custom-python --invoke /bin/bash
+# BUILDX_EXPERIMENTAL=1 DOCKER_BUILDKIT=1 docker build -t doctor-ew/airflow:custom-cuda -f projects/airflow/airflow/Dockerfile projects/airflow/airflow --build-arg PYTHON_BASE_IMAGE=nvidia/cuda:custom-python --invoke /bin/bash
+
+# BUILDX_EXPERIMENTAL=1 DOCKER_BUILDKIT=1 docker build -t doctor-ew/airflow:custom-cuda -f projects/airflow/Dockerfile.airflow-cuda projects/airflow --invoke /bin/bash
+
