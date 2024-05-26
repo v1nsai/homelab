@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: gluetun
-          image: qmcgaw/gluetun
+          image: qmcgaw/gluetun:latest
+          imagePullPolicy: Always
           env:
             - name: FIREWALL_OUTBOUND_SUBNETS
               value: "192.168.1.0/24,10.0.0.0/8,172.16.0.0/12"
@@ -28,8 +29,10 @@ spec:
               value: "wireguard"
             - name: TZ
               value: "America/New_York"
-          # ports:
-          #   - containerPort: 9091
+            - name: FIREWALL_INPUT_PORTS
+              value: "9091,9696"
+          ports:
+            - containerPort: 51820
           securityContext:
             capabilities:
               add: ["NET_ADMIN"]
@@ -50,6 +53,21 @@ spec:
             - name: qbittorrent-config
               mountPath: /config
 
+        - name: prowlarr
+          image: lscr.io/linuxserver/prowlarr
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "America/New_York"
+          ports:
+            - containerPort: 9696
+          volumeMounts:
+            - name: prowlarr-config
+              mountPath: /config
+
       volumes:
         - name: downloads
           persistentVolumeClaim:
@@ -63,11 +81,14 @@ spec:
         - name: qbittorrent-config
           persistentVolumeClaim:
             claimName: qbittorrent-config
+        - name: prowlarr-config
+          persistentVolumeClaim:
+            claimName: prowlarr-config
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: gluetun
+  name: qbittorrent
 spec:
   type: LoadBalancer
   ports:
@@ -76,12 +97,38 @@ spec:
       targetPort: 9091
   selector:
     app: qbittorrent-gluetun
+# service for prowlarr
 ---
-# Comment out to avoid destroying/recreating
+apiVersion: v1
+kind: Service
+metadata:
+  name: prowlarr
+spec:
+  type: LoadBalancer
+  ports:
+    - name: "9696"
+      port: 9696
+      targetPort: 9696
+  selector:
+    app: qbittorrent-gluetun
+# # pvcs commented out to persist between installations
+# ---
 # apiVersion: v1
 # kind: PersistentVolumeClaim
 # metadata:
 #   name: qbittorrent-config
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 5Gi
+#   storageClassName: nfs-client
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: prowlarr-config
 # spec:
 #   accessModes:
 #     - ReadWriteOnce
