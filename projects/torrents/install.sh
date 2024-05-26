@@ -17,9 +17,20 @@ kubectl apply \
     --namespace plex \
     --filename projects/torrents/torrents.yaml
 
-# Reboot qbittorrent container since it can't connect to network if both are started at the same time
+echo "Setting up qbittorrent custom UI..."
+# latest_release=$(curl -s -L -o /dev/null -w "%{url_effective}" https://github.com/VueTorrent/VueTorrent/releases/latest | sed 's/releases\/tag/releases\/download/g')
+# wget "$latest_release/vuetorrent.zip" -O projects/torrents/config/vuetorrent.zip
+# unzip projects/torrents/config/vuetorrent.zip -d projects/torrents/config/vuetorrent
+kubectl cp projects/torrents/config/vuetorrent/vuetorrent \
+    --namespace plex \
+    $(kubectl get pods \
+        --namespace plex \
+        --selector=app=qbittorrent-gluetun \
+        --output=jsonpath='{.items[0].metadata.name}'):/downloads \
+    --container qbittorrent
+
 echo "Sleeping and then restarting qbittorrent container..."
-sleep 10
+sleep 5
 kubectl exec -it \
     --namespace plex \
     $(kubectl get pods \
@@ -28,3 +39,4 @@ kubectl exec -it \
         --output=jsonpath='{.items[0].metadata.name}') \
     --container qbittorrent \
     -- reboot
+
