@@ -21,7 +21,7 @@ echo "Setting up qbittorrent custom UI..."
 # latest_release=$(curl -s -L -o /dev/null -w "%{url_effective}" https://github.com/VueTorrent/VueTorrent/releases/latest | sed 's/releases\/tag/releases\/download/g')
 # wget "$latest_release/vuetorrent.zip" -O projects/torrents/config/vuetorrent.zip
 # unzip projects/torrents/config/vuetorrent.zip -d projects/torrents/config/vuetorrent
-kubectl cp projects/torrents/config/vuetorrent/vuetorrent \
+kubectl cp projects/torrents/config/vuetorrent/ \
     --namespace plex \
     $(kubectl get pods \
         --namespace plex \
