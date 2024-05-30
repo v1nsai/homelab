@@ -2,9 +2,6 @@
 
 set -e
 
-# REMOVE FOR TESTING ONLY
-helm -n nextcloud uninstall nextcloud || true
-
 echo "Generating or retrieving credentials..."
 source projects/nextcloud/secrets.env
 NC_ADMIN_SECRET_NAME=nextcloud-admin
@@ -81,6 +78,11 @@ else
 fi
 
 echo "Installing Nextcloud..."
+read -p "Delete first? (y/N)" DELETE
+if [ "$DELETE" == "y" ]; then
+    helm -n nextcloud uninstall nextcloud
+    sleep 5
+fi
 helm repo add nextcloud https://nextcloud.github.io/helm/
 helm repo update
 helm upgrade --install nextcloud nextcloud/nextcloud \
@@ -88,14 +90,6 @@ helm upgrade --install nextcloud nextcloud/nextcloud \
     --create-namespace \
     --set nextcloud.host=$NC_HOST \
     --set nextcloud.existingSecret.secretName=$NC_ADMIN_SECRET_NAME \
-    --set nextcloud.mail.enabled=true \
-    --set nextcloud.mail.fromAddress=$SMTP_FROM \
-    --set nextcloud.mail.domain=$SMTP_DOMAIN \
-    --set nextcloud.mail.smtp.host=$SMTP_HOST \
-    --set nextcloud.mail.smtp.port=$SMTP_PORT \
-    --set nextcloud.mail.smtp.authtype=LOGIN \
-    --set nextcloud.mail.smtp.name=$SMTP_USER \
-    --set nextcloud.mail.smtp.password=$SMTP_PASS \
     --set persistence.enabled=false \
     --set persistence.existingClaim=nextcloud-pvc \
     --set internalDatabase.enabled=false \
@@ -116,3 +110,11 @@ helm upgrade --install nextcloud nextcloud/nextcloud \
     --values projects/nextcloud/values.yaml
 
     # --set image.pullPolicy=Always \
+    # --set nextcloud.mail.enabled=true \
+    # --set nextcloud.mail.fromAddress=$SMTP_FROM \
+    # --set nextcloud.mail.domain=$SMTP_DOMAIN \
+    # --set nextcloud.mail.smtp.host=$SMTP_HOST \
+    # --set nextcloud.mail.smtp.port=$SMTP_PORT \
+    # --set nextcloud.mail.smtp.authtype=LOGIN \
+    # --set nextcloud.mail.smtp.name=$SMTP_USER \
+    # --set nextcloud.mail.smtp.password=$SMTP_PASS \
