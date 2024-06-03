@@ -1,19 +1,18 @@
-# Configuration for the CSI to connect to the cluster
-# Ref: https://github.com/ceph/ceph-csi/blob/devel/examples/README.md
-# Example:
-# csiConfig:
-#   - clusterID: "<cluster-id>"
-#     monitors:
-#       - "<MONValue1>"
-#       - "<MONValue2>"
-#     cephFS:
-#       subvolumeGroup: "csi"
-#       netNamespaceFilePath: "{{ .kubeletDir }}/plugins/{{ .driverName }}/net"
 csiConfig:
-  - clusterID: "00e83638-b0ee-4789-aaf4-8ee60285dac3"
-    monitors:
-      - "v2:192.168.1.169:3300/0,v1:192.168.1.169:6789/0"
-      - "v2:192.168.1.152:3300/0,v1:192.168.1.152:6789/0"
-    cephFS:
-      subvolumeGroup: "csi"
-      netNamespaceFilePath: "{{ .kubeletDir }}/plugins/{{ .driverName }}/net"
+- cephFS:
+    subvolumeGroup: homelab-group
+  clusterID: 00e83638-b0ee-4789-aaf4-8ee60285dac3
+  monitors:
+  - 192.168.1.169:3300
+  - 192.168.1.169:6789
+  - 192.168.1.152:3300
+  - 192.168.1.152:6789
+secret:
+  adminID: client.admin
+  adminKey: <my admin key>
+  create: true
+storageClass:
+  clusterID: 00e83638-b0ee-4789-aaf4-8ee60285dac3
+  create: true
+  fsName: homelab
+  mounter: kernel

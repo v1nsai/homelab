@@ -10,4 +10,4 @@ spec:
   resources:
     requests:
       storage: 500Gi
-  storageClassName: nfs-client
+  storageClassName: csi-cephfs-sc
