@@ -18,10 +18,8 @@ helm upgrade --install plex plex/plex-media-server \
     --set extraVolumeMounts[0].mountPath=/plex-media \
     --set extraVolumes[0].name=plex-media \
     --set extraVolumes[0].persistentVolumeClaim.claimName=plex-media \
+    --set extraVolumeMounts[1].name=the-goods \
+    --set extraVolumeMounts[1].mountPath=/the-goods \
+    --set extraVolumes[1].name=the-goods \
+    --set extraVolumes[1].persistentVolumeClaim.claimName=the-goods \
     --set extraEnv.PLEX_CLAIM="$PLEX_CLAIM"
-
-
-    # --set extraVolumeMounts[1].name=media-pvc \
-    # --set extraVolumeMounts[1].mountPath=/media-pvc \
-    # --set extraVolumes[1].name=media-pvc \
-    # --set extraVolumes[1].persistentVolumeClaim.claimName=media-pvc \
