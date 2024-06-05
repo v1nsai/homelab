@@ -40,7 +40,7 @@ all-in-one
 # Ignore config files
 projects/*/config
 *.env
-values.default.yaml
+*.default.yaml
 
 # Ignore images
 projects/diagrams/custom_icons
