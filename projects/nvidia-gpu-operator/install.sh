@@ -4,9 +4,9 @@ set -e
 
 helm repo add nvidia https://helm.ngc.nvidia.com/nvidia
 helm repo update
-helm upgrade --install gpu-operator nvidia/gpu-operator \
+helm upgrade --install nvidia-gpu-operator nvidia/gpu-operator \
     --create-namespace \
-    --namespace gpu-operator-resources \
+    --namespace nvidia-gpu-operator \
     --values projects/nvidia-gpu-operator/values.yaml
 
 # sudo vim /var/snap/microk8s/current/args/containerd.toml
