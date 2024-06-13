@@ -86,13 +86,8 @@ kubectl -n plex annotate pod/plex-plex-media-server-0 backup.velero.io/backup-vo
 echo "Scheduling backups..."
 velero schedule create nightly --schedule="0 3 * * *" --ttl 168h0m0s
 
-# echo "Setting up kubernetes componenets..."
-# helm repo add vmware-tanzu https://vmware-tanzu.github.io/helm-charts
-# helm upgrade --install velero vmware-tanzu/velero \
-#     --namespace velero \
-#     --create-namespace \
-#     --set configuration.backupStorageLocation[0].credential.name=$S3_ACCESS_KEY \
-#     --set configuration.backupStorageLocation[0].credential.key=$S3_SECRET_KEY \
-#     --set configuration.volumeSnapshotLocation[0].credential.name=$S3_ACCESS_KEY \
-#     --set configuration.volumeSnapshotLocation[0].credential.key=$S3_SECRET_KEY \
-#     --values projects/velero/values.yaml
+# restore a namespace from backup
+NAMESPACE="nextcloud"
+RESTORE_DATE=$(date -d "2 days ago" +%Y%m%d)
+BACKUP_NAME=$(aws s3 ls s3://$BUCKET/backups/ | grep $RESTORE_DATE | awk '{print $2}' | tr -d "/")
+velero restore create --from-backup $BACKUP_NAME --include-namespaces $NAMESPACE
