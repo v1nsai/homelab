@@ -1,0 +1,22 @@
+# pms:
+#   resources:
+#     limits:
+#       nvidia.com/gpu: 1
+extraVolumeMounts:
+# - mountPath: /plex-media
+#   name: plex-media
+- mountPath: /the-goods
+  name: the-goods
+extraVolumes:
+# - name: plex-media
+#   persistentVolumeClaim:
+#     claimName: plex-media
+- name: the-goods
+  persistentVolumeClaim:
+    claimName: the-goods
+extraEnv:
+  NVIDIA_VISIBLE_DEVICES: "all"
+  NVIDIA_DRIVER_CAPABILITIES: "compute,video,utility"
+
+service:
+  type: LoadBalancer

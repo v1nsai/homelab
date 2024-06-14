@@ -10,16 +10,12 @@ if [ "$DELETE" == "y" ]; then
     read -p "Enter current plex claim token: " PLEX_CLAIM
 fi
 helm repo add plex https://raw.githubusercontent.com/plexinc/pms-docker/gh-pages
+helm repo update
 helm upgrade --install plex plex/plex-media-server \
     --create-namespace \
     --namespace plex \
-    --set service.type=LoadBalancer \
-    --set extraVolumeMounts[0].name=plex-media \
-    --set extraVolumeMounts[0].mountPath=/plex-media \
-    --set extraVolumes[0].name=plex-media \
-    --set extraVolumes[0].persistentVolumeClaim.claimName=plex-media \
-    --set extraVolumeMounts[1].name=the-goods \
-    --set extraVolumeMounts[1].mountPath=/the-goods \
-    --set extraVolumes[1].name=the-goods \
-    --set extraVolumes[1].persistentVolumeClaim.claimName=the-goods \
+    --values projects/plex/values.yaml \
     --set extraEnv.PLEX_CLAIM="$PLEX_CLAIM"
+
+# set runtimeClassName for plex pod
+# kubectl patch pod plex-plex-media-server-0 -n plex --type='json' -p='[{"op": "add", "path": "/spec/runtimeClassName", "value": "nvidia"}]'
