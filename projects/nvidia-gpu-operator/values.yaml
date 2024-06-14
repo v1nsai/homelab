@@ -1,5 +1,7 @@
 driver:
-  enabled: "false"
+  enabled: "true"
+  nvidiaDriverCRD:
+    enabled: "true"
 operator:
   defaultRuntime: containerd
 toolkit:
