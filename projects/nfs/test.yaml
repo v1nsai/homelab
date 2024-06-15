@@ -1,0 +1,13 @@
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-test
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: irma
+  resources:
+    requests:
+      storage: 1Gi
+EOF

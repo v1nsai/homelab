@@ -27,6 +27,3 @@ helm upgrade --install irma-provisioner nfs-subdir-external-provisioner/nfs-subd
 
 echo "/mnt/silverstick *(rw,sync,no_root_squash,no_subtree_check)" | sudo tee -a /etc/exports
 sudo exportfs -a
-
-# test mount nfs folder
-sudo mount
