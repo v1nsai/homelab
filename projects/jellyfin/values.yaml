@@ -1,0 +1,18 @@
+persistence:
+  # config:
+  #   enabled: true
+  media:
+    enabled: true
+    existingClaim: the-goods
+    accessMode: ReadWriteMany
+
+extraEnvVars:
+  - name: NVIDIA_VISIBLE_DEVICES
+    value: all
+  - name: NVIDIA_DRIVER_CAPABILITIES
+    value: all
+  - name: DOTNET_SYSTEM_IO_DISABLEFILELOCKING
+    value: true
+
+nodeSelector:
+  nvidia.com/gpu.present: "true"

@@ -71,7 +71,7 @@ spec:
       volumes:
         - name: downloads
           persistentVolumeClaim:
-            claimName: plex-media
+            claimName: the-goods
         - name: wg-config
           secret:
             secretName: wireguard-config
@@ -113,6 +113,7 @@ spec:
     app: qbittorrent-gluetun
 # # pvcs commented out to persist between installations
 # ---
+# kubectl apply -n jellyfin -f - <<EOF
 # apiVersion: v1
 # kind: PersistentVolumeClaim
 # metadata:
@@ -123,7 +124,6 @@ spec:
 #   resources:
 #     requests:
 #       storage: 5Gi
-#   storageClassName: nfs-client
 # ---
 # apiVersion: v1
 # kind: PersistentVolumeClaim
@@ -135,4 +135,4 @@ spec:
 #   resources:
 #     requests:
 #       storage: 5Gi
-#   storageClassName: nfs-client
+# EOF

@@ -2,19 +2,25 @@
 
 set -e
 
-# Delete first for troubleshooting
-# kubectl delete secret wireguard-config \
-#     --namespace plex || true
-# kubectl delete \
-#     --namespace plex \
-#     --filename projects/torrents/torrents.yaml || true
+read -p "Delete deployment and non-media pvcs? [y/N]" DELETE
+if [ "$DELETE" == "y" ]; then
+    kubectl delete \
+        --namespace jellyfin \
+        --filename projects/torrents/torrents.yaml || true
+fi
+
+read -p "Recreate wireguard-config secret? [y/N]" RECREATE_SECRET
+if [ "$RECREATE_SECRET" == "y" ]; then
+    kubectl delete secret wireguard-config \
+        --namespace jellyfin || true
+fi
 
 kubectl create secret generic wireguard-config \
-    --namespace plex \
+    --namespace jellyfin \
     --from-file=projects/torrents/config/gluetun/wg0.conf || true
 
 kubectl apply \
-    --namespace plex \
+    --namespace jellyfin \
     --filename projects/torrents/torrents.yaml
 
 echo "Setting up qbittorrent custom UI..."
@@ -22,21 +28,21 @@ echo "Setting up qbittorrent custom UI..."
 # wget "$latest_release/vuetorrent.zip" -O projects/torrents/config/vuetorrent.zip
 # unzip projects/torrents/config/vuetorrent.zip -d projects/torrents/config/vuetorrent
 kubectl cp projects/torrents/config/vuetorrent/ \
-    --namespace plex \
+    --namespace jellyfin \
     $(kubectl get pods \
-        --namespace plex \
+        --namespace jellyfin \
         --selector=app=qbittorrent-gluetun \
-        --output=jsonpath='{.items[0].metadata.name}'):/downloads \
+        --output=jsonpath='{.items[0].metadata.name}'):/config \
     --container qbittorrent
 
-echo "Sleeping and then restarting qbittorrent container..."
-sleep 5
-kubectl exec -it \
-    --namespace plex \
-    $(kubectl get pods \
-        --namespace plex \
-        --selector=app=qbittorrent-gluetun \
-        --output=jsonpath='{.items[0].metadata.name}') \
-    --container qbittorrent \
-    -- reboot
+# echo "Sleeping and then restarting qbittorrent container..."
+# sleep 5
+# kubectl exec -it \
+#     --namespace jellyfin \
+#     $(kubectl get pods \
+#         --namespace jellyfin \
+#         --selector=app=qbittorrent-gluetun \
+#         --output=jsonpath='{.items[0].metadata.name}') \
+#     --container qbittorrent \
+#     -- reboot
 
