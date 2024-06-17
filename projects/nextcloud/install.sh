@@ -4,20 +4,23 @@ set -e
 
 echo "Generating or retrieving credentials..."
 source projects/nextcloud/secrets.env
-NC_ADMIN_SECRET_NAME=nextcloud-admin
-NC_NAMESPACE=nextcloud
-MARIADB_SECRET_NAME=mariadb-passwords
-STORAGECLASS=nfs-client
+
+read -p "Delete namespace first? (y/N)" DELETE
+if [ "$DELETE" == "y" ]; then
+    helm delete -n nextcloud nextcloud --wait || true
+    kubectl delete ns nextcloud --wait || true
+    kubectl create ns nextcloud || true
+fi
 
 echo "Generating nextcloud passwords..."
-if kubectl get secrets -n nextcloud | grep -q "$NC_ADMIN_SECRET_NAME"; then
-    echo "Secret $NC_ADMIN_SECRET_NAME already exists"
+if kubectl get secrets -n nextcloud | grep -q "nextcloud-admin"; then
+    echo "Secret nextcloud-admin already exists"
 else
-    echo "Generating $NC_ADMIN_SECRET_NAME..."
+    echo "Generating nextcloud-admin..."
     if [ -z "$NC_PASSWORD" ]; then
         NC_PASSWORD=$(openssl rand -base64 20)
     fi
-    kubectl create secret -n $NC_NAMESPACE generic $NC_ADMIN_SECRET_NAME \
+    kubectl create secret -n nextcloud generic nextcloud-admin \
         --from-literal=nextcloud-password=$NC_PASSWORD \
         --from-literal=nextcloud-host=$NC_HOST \
         --from-literal=nextcloud-username=admin \
@@ -29,7 +32,7 @@ else
 fi
 
 echo "Generating mariadb passwords..."
-if kubectl get secrets -n nextcloud | grep -q $MARIADB_SECRET_NAME; then
+if kubectl get secrets -n nextcloud | grep -q mariadb-passwords; then
     echo "Secret mariadb-passwords already exists"
 else
     echo "Generating mariadb-passwords..."
@@ -37,7 +40,7 @@ else
     MARIADB_ROOT_PASSWORD=$(openssl rand -base64 20)
     MARIADB_REPLICATION_PASSWORD=$(openssl rand -base64 20)
     MARIADB_USERNAME=nextcloud
-    kubectl create secret -n nextcloud generic $MARIADB_SECRET_NAME \
+    kubectl create secret -n nextcloud generic mariadb-passwords \
         --from-literal=mariadb-password=$MARIADB_PASSWORD \
         --from-literal=password=$MARIADB_PASSWORD \
         --from-literal=mariadb-root-password=$MARIADB_ROOT_PASSWORD \
@@ -74,47 +77,14 @@ if kubectl get pvc -n nextcloud | grep -q nextcloud-pvc; then
     echo "PVC nextcloud-pvc already exists"
 else
     echo "Creating nextcloud-pvc..."
-    kubectl apply -f projects/nextcloud/nextcloud-pvc.yaml
+    kubectl apply -f projects/nextcloud/nextcloud-pvc.yaml -n nextcloud
 fi
 
 echo "Installing Nextcloud..."
-read -p "Delete first? (y/N)" DELETE
-if [ "$DELETE" == "y" ]; then
-    helm -n nextcloud uninstall nextcloud
-    sleep 5
-fi
 helm repo add nextcloud https://nextcloud.github.io/helm/
 helm repo update
 helm upgrade --install nextcloud nextcloud/nextcloud \
     --namespace nextcloud \
     --create-namespace \
-    --set nextcloud.host=$NC_HOST \
-    --set nextcloud.existingSecret.secretName=$NC_ADMIN_SECRET_NAME \
-    --set persistence.enabled=false \
-    --set persistence.existingClaim=nextcloud-pvc \
-    --set internalDatabase.enabled=false \
-    --set externalDatabase.enabled=true \
-    --set externalDatabase.existingSecret.enabled=true \
-    --set externalDatabase.existingSecret.secretName=$MARIADB_SECRET_NAME \
-    --set externalDatabase.existingSecret.usernameKey=mariadb-username \
-    --set externalDatabase.existingSecret.passwordKey=mariadb-password \
-    --set mariadb.enabled=true \
-    --set mariadb.auth.existingSecret=$MARIADB_SECRET_NAME \
-    --set mariadb.primary.persistence.enabled=true \
-    --set cronjob.enabled=true \
-    --set redis.enabled=true \
-    --set redis.auth.existingSecret=redis-password \
-    --set redis.auth.existingSecretKey=redis-password \
-    --set redis.auth.enabled=false \
-    --set service.type=LoadBalancer \
-    --values projects/nextcloud/values.yaml
-
-    # --set image.pullPolicy=Always \
-    # --set nextcloud.mail.enabled=true \
-    # --set nextcloud.mail.fromAddress=$SMTP_FROM \
-    # --set nextcloud.mail.domain=$SMTP_DOMAIN \
-    # --set nextcloud.mail.smtp.host=$SMTP_HOST \
-    # --set nextcloud.mail.smtp.port=$SMTP_PORT \
-    # --set nextcloud.mail.smtp.authtype=LOGIN \
-    # --set nextcloud.mail.smtp.name=$SMTP_USER \
-    # --set nextcloud.mail.smtp.password=$SMTP_PASS \
+    --values projects/nextcloud/values.yaml \
+    --set nextcloud.host=$NC_HOST

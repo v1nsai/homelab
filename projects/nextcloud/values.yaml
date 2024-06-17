@@ -1,5 +1,28 @@
+cronjob:
+  enabled: true
+  # lifecycle:
+  #   postStartCommand: ["chown -R www-data:www-data /var/www/html"]
+  # securityContext:
+  #   runAsNonRoot: false
+externalDatabase:
+  enabled: true
+  existingSecret:
+    enabled: true
+    passwordKey: mariadb-password
+    secretName: mariadb-passwords
+    usernameKey: mariadb-username
+internalDatabase:
+  enabled: false
+mariadb:
+  auth:
+    existingSecret: mariadb-passwords
+  enabled: true
+  primary:
+    persistence:
+      enabled: true
 nextcloud:
   configs:
+    # add k8s pod namespace to trusted proxies, set phone region and maintenance window start time to 1am
     mycustom.config.php: |
       <?php
       $CONFIG = array(
@@ -7,3 +30,18 @@ nextcloud:
         'default_phone_region' => 'US',
         'maintenance_window_start' => 1,
         );
+  existingSecret:
+    secretName: nextcloud-admin
+persistence:
+  enabled: true
+  existingClaim: nextcloud-pvc
+  nextcloudData:
+    enabled: true
+redis:
+  auth:
+    enabled: false
+    existingSecret: redis-password
+    existingSecretKey: redis-password
+  enabled: true
+service:
+  type: LoadBalancer
