@@ -34,7 +34,7 @@ nextcloud:
     secretName: nextcloud-admin
 persistence:
   enabled: true
-  existingClaim: nextcloud-pvc
+  # existingClaim: nextcloud-data
   nextcloudData:
     enabled: true
 redis:
@@ -45,3 +45,7 @@ redis:
   enabled: true
 service:
   type: LoadBalancer
+image:
+  pullPolicy: Always
+  # tag: stable-fpm
+  # flavor: apache

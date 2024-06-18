@@ -5,7 +5,7 @@ set -e
 echo "Generating or retrieving credentials..."
 source projects/nextcloud/secrets.env
 
-read -p "Delete namespace first? (y/N)" DELETE
+read -sn1 -p "Delete namespace first? (y/N) " DELETE
 if [ "$DELETE" == "y" ]; then
     helm delete -n nextcloud nextcloud --wait || true
     kubectl delete ns nextcloud --wait || true
@@ -73,11 +73,11 @@ fi
 rm -rf /tmp/nextcloud.key /tmp/nextcloud.crt
 
 echo "Creating data pvc..."
-if kubectl get pvc -n nextcloud | grep -q nextcloud-pvc; then
-    echo "PVC nextcloud-pvc already exists"
+if kubectl get pvc -n nextcloud | grep -q nextcloud-data; then
+    echo "PVC nextcloud-data already exists"
 else
-    echo "Creating nextcloud-pvc..."
-    kubectl apply -f projects/nextcloud/nextcloud-pvc.yaml -n nextcloud
+    echo "Creating nextcloud-data..."
+    kubectl apply -f projects/nextcloud/nextcloud-data.yaml -n nextcloud
 fi
 
 echo "Installing Nextcloud..."
@@ -88,3 +88,4 @@ helm upgrade --install nextcloud nextcloud/nextcloud \
     --create-namespace \
     --values projects/nextcloud/values.yaml \
     --set nextcloud.host=$NC_HOST
+
