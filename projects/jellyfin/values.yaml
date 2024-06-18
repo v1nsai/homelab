@@ -1,6 +1,7 @@
 persistence:
-  # config:
-  #   enabled: true
+  config:
+    enabled: true
+    storageClass: microk8s-hostpath
   media:
     enabled: true
     existingClaim: the-goods
@@ -8,11 +9,11 @@ persistence:
 
 extraEnvVars:
   - name: NVIDIA_VISIBLE_DEVICES
-    value: all
+    value: "all"
   - name: NVIDIA_DRIVER_CAPABILITIES
-    value: all
+    value: "all"
   - name: DOTNET_SYSTEM_IO_DISABLEFILELOCKING
-    value: true
+    value: "true"
 
 nodeSelector:
   nvidia.com/gpu.present: "true"
