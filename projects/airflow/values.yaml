@@ -1,7 +1,18 @@
+config:
+  core:
+    load_examples: true
+webserver:
+  service:
+    type: LoadBalancer
+# webserverSecretKeySecretName: airflow-auth
 workers:
-  extraContainers:
-  - name: cuda-sidecar
-    image: nvidia/cuda:12.4.1-cudnn-runtime-ubuntu22.04
-    resources:
-      limits:
-        nvidia.com/gpu: 1
+  env:
+  - name: NVIDIA_VISIBLE_DEVICES
+    value: all
+  - name: NVIDIA_DRIVER_CAPABILITIES
+    value: all
+  waitForMigrations:
+    enabled: true
+images:
+  airflow:
+    repository: apache/airflow
