@@ -1,9 +1,5 @@
 cronjob:
   enabled: true
-  # lifecycle:
-  #   postStartCommand: ["chown -R www-data:www-data /var/www/html"]
-  # securityContext:
-  #   runAsNonRoot: false
 externalDatabase:
   enabled: true
   existingSecret:
@@ -35,8 +31,8 @@ nextcloud:
 persistence:
   enabled: true
   # existingClaim: nextcloud-data
-  nextcloudData:
-    enabled: true
+  # nextcloudData:
+  #   enabled: true
 redis:
   auth:
     enabled: false
@@ -45,7 +41,9 @@ redis:
   enabled: true
 service:
   type: LoadBalancer
-image:
-  pullPolicy: Always
-  # tag: stable-fpm
-  # flavor: apache
+livenessProbe:
+  initialDelaySeconds: 7200
+readinessProbe:
+  initialDelaySeconds: 7200
+startupProbe:
+  initialDelaySeconds: 7200
