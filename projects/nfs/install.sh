@@ -27,10 +27,3 @@ helm upgrade --install irma-provisioner nfs-subdir-external-provisioner/nfs-subd
 
 echo "/mnt/silverstick *(rw,sync,no_root_squash,no_subtree_check)" | sudo tee -a /etc/exports
 sudo exportfs -a
-
-### Tests
-# # write speed test
-# dd if=/dev/zero of=./test.img bs=1G count=1 oflag=dsync
-
-# # read speed test
-# dd if=/dev/zero of=./test.img bs=512 count=1000 oflag=dsync
