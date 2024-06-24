@@ -11,10 +11,10 @@ helm install csi-driver-nfs csi-driver-nfs/csi-driver-nfs \
 
 # oppenheimer
 helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
-# helm upgrade --install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner \
-#     --namespace kube-system \
-#     --set nfs.server="192.168.1.152" \
-#     --set nfs.path="/mnt/silverstick/kubernetes"
+helm upgrade --install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner \
+    --namespace kube-system \
+    --set nfs.server="192.168.1.162" \
+    --set nfs.path="/mnt/silverstick/kubernetes"
 
 # bigrig
 helm upgrade --install irma-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner \

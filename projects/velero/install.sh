@@ -74,13 +74,26 @@ REGION=$(aws configure get region)
 
 echo "Installing velero..."
 velero install \
-    # --use-restic \
     --provider aws \
     --plugins velero/velero-plugin-for-aws:v1.9.2 \
     --bucket $BUCKET \
     --backup-location-config region=$REGION \
     --snapshot-location-config region=$REGION \
-    --secret-file projects/velero/velero.env
+    --secret-file projects/velero/velero.env \
+    --features=EnableCSI \
+    --use-node-agent
+
+echo "Fixing node-agent volumes for microk8s..."
+kubectl -n velero edit daemonset node-agent
+# change the pods and plugins to microk8s default locations
+#   - hostPath:
+#       path: /var/snap/microk8s/common/var/lib/kubelet/pods
+#       type: ""
+#     name: host-pods
+#   - hostPath:
+#       path: /var/snap/microk8s/common/var/lib/kubelet/plugins
+#       type: ""
+#     name: host-plugins
 
 echo "Setting up volume backup exclusions..."
 kubectl -n jellyfin annotate pod/plex-plex-media-server-0 backup.velero.io/backup-volumes-excludes=the-goods
@@ -98,6 +111,4 @@ kubectl apply -f projects/velero/change-storageclass.yaml
 # velero restore create --from-backup $BACKUP_NAME --include-namespaces $NAMESPACE
 
 # velero backup create torrents-$(date +%Y%m%d) --include-namespaces plex --include-resources persistentvolumeclaims
-# velero restore create torrents-plex --from-backup torrents-$(date +%Y%m%d) --namespace  #--namespace-mappings plex:jellyfin
-
-velero backup create nextcloud-test --include-namespaces nextcloud
+# velero restore create --from-backup nightly-20240623030044  #--namespace-mappings plex:jellyfin
