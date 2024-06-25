@@ -90,7 +90,7 @@ echo "Setting up volume backup exclusions..."
 kubectl -n jellyfin annotate pod/plex-plex-media-server-0 backup.velero.io/backup-volumes-excludes=the-goods
 
 echo "Scheduling backups..."
-velero schedule create nightly --schedule="0 3 * * *" --ttl 168h0m0s
+velero schedule create nightly --schedule="0 3 * * *" --ttl 168h0m0s --default-volumes-to-fs-backup
 
 echo "Adding backup rules..."
 kubectl apply -f projects/velero/change-storageclass.yaml

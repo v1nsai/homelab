@@ -20,4 +20,4 @@ data:
   # storage class name and the value is the new storage
   # class name.
   # nfs-client: irma
-  irma: irma-nfs-csi
+  nfs-client: irma
