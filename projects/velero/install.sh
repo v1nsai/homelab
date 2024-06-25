@@ -80,20 +80,11 @@ velero install \
     --backup-location-config region=$REGION \
     --snapshot-location-config region=$REGION \
     --secret-file projects/velero/velero.env \
-    --features=EnableCSI \
-    --use-node-agent
+    --use-node-agent \
+    --default-volumes-to-fs-backup
 
-echo "Fixing node-agent volumes for microk8s..."
-kubectl -n velero edit daemonset node-agent
-# change the pods and plugins to microk8s default locations
-#   - hostPath:
-#       path: /var/snap/microk8s/common/var/lib/kubelet/pods
-#       type: ""
-#     name: host-pods
-#   - hostPath:
-#       path: /var/snap/microk8s/common/var/lib/kubelet/plugins
-#       type: ""
-#     name: host-plugins
+# echo "Fixing node-agent volumes for microk8s (or possibly issues with previous k3s install)..."
+# sudo rm -rf /var/lib/kubelet && sudo ln -s /var/snap/microk8s/common/var/lib/kubelet /var/lib/kubelet
 
 echo "Setting up volume backup exclusions..."
 kubectl -n jellyfin annotate pod/plex-plex-media-server-0 backup.velero.io/backup-volumes-excludes=the-goods
@@ -103,12 +94,3 @@ velero schedule create nightly --schedule="0 3 * * *" --ttl 168h0m0s
 
 echo "Adding backup rules..."
 kubectl apply -f projects/velero/change-storageclass.yaml
-
-# restore a namespace from backup
-# NAMESPACE="nextcloud"
-# RESTORE_DATE=$(date -d "1 days ago" +%Y%m%d)
-# BACKUP_NAME=$(aws s3 ls s3://$BUCKET/backups/ | grep $RESTORE_DATE | awk '{print $2}' | tr -d "/")
-# velero restore create --from-backup $BACKUP_NAME --include-namespaces $NAMESPACE
-
-# velero backup create torrents-$(date +%Y%m%d) --include-namespaces plex --include-resources persistentvolumeclaims
-# velero restore create --from-backup nightly-20240623030044  #--namespace-mappings plex:jellyfin
