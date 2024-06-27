@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: qbittorrent-gluetun
+  name: torrents
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: qbittorrent-gluetun
+      app: torrents
   template:
     metadata:
       labels:
-        app: qbittorrent-gluetun
+        app: torrents
     spec:
       containers:
         - name: gluetun
@@ -30,7 +30,7 @@ spec:
             - name: TZ
               value: "America/New_York"
             - name: FIREWALL_INPUT_PORTS
-              value: "9091,9696"
+              value: "9091,9696,8989"
           ports:
             - containerPort: 51820
           securityContext:
@@ -67,6 +67,27 @@ spec:
           volumeMounts:
             - name: prowlarr-config
               mountPath: /config
+        
+        - name: sonarr
+          image: lscr.io/linuxserver/sonarr
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "America/New_York"
+          ports:
+            - containerPort: 8989
+          volumeMounts:
+            - name: sonarr-config
+              mountPath: /config
+            - name: downloads
+              mountPath: /tv
+              subPath: tv
+            # - name: downloads
+            #   mountPath: /downloads
+            #   subPath: sonarr-downloads
 
       volumes:
         - name: downloads
@@ -84,6 +105,9 @@ spec:
         - name: prowlarr-config
           persistentVolumeClaim:
             claimName: prowlarr-config
+        - name: sonarr-config
+          persistentVolumeClaim:
+            claimName: sonarr-config
 ---
 apiVersion: v1
 kind: Service
@@ -96,7 +120,7 @@ spec:
       port: 9091
       targetPort: 9091
   selector:
-    app: qbittorrent-gluetun
+    app: torrents
 # service for prowlarr
 ---
 apiVersion: v1
@@ -110,7 +134,20 @@ spec:
       port: 9696
       targetPort: 9696
   selector:
-    app: qbittorrent-gluetun
+    app: torrents
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sonarr
+spec:
+  type: LoadBalancer
+  ports:
+    - name: "8989"
+      port: 8989
+      targetPort: 8989
+  selector:
+    app: torrents
 # # pvcs commented out to persist between installations
 # ---
 # kubectl apply -n jellyfin -f - <<EOF
@@ -129,6 +166,20 @@ spec:
 # kind: PersistentVolumeClaim
 # metadata:
 #   name: prowlarr-config
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 5Gi
+# EOF
+# ---
+# kubectl apply -f - <<EOF
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: sonarr-config
+#   namespace: jellyfin
 # spec:
 #   accessModes:
 #     - ReadWriteOnce
