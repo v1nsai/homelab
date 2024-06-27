@@ -1,6 +1,6 @@
 clusterName: rook-ceph-cluster
 toolbox:
-  enabled: false 
+  enabled: true 
 cephClusterSpec:
   storage:
     # config:
