@@ -87,7 +87,11 @@ velero install \
 # sudo rm -rf /var/lib/kubelet && sudo ln -s /var/snap/microk8s/common/var/lib/kubelet /var/lib/kubelet
 
 echo "Setting up volume backup exclusions..."
-kubectl -n jellyfin annotate pod/plex-plex-media-server-0 backup.velero.io/backup-volumes-excludes=the-goods
+JELLYFIN=$(kubectl get pods -n jellyfin | grep jellyfin | awk '{print $1}')
+kubectl -n jellyfin annotate pod/$JELLYFIN backup.velero.io/backup-volumes-excludes=the-goods
+
+# get name of pod in jellyfin namespace that begins with "jellyfin"
+jellyfin=$(kubectl get pods -n jellyfin | grep jellyfin | awk '{print $1}')
 
 echo "Scheduling backups..."
 velero schedule create nightly --schedule="0 3 * * *" --ttl 168h0m0s --default-volumes-to-fs-backup

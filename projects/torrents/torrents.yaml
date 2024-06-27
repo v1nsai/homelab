@@ -148,42 +148,38 @@ spec:
       targetPort: 8989
   selector:
     app: torrents
-# # pvcs commented out to persist between installations
-# ---
-# kubectl apply -n jellyfin -f - <<EOF
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: qbittorrent-config
-# spec:
-#   accessModes:
-#     - ReadWriteOnce
-#   resources:
-#     requests:
-#       storage: 5Gi
-# ---
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: prowlarr-config
-# spec:
-#   accessModes:
-#     - ReadWriteOnce
-#   resources:
-#     requests:
-#       storage: 5Gi
-# EOF
-# ---
-# kubectl apply -f - <<EOF
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: sonarr-config
-#   namespace: jellyfin
-# spec:
-#   accessModes:
-#     - ReadWriteOnce
-#   resources:
-#     requests:
-#       storage: 5Gi
-# EOF
+# pvcs commented out to persist between installations
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: qbittorrent-config
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prowlarr-config
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sonarr-config
+  namespace: jellyfin
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
