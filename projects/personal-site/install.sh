@@ -10,6 +10,7 @@ fi
 
 read -sn1 -p "Delete before installing? [y/N] " DELETE
 if [ "$DELETE" == "y" ] || [ "$DELETE" == "Y" ]; then
+    echo "" 
     helm delete -n personal-site personal-site || true
     kubectl delete ns personal-site || true
     kubectl create ns personal-site || true
@@ -28,5 +29,6 @@ helm upgrade --install personal-site oci://registry-1.docker.io/bitnamicharts/wo
     --namespace personal-site \
     --set wordpressUsername=doctor_ew \
     --set existingSecret=wordpress-password \
-    --set externalDatabase.existingSecret=externaldb-password
+    --set externalDatabase.existingSecret=externaldb-password 
+    # --set nodeSelector."kubernetes\.io/hostname"=bigrig
     # --set global.storageClass=microk8s-hostpath
