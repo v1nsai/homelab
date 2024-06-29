@@ -1,6 +1,10 @@
 clusterName: rook-ceph-cluster
 toolbox:
-  enabled: true 
+  enabled: true
+  containerSecurityContext:
+    runAsNonRoot: false
+    runAsUser: 0
+    runAsGroup: 0
 cephClusterSpec:
   storage:
     # config:
@@ -15,7 +19,12 @@ cephClusterSpec:
           - name: "/dev/sdc"
 cephFileSystemVolumeSnapshotClass:
   enabled: false
-# cephFileSystems:
-#   - name: ceph-filesystem
-#     storageClass:
-#       name: cephfs
+cephBlockPools:
+- name: ceph-blockpool
+  storageClass:
+    isDefault: false
+    enabled: false
+cephFileSystems:
+- name: ceph-filesystem
+  storageClass:
+    name: cephfs
