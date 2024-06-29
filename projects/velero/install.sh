@@ -90,9 +90,6 @@ echo "Setting up volume backup exclusions..."
 JELLYFIN=$(kubectl get pods -n jellyfin | grep jellyfin | awk '{print $1}')
 kubectl -n jellyfin annotate pod/$JELLYFIN backup.velero.io/backup-volumes-excludes=the-goods
 
-# get name of pod in jellyfin namespace that begins with "jellyfin"
-jellyfin=$(kubectl get pods -n jellyfin | grep jellyfin | awk '{print $1}')
-
 echo "Scheduling backups..."
 velero schedule create nightly --schedule="0 3 * * *" --ttl 168h0m0s --default-volumes-to-fs-backup
 
