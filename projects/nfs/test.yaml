@@ -1,4 +1,3 @@
-kubectl apply -f - <<EOF
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -6,8 +5,33 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: irma
+  storageClassName: irma-nfs-csi
   resources:
     requests:
       storage: 1Gi
-EOF
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ubuntu
+  template:
+    metadata:
+      labels:
+        app: ubuntu
+    spec:
+      containers:
+      - name: ubuntu-container
+        image: ubuntu:22.04
+        command: ["/bin/sleep", "infinity"]
+        volumeMounts:
+        - name: nfs-volume
+          mountPath: /nfs-test
+      volumes:
+      - name: nfs-volume
+        persistentVolumeClaim:
+          claimName: nfs-test

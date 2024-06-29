@@ -1,0 +1,21 @@
+kubeletDir: /var/snap/microk8s/common/var/lib/kubelet
+controller:
+  dnsPolicy: ClusterFirstWithHostNet
+  # runOnControlPlane: true
+node:
+  dnsPolicy: ClusterFirstWithHostNet
+storageClass:
+  create: true
+  name: irma-nfs-csi
+  parameters:
+    server: 192.168.1.169
+    share: /mnt/irma/kubernetes/csi-nfs-driver
+    subDir:
+    mountPermissions: "0"
+    # csi.storage.k8s.io/provisioner-secret is only needed for providing mountOptions in DeleteVolume
+    # csi.storage.k8s.io/provisioner-secret-name: "mount-options"
+    # csi.storage.k8s.io/provisioner-secret-namespace: "default"
+  reclaimPolicy: Delete
+  volumeBindingMode: Immediate
+  # mountOptions:
+  #   - nfsvers=4.1
