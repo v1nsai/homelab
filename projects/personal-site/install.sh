@@ -3,10 +3,10 @@
 set -e
 source projects/personal-site/secrets.env
 
-if [ -z "$WORDPRESS_PASSWORD" ] || [ -z "$MARIADB_PASSWORD" ]; then
-    echo "Please set WORDPRESS_PASSWORD and MARIADB_PASSWORD in projects/personal-site/secrets.env"
-    exit 1
-fi
+# if [ -z "$WORDPRESS_PASSWORD" ] || [ -z "$MARIADB_PASSWORD" ]; then
+#     echo "Please set WORDPRESS_PASSWORD and MARIADB_PASSWORD in projects/personal-site/secrets.env"
+#     exit 1
+# fi
 
 read -sn1 -p "Delete before installing? [y/N] " DELETE
 if [ "$DELETE" == "y" ] || [ "$DELETE" == "Y" ]; then
@@ -18,11 +18,11 @@ fi
 
 kubectl create secret generic wordpress-password \
     --namespace personal-site \
-    --from-literal=wordpress-password=${WORDPRESS_PASSWORD} || true
+    --from-literal=wordpress-password=$(openssl rand -base64 20) || true
 
 kubectl create secret generic externaldb-password \
     --namespace personal-site \
-    --from-literal=mariadb-password=${MARIADB_PASSWORD} || true
+    --from-literal=mariadb-password=$(openssl rand -base64 20) || true
 
 helm delete -n personal-site personal-site || true
 helm upgrade --install personal-site oci://registry-1.docker.io/bitnamicharts/wordpress \
