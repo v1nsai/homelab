@@ -3,7 +3,7 @@
 set -e
 source projects/velero/.env
 
-if [ -z "$BUCKET" ]; then
+if [ -z "$BUCKET" ] || [ -z "$AWS_ACCESS_KEY_ID" ] || [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
     echo "Please set BUCKET in projects/velero/.env"
     exit 1
 fi
@@ -62,14 +62,14 @@ cat > projects/velero/velero.env <<EOF
 aws_access_key_id=${AWS_ACCESS_KEY_ID}
 aws_secret_access_key=${AWS_SECRET_ACCESS_KEY}
 EOF
-aws iam create-user --user-name velero
-aws iam put-user-policy \
-  --user-name velero \
-  --policy-name velero \
-  --policy-document file://projects/velero/velero-policy.json
-aws iam create-access-key --user-name velero > ~/.aws/velero-user.json
-AWS_SECRET_ACCESS_KEY=$(jq -r '.AccessKey.SecretAccessKey' ~/.aws/velero-user.json)
-AWS_ACCESS_KEY_ID=$(jq -r '.AccessKey.AccessKeyId' ~/.aws/velero-user.json)
+# aws iam create-user --user-name velero
+# aws iam put-user-policy \
+#   --user-name velero \
+#   --policy-name velero \
+#   --policy-document file://projects/velero/velero-policy.json
+# aws iam create-access-key --user-name velero > ~/.aws/velero-user.json
+# AWS_SECRET_ACCESS_KEY=$(jq -r '.AccessKey.SecretAccessKey' ~/.aws/velero-user.json)
+# AWS_ACCESS_KEY_ID=$(jq -r '.AccessKey.AccessKeyId' ~/.aws/velero-user.json)
 REGION=$(aws configure get region)
 
 echo "Installing velero..."
@@ -78,20 +78,17 @@ velero install \
     --plugins velero/velero-plugin-for-aws:v1.9.2 \
     --bucket $BUCKET \
     --backup-location-config region=$REGION \
-    --snapshot-location-config region=$REGION \
     --secret-file projects/velero/velero.env \
     --use-node-agent \
-    --default-volumes-to-fs-backup
+    --default-volumes-to-fs-backup \
+    --use-volume-snapshots=false
 
-# echo "Fixing node-agent volumes for microk8s (or possibly issues with previous k3s install)..."
-# sudo rm -rf /var/lib/kubelet && sudo ln -s /var/snap/microk8s/common/var/lib/kubelet /var/lib/kubelet
+# echo "Setting up volume backup exclusions..."
+# JELLYFIN=$(kubectl get pods -n jellyfin | grep jellyfin | awk '{print $1}')
+# kubectl -n jellyfin annotate pod/$JELLYFIN backup.velero.io/backup-volumes-excludes=the-goods
 
-echo "Setting up volume backup exclusions..."
-JELLYFIN=$(kubectl get pods -n jellyfin | grep jellyfin | awk '{print $1}')
-kubectl -n jellyfin annotate pod/$JELLYFIN backup.velero.io/backup-volumes-excludes=the-goods
+# echo "Scheduling backups..."
+# velero schedule create nightly --schedule="0 3 * * *" --ttl 168h0m0s --default-volumes-to-fs-backup
 
-echo "Scheduling backups..."
-velero schedule create nightly --schedule="0 3 * * *" --ttl 168h0m0s --default-volumes-to-fs-backup
-
-echo "Adding backup rules..."
-kubectl apply -f projects/velero/change-storageclass.yaml
+# echo "Adding backup rules..."
+# kubectl apply -f projects/velero/change-storageclass.yaml
