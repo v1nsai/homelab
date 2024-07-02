@@ -28,4 +28,4 @@ microk8s enable metallb:192.168.1.2-192.168.1.99
 # enable traefik ingress
 helm install traefik traefik/traefik \
     --namespace traefik \
-    --create-namespace 
+    --create-namespace
