@@ -5,6 +5,12 @@ set -e
 echo "Generating or retrieving credentials..."
 source projects/nextcloud/secrets.env
 
+# if NC_HOST is not defined, prompt for it
+if [ -z "$NC_HOST" ]; then
+    read -sn1 -p "Enter Nextcloud host: " NC_HOST
+    cat "NC_HOST=$NC_HOST" >> projects/nextcloud/secrets.env
+fi
+
 read -sn1 -p "Delete namespace first? (y/N) " DELETE
 if [ "$DELETE" == "y" ]; then
     helm delete -n nextcloud nextcloud --wait || true
@@ -24,11 +30,11 @@ else
         --from-literal=nextcloud-password=$NC_PASSWORD \
         --from-literal=nextcloud-host=$NC_HOST \
         --from-literal=nextcloud-username=admin \
-        --from-literal=nextcloud-token=$NC_PASSWORD \
-        --from-literal=smtp-password=$SMTP_PASS \
-        --from-literal=smtp-host=$SMTP_HOST \
-        --from-literal=smtp-port=$SMTP_PORT \
-        --from-literal=smtp-username=$SMTP_USER
+        --from-literal=nextcloud-token=$NC_PASSWORD
+        # --from-literal=smtp-password=$SMTP_PASS \
+        # --from-literal=smtp-host=$SMTP_HOST \
+        # --from-literal=smtp-port=$SMTP_PORT \
+        # --from-literal=smtp-username=$SMTP_USER
 fi
 
 echo "Generating mariadb passwords..."

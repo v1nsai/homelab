@@ -4,6 +4,13 @@ metadata:
   name: nextcloud
 spec:
   project: default
+  source:
+    repoURL: 'https://nextcloud.github.io/helm/'
+    targetRevision: "*"
+    helm:
+      valueFiles:
+      - $values/projects/nextcloud/values.yaml
+    chart: nextcloud
   sources:
   - repoURL: 'https://nextcloud.github.io/helm/'
     helm:
@@ -24,7 +31,3 @@ spec:
       - CreateNamespace=true
       - ApplyOutOfSyncOnly=true
       - Validate=false
-  # sources:
-  # - repoURL: 'https://github.com/v1nsai/homelab.git'
-  #   ref: values
-  #   target: projects/nextcloud/values.yaml
