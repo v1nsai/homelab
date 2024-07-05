@@ -31,8 +31,8 @@ nextcloud:
 persistence:
   enabled: true
   # existingClaim: nextcloud-data
-  # nextcloudData:
-  #   enabled: true
+  nextcloudData:
+    enabled: true
 redis:
   auth:
     enabled: false

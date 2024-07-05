@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nextcloud
+spec:
+  project: default
+  sources:
+  - repoURL: 'https://nextcloud.github.io/helm/'
+    helm:
+      valueFiles:
+      - $values/projects/nextcloud/values.yaml
+    chart: nextcloud
+    targetRevision: "*"
+  - repoURL: 'https://github.com/v1nsai/homelab.git'
+    ref: values
+  destination:
+    name: in-cluster
+    namespace: nextcloud
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+      - Validate=false
+  # sources:
+  # - repoURL: 'https://github.com/v1nsai/homelab.git'
+  #   ref: values
+  #   target: projects/nextcloud/values.yaml

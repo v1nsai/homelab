@@ -72,20 +72,20 @@ else
 fi
 rm -rf /tmp/nextcloud.key /tmp/nextcloud.crt
 
-echo "Creating data pvc..."
-if kubectl get pvc -n nextcloud | grep -q nextcloud-data; then
-    echo "PVC nextcloud-data already exists"
-else
-    echo "Creating nextcloud-data..."
-    kubectl apply -f projects/nextcloud/nextcloud-data.yaml -n nextcloud
-fi
+# echo "Creating data pvc..."
+# if kubectl get pvc -n nextcloud | grep -q nextcloud-data; then
+#     echo "PVC nextcloud-data already exists"
+# else
+#     echo "Creating nextcloud-data..."
+#     kubectl apply -f projects/nextcloud/nextcloud-data.yaml -n nextcloud
+# fi
 
-echo "Installing Nextcloud..."
-helm repo add nextcloud https://nextcloud.github.io/helm/
-helm repo update
-helm upgrade --install nextcloud nextcloud/nextcloud \
-    --namespace nextcloud \
-    --create-namespace \
-    --values projects/nextcloud/values.yaml \
-    --set nextcloud.host=$NC_HOST
+# echo "Installing Nextcloud..."
+# helm repo add nextcloud https://nextcloud.github.io/helm/
+# helm repo update
+# helm upgrade --install nextcloud nextcloud/nextcloud \
+#     --namespace nextcloud \
+#     --create-namespace \
+#     --values projects/nextcloud/values.yaml \
+#     --set nextcloud.host=$NC_HOST
 
