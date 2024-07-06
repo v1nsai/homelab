@@ -8,7 +8,7 @@ helm repo update
 helm upgrade --install argo-cd argo/argo-cd \
     --namespace argocd \
     --create-namespace \
-    --values projects/argo/argo-cd/values.yaml
+    --values projects/argocd/values.yaml
 
 echo "Deploying argocd image updater to kubernetes..."
 kubectl apply \
@@ -21,3 +21,10 @@ wget https://github.com/argoproj-labs/argocd-image-updater/releases/download/v0.
 echo "Running post install config..."
 kubectl patch svc -n argocd argo-cd-argocd-server -p '{"spec": {"type": "LoadBalancer"}}'
 kubectl patch configmap argocd-cm -n argocd --type merge --patch '{"data": {"resourceTrackingMethod": "annotation+label"}}'
+if kubectl get secrets -n argocd | grep -q argocd-secret; then
+    echo "Secret argocd-secret already exists"
+else
+    echo "Generating argocd-secret..."
+    kubectl patch secret -n argocd argocd-secret \
+        -p "{\"stringData\": {\"webhook.github.secret\": \"$(openssl rand -base64 20)\"}}"
+fi
