@@ -39,4 +39,5 @@ spec:
       create: true
       passwordHash: $2a$10$ajpEm6U2h0DU4ftWQ4FWwuoFNI.QTdvxHx6SM2bG9luBSRv1TFs0i
       username: admin
-
+    service:
+      type: LoadBalancer
