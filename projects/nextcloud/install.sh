@@ -5,10 +5,10 @@ set -e
 echo "Generating or retrieving credentials..."
 source projects/nextcloud/secrets.env
 
-# if NC_HOST is not defined, prompt for it
 if [ -z "$NC_HOST" ]; then
     read -sn1 -p "Enter Nextcloud host: " NC_HOST
     cat "NC_HOST=$NC_HOST" >> projects/nextcloud/secrets.env
+    export NC_HOST="$NC_HOST"
 fi
 
 read -sn1 -p "Delete namespace first? (y/N) " DELETE
@@ -31,10 +31,6 @@ else
         --from-literal=nextcloud-host=$NC_HOST \
         --from-literal=nextcloud-username=admin \
         --from-literal=nextcloud-token=$NC_PASSWORD
-        # --from-literal=smtp-password=$SMTP_PASS \
-        # --from-literal=smtp-host=$SMTP_HOST \
-        # --from-literal=smtp-port=$SMTP_PORT \
-        # --from-literal=smtp-username=$SMTP_USER
 fi
 
 echo "Generating mariadb passwords..."
@@ -78,20 +74,7 @@ else
 fi
 rm -rf /tmp/nextcloud.key /tmp/nextcloud.crt
 
-# echo "Creating data pvc..."
-# if kubectl get pvc -n nextcloud | grep -q nextcloud-data; then
-#     echo "PVC nextcloud-data already exists"
-# else
-#     echo "Creating nextcloud-data..."
-#     kubectl apply -f projects/nextcloud/nextcloud-data.yaml -n nextcloud
-# fi
-
-# echo "Installing Nextcloud..."
-# helm repo add nextcloud https://nextcloud.github.io/helm/
-# helm repo update
-# helm upgrade --install nextcloud nextcloud/nextcloud \
-#     --namespace nextcloud \
-#     --create-namespace \
-#     --values projects/nextcloud/values.yaml \
-#     --set nextcloud.host=$NC_HOST
-
+echo "Installing Nextcloud..."
+argocd app create --upsert nextcloud \
+    --file projects/nextcloud/argocd.yaml \
+    --helm-set "nextcloud.host=$NC_HOST"
