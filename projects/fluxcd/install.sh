@@ -18,9 +18,11 @@ flux bootstrap github \
   --components-extra image-reflector-controller,image-automation-controller
 
 echo "Installing weave gitops UI..."
-PASSWORD="$(openssl rand -base64 20)"
+if [ -z "$WW_DASH_PASS" ]; then
+    WW_DASH_PASS="$(openssl rand -base64 20)"
+    echo "$WW_DASH_PASS" | tee -a ./projects/fluxcd/fluxcd.env
+fi
+
 gitops create dashboard ww-gitops \
-  --password=$PASSWORD \
-  --export > ./projects/fluxcd/flux-system/weave-gitops-dashboard.yaml
-
-
+  --password=$WW_DASH_PASS \
+  --export > ./projects/fluxcd/flux-system/weave-gitops.yaml
