@@ -75,20 +75,21 @@ REGION=$(aws configure get region)
 echo "Installing velero..."
 velero install \
     --provider aws \
-    --plugins velero/velero-plugin-for-aws:v1.9.2 \
+    --plugins velero/velero-plugin-for-aws:latest \
     --bucket $BUCKET \
     --backup-location-config region=$REGION \
     --secret-file projects/velero/velero.env \
     --use-node-agent \
     --default-volumes-to-fs-backup \
     --use-volume-snapshots=false
+    # --parallel-files-upload 10
 
 # echo "Setting up volume backup exclusions..."
 # JELLYFIN=$(kubectl get pods -n jellyfin | grep jellyfin | awk '{print $1}')
 # kubectl -n jellyfin annotate pod/$JELLYFIN backup.velero.io/backup-volumes-excludes=the-goods
 
-# echo "Scheduling backups..."
-# velero schedule create nightly --schedule="0 3 * * *" --ttl 168h0m0s --default-volumes-to-fs-backup
+echo "Scheduling backups..."
+velero schedule create nightly --schedule="0 3 * * *" --ttl 168h0m0s --default-volumes-to-fs-backup --parallel-files-upload 10
 
 # echo "Adding backup rules..."
 # kubectl apply -f projects/velero/change-storageclass.yaml
