@@ -3,13 +3,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: prowlarr
-  namespace: flux-system
+  name: jellyfin
+  namespace: jellyfin
 spec:
   targetNamespace: default
   commonMetadata:
     labels:
-      app.kubernetes.io/name: prowlarr
+      app.kubernetes.io/name: jellyfin
   path: ./projects/jellyfin/app
   prune: true
   sourceRef:
