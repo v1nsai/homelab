@@ -38,7 +38,7 @@ terraform.rc
 all-in-one
 
 # Ignore config files
-projects/*/config
+projects/*/secrets
 *.env
 *.default.yaml
 
