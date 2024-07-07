@@ -1,14 +1,12 @@
-kubectl apply -f - <<EOF
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: thegoods
+  name: the-goods
   namespace: jellyfin
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: ceph-filesystem
+  storageClassName: irma
   resources:
     requests:
-      storage: 5000Gi
-EOF
+      storage: 2600Gi
