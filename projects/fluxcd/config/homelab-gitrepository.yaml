@@ -9,3 +9,5 @@ spec:
   url: https://github.com/v1nsai/homelab
   ref:
     branch: develop
+  ignore: |
+    values.yaml
