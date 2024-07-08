@@ -8,11 +8,6 @@ if [ "$DELETE" == "y" ]; then
     kubectl delete pvc --namespace jellyfin jellyfin-config || true
 fi
 
-# helm upgrade --install jellyfin ./projects/jellyfin/jellyfin-helm/charts/jellyfin \
-#     --namespace jellyfin \
-#     --create-namespace \
-#     --values projects/jellyfin/values.yaml
-
 flux create source git jellyfin \
   --url https://github.com/v1nsai/jellyfin-helm \
   --branch master \
@@ -24,3 +19,10 @@ flux create helmrelease jellyfin --chart jellyfin \
   --namespace jellyfin \
   --values-from Secret/jellyfin-values \
   --export > projects/jellyfin/app/jellyfin.yaml
+
+flux create kustomization jellyfin \
+  --source=GitRepository/homelab \
+  --path="./projects/jellyfin/app" \
+  --prune=true \
+  --interval=1h \
+  --export > projects/jellyfin/app.yaml
