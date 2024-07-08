@@ -5,10 +5,13 @@ set -e
 
 echo "Deleting remaining resources in $1..."
 export NAMESPACE="$1"
-kubectl delete namespace $NAMESPACE --wait=false --grace-period=0 --force
-kubectl api-resources --verbs=list --namespaced -o name | xargs -n 1 kubectl get --show-kind --ignore-not-found -n $NAMESPACE | awk '{print $1}' | xargs -n 1 kubectl delete -n $NAMESPACE --grace-period=0 --force
 
+# list all resources in namespace
+kubectl api-resources --verbs=list --namespaced -o name \
+  | xargs -n 1 kubectl get --show-kind --ignore-not-found -n $NAMESPACE
+# TODO add some awk/sed fu to automate deleting all the resources from the previous command
 kubectl get ns $NAMESPACE -ojson | jq '.spec.finalizers = []' | kubectl replace --raw "/api/v1/namespaces/$NAMESPACE/finalize" -f -
+
 
 # echo "Removing finalizers from namespace $NAMESPACE..."
 # kubectl get namespace -o json $NAMESPACE > stuck.json
@@ -20,3 +23,6 @@ kubectl get ns $NAMESPACE -ojson | jq '.spec.finalizers = []' | kubectl replace 
 # echo "Cleaning up..."
 # kill $PROXY_PID
 # rm stuck.json
+
+# kubectl delete namespace $NAMESPACE --wait=false --grace-period=0 --force
+# kubectl api-resources --verbs=list --namespaced -o name | xargs -n 1 kubectl get --show-kind --ignore-not-found -n $NAMESPACE | awk '{print $1}' | xargs -n 1 kubectl delete -n $NAMESPACE --grace-period=0 --force
