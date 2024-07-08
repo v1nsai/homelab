@@ -42,8 +42,8 @@ redis:
 service:
   type: LoadBalancer
 livenessProbe:
-  initialDelaySeconds: 900
+  initialDelaySeconds: 1800
 readinessProbe:
-  initialDelaySeconds: 900
+  initialDelaySeconds: 1800
 startupProbe:
-  initialDelaySeconds: 900
+  initialDelaySeconds: 1800

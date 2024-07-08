@@ -78,3 +78,10 @@ echo "Installing Nextcloud..."
 argocd app create --upsert nextcloud \
     --file projects/nextcloud/argocd.yaml \
     --helm-set "nextcloud.host=$NC_HOST"
+
+flux create source helm nextcloud --url https://nextcloud.github.io/helm/ --namespace nextcloud
+flux create helmrelease nextcloud \
+    --chart nextcloud \
+    --source HelmRepository/nextcloud \
+    --namespace nextcloud \
+    --export > projects/fluxcd/nextcloud.yaml
