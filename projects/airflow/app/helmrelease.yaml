@@ -1,0 +1,38 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: airflow
+  namespace: airflow
+spec:
+  chart:
+    spec:
+      chart: airflow
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: airflow
+      version: 8.0.1
+  interval: 1h0m0s
+  values:
+    config:
+      core:
+        load_examples: true
+    images:
+      airflow:
+        repository: apache/airflow
+    webserver:
+      service:
+        type: LoadBalancer
+    webserverSecretKeySecretName: airflow-auth
+    workers:
+      env:
+      - name: NVIDIA_VISIBLE_DEVICES
+        value: all
+      - name: NVIDIA_DRIVER_CAPABILITIES
+        value: all
+      waitForMigrations:
+        enabled: true
+  valuesFrom:
+  - kind: Secret
+    name: secret-values

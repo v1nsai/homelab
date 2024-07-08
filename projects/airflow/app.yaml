@@ -1,0 +1,44 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: airflow
+  namespace: airflow
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: airflow
+  dependsOn:
+    - name: sealed-secrets
+    - name: generate-secrets
+  path: ./projects/airflow/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: homelab
+    namespace: flux-system
+  wait: false
+  interval: 1h
+  retryInterval: 1m
+  timeout: 5m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: generate-secrets
+  namespace: airflow
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: airflow
+  interval: 10m
+  sourceRef:
+    kind: GitRepository
+    name: homelab
+  path: ./projects/airflow/generate-secrets
+  prune: true
+  wait: true
+  timeout: 5m
+  retryInterval: 1m
+  

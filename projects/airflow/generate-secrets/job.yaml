@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: generate-secrets
+spec:
+  template:
+    spec:
+      containers:
+      - name: generate-secrets
+        image: bitnami/kubectl:1.29.4
+        command: ["/bin/sh", "/scripts/generate-secrets.sh"]
+        volumeMounts:
+        - name: generate-secrets-script
+          mountPath: /scripts
+      restartPolicy: Never
+      volumes:
+      - name: generate-secrets-script
+        configMap:
+          name: generate-secrets-script
+          defaultMode: 0744
+      serviceAccountName: secret-creator-sa

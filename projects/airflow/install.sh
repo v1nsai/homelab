@@ -8,43 +8,52 @@ if [ -z "$USER_EMAIL" ] || [ -z "$USER_NAME" ] || [ -z "$USER_FIRSTNAME" ] || [ 
     exit 1
 fi
 
-read -sn1 -p "Delete existing airflow namespace first? [y/N]" DELETE
-if [ "$DELETE" == "y" ]; then
-    helm delete -n airflow airflow || true
-    kubectl delete namespace airflow || true
-    kubectl create namespace airflow || true
-fi
-
-echo "Configuring users, auth and encryption..."
-if ! kubectl get secret airflow-auth -n airflow &> /dev/null; then
-    echo "Creating secret airflow-auth..."
-    USER_PASSWORD=$(openssl rand -base64 20)
-    AIRFLOW__CORE__FERNET_KEY=$(python -c "from cryptography.fernet import Fernet; FERNET_KEY = Fernet.generate_key().decode(); print(FERNET_KEY)")
-    WEB_SERVER_SECRET_KEY=$(openssl rand -base64 20)
-    kubectl create secret generic airflow-auth \
-        --from-literal=auth-username="$USER_NAME" \
-        --from-literal=auth-password="$USER_PASSWORD" \
-        --from-literal=auth-email="$USER_EMAIL" \
-        --from-literal=auth-firstname="$USER_FIRSTNAME" \
-        --from-literal=auth-lastname="$USER_LASTNAME" \
-        --from-literal=fernet-key="$AIRFLOW__CORE__FERNET_KEY" \
-        --from-literal=webserver-secret-key="$WEB_SERVER_SECRET_KEY" \
-        --namespace airflow
-else
-    echo "Secret airflow-auth already exists."
-    AIRFLOW__CORE__FERNET_KEY="$(kubectl get secret airflow-auth -n airflow -o jsonpath='{.data.fernet-key}' | base64 -d)"
-    USER_PASSWORD="$(kubectl get secret airflow-auth -n airflow -o jsonpath='{.data.auth-password}' | base64 -d)"
-fi
-
-echo "Installing Airflow..."
-# helm repo add apache-airflow https://airflow.apache.org
-# helm repo update
-helm upgrade --install airflow apache-airflow/airflow \
+echo "Creating and encrypting secrets..."
+USER_PASSWORD=$(openssl rand -base64 20)
+AIRFLOW__CORE__FERNET_KEY=$(python -c "from cryptography.fernet import Fernet; FERNET_KEY = Fernet.generate_key().decode(); print(FERNET_KEY)")
+WEB_SERVER_SECRET_KEY=$(openssl rand -base64 20)
+kubectl create secret generic airflow-auth \
+    --from-literal=auth-username="$USER_NAME" \
+    --from-literal=auth-password="$USER_PASSWORD" \
+    --from-literal=auth-email="$USER_EMAIL" \
+    --from-literal=auth-firstname="$USER_FIRSTNAME" \
+    --from-literal=auth-lastname="$USER_LASTNAME" \
+    --from-literal=fernet-key="$AIRFLOW__CORE__FERNET_KEY" \
+    --from-literal=webserver-secret-key="$WEB_SERVER_SECRET_KEY" \
     --namespace airflow \
-    --create-namespace \
-    --values projects/airflow/values.yaml \
-    --set webserver.defaultUser.username="${USER_NAME}" \
-    --set webserver.defaultUser.password="${USER_PASSWORD}" \
-    --set webserver.defaultUser.email="${USER_EMAIL}" \
-    --set webserver.defaultUser.firstName="${USER_FIRSTNAME}" \
-    --set webserver.defaultUser.lastName="${USER_LASTNAME}"
+    --dry-run=client \
+    --output=yaml > projects/airflow/airflow-auth.yaml
+kubeseal --format=yaml --cert=./.sealed-secrets.pub < projects/airflow/airflow-auth.yaml | tee -a projects/airflow/app/sealed-secrets.yaml
+rm projects/airflow/airflow-auth.yaml
+
+cat > projects/airflow/secret-values.yaml <<-EOF
+webserver:
+  defaultUser:
+    username: $USER_NAME
+    password: $USER_PASSWORD
+    email: $USER_EMAIL
+    firstname: $USER_FIRSTNAME
+    lastname: $USER_LASTNAME
+EOF
+kubectl create secret generic secret-values \
+    --from-file=projects/airflow/secret-values.yaml \
+    --namespace airflow \
+    --dry-run=client \
+    --output=yaml > projects/airflow/secret-values-secret.yaml
+kubeseal --format=yaml --cert=./.sealed-secrets.pub < projects/airflow/secret-values-secret.yaml | tee -a projects/airflow/app/sealed-secret-values.yaml
+rm projects/airflow/secret-values-secret.yaml projects/airflow/secret-values.yaml
+
+flux create source helm airflow \
+    --url=https://airflow.apache.org \
+    --interval=1h \
+    --export > projects/airflow/app/helmrepository.yaml
+
+flux create helmrelease airflow \
+    --interval=1h \
+    --source=HelmRepository/airflow \
+    --chart=airflow \
+    --chart-version=8.0.1 \
+    --namespace=airflow \
+    --values=projects/airflow/values.yaml \
+    --values-from=Secret/secret-values \
+    --export > projects/airflow/app/helmrelease.yaml
