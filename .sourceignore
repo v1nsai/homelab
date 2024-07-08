@@ -1,2 +1,5 @@
 *.values.yaml
+*.values.yml
 *.values.default.yaml
+*docker-compose*.yaml
+*docker-compose*.yml
