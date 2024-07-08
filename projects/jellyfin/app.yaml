@@ -14,7 +14,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: jellyfin
+    name: homelab
   wait: false
   interval: 30m
   retryInterval: 1m
