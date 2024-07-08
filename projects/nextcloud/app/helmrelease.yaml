@@ -1,0 +1,63 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nextcloud
+  namespace: flux-system
+spec:
+  chart:
+    spec:
+      chart: nextcloud
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: nextcloud
+  interval: 1m0s
+  values:
+    cronjob:
+      enabled: true
+    externalDatabase:
+      enabled: true
+      existingSecret:
+        enabled: true
+        passwordKey: mariadb-password
+        secretName: mariadb-passwords
+        usernameKey: mariadb-username
+    internalDatabase:
+      enabled: false
+    livenessProbe:
+      initialDelaySeconds: 1800
+    mariadb:
+      auth:
+        existingSecret: mariadb-passwords
+      enabled: true
+      primary:
+        persistence:
+          enabled: true
+    nextcloud:
+      configs:
+        mycustom.config.php: |
+          <?php
+          $CONFIG = array(
+            'trusted_proxies' => array('10.0.0.0/8'),
+            'default_phone_region' => 'US',
+            'maintenance_window_start' => 1,
+            );
+      existingSecret:
+        secretName: nextcloud-admin
+    persistence:
+      enabled: true
+      nextcloudData:
+        enabled: true
+    readinessProbe:
+      initialDelaySeconds: 1800
+    redis:
+      auth:
+        enabled: false
+        existingSecret: redis-password
+        existingSecretKey: redis-password
+      enabled: true
+    service:
+      type: LoadBalancer
+    startupProbe:
+      initialDelaySeconds: 1800
