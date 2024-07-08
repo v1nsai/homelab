@@ -71,39 +71,3 @@ EOF
   # sops --encrypt --in-place basic-auth.yaml
   # git add basic-auth.yaml && git commit -m "Encrypt basic-auth secret"
 fi
-
-read -sn1 -p "Install secrets management with Sealed Secrets? [y/N]" SEALED
-if [ "$SEALED" == "y" ]; then
-  echo "Configuring sealed secrets..."
-  # CLI client
-  curl -LO https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.27.0/kubeseal-0.27.0-linux-amd64.tar.gz
-  tar -xvf kubeseal-0.27.0-linux-amd64.tar.gz kubeseal
-  sudo mv kubeseal /usr/local/bin/kubeseal
-
-  # Kubernetes Controller
-  flux create source helm sealed-secrets \
-    --interval=1h \
-    --url=https://bitnami-labs.github.io/sealed-secrets
-  flux create helmrelease sealed-secrets \
-    --interval=1h \
-    --release-name=sealed-secrets-controller \
-    --target-namespace=flux-system \
-    --source=HelmRepository/sealed-secrets \
-    --chart=sealed-secrets \
-    --crds=CreateReplace
-
-  kubeseal --fetch-cert \
-    --controller-name=sealed-secrets-controller \
-    --controller-namespace=flux-system \
-    > .sealed-secrets.pub
-
-  # example usage
-  # kubectl -n default create secret generic basic-auth \
-  #   --from-literal=user=admin \
-  #   --from-literal=password=change-me \
-  #   --dry-run=client \
-  #   -o yaml > basic-auth.yaml
-  # kubeseal --format=yaml --cert=.sealed-secrets.pub < basic-auth.yaml > basic-auth-sealed.yaml
-  # rm basic-auth.yaml
-  # git add basic-auth-sealed.yaml && git commit -m "Seal basic-auth secret"
-fi
