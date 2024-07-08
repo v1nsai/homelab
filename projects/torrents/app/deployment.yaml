@@ -12,6 +12,7 @@ spec:
       labels:
         app: torrents
         backup.velero.io/backup-volumes-excludes: "the-goods"
+        velero.io/exclude-from-backup: "true"
     spec:
       containers:
         - name: gluetun
