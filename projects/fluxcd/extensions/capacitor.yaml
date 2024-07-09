@@ -26,16 +26,3 @@ spec:
   sourceRef:
     kind: OCIRepository
     name: capacitor
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: capacitor-lb
-  namespace: flux-system
-spec:
-  type: LoadBalancer
-  selector:
-    app.kubernetes.io/instance: capacitor
-  ports:
-    - port: 9000
-      targetPort: 9000
