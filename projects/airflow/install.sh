@@ -42,18 +42,3 @@ kubectl create secret generic secret-values \
     --output=yaml > projects/airflow/secret-values-secret.yaml
 kubeseal --format=yaml --cert=./.sealed-secrets.pub < projects/airflow/secret-values-secret.yaml | tee -a projects/airflow/app/sealed-secret-values.yaml
 rm projects/airflow/secret-values-secret.yaml projects/airflow/secret-values.yaml
-
-flux create source helm airflow \
-    --url=https://airflow.apache.org \
-    --interval=1h \
-    --export > projects/airflow/app/helmrepository.yaml
-
-flux create helmrelease airflow \
-    --interval=1h \
-    --source=HelmRepository/airflow \
-    --chart=airflow \
-    --chart-version=8.0.1 \
-    --namespace=airflow \
-    --values=projects/airflow/values.yaml \
-    --values-from=Secret/secret-values \
-    --export > projects/airflow/app/helmrelease.yaml
