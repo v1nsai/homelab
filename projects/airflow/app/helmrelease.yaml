@@ -33,7 +33,7 @@ spec:
         value: all
       waitForMigrations:
         enabled: true
-  valuesFrom:
-  - kind: Secret
-    name: secret-values
-    valuesKey: secret-values.yaml
+  # valuesFrom:
+  # - kind: Secret
+  #   name: secret-values
+  #   valuesKey: secret-values.yaml
