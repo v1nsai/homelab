@@ -1,11 +1,12 @@
-apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: OCIRepository
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
 metadata:
-  name: kubeapps
+  name: bitnami
   namespace: flux-system
 spec:
-  interval: 12h
-  url: oci://registry-1.docker.io/bitnamicharts/kubeapps
+  interval: 1m0s
+  url: https://charts.bitnami.com/bitnami
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -13,11 +14,14 @@ metadata:
   name: kubeapps
   namespace: flux-system
 spec:
+  chart:
+    spec:
+      chart: kubeapps
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
   interval: 12h
-  chartRef:
-    kind: OCIRepository
-    name: kubeapps
-    namespace: flux-system
   values:
     replicaCount: 2
     packaging:
