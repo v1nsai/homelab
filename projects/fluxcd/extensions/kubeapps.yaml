@@ -22,6 +22,7 @@ spec:
         kind: HelmRepository
         name: bitnami
   interval: 12h
+  timeout: 20m
   values:
     replicaCount: 2
     packaging:
