@@ -8,7 +8,8 @@ metadata:
 spec:
   dependsOn:
     - name: sealed-secrets
-    - name: generate-secrets
+      namespace: flux-system
+    # - name: generate-secrets
   path: ./projects/airflow/app
   prune: true
   sourceRef:

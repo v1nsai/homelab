@@ -12,7 +12,6 @@ kubectl api-resources --verbs=list --namespaced -o name \
 # TODO add some awk/sed fu to automate deleting all the resources from the previous command
 kubectl get ns $NAMESPACE -ojson | jq '.spec.finalizers = []' | kubectl replace --raw "/api/v1/namespaces/$NAMESPACE/finalize" -f -
 
-
 # echo "Removing finalizers from namespace $NAMESPACE..."
 # kubectl get namespace -o json $NAMESPACE > stuck.json
 # jq '.spec.finalizers = []' stuck.json > stuck.nofinalizers.json
