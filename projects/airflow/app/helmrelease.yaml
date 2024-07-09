@@ -12,7 +12,6 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: airflow
-      version: 8.0.1
   interval: 1h0m0s
   values:
     config:
@@ -33,7 +32,7 @@ spec:
         value: all
       waitForMigrations:
         enabled: true
-  # valuesFrom:
-  # - kind: Secret
-  #   name: secret-values
-  #   valuesKey: secret-values.yaml
+  valuesFrom:
+  - kind: Secret
+    name: secret-values
+    valuesKey: secret-values.yaml

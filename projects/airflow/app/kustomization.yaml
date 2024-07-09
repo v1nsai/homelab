@@ -6,5 +6,5 @@ namespace: airflow
 resources:
   - ./helmrelease.yaml
   - ./helmrepository.yaml
-  # - ./sealed-secret-values.yaml
+  - ./sealed-secret-values.yaml
   - ./sealed-secrets.yaml
