@@ -1,0 +1,30 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: kubeapps
+  namespace: flux-system
+spec:
+  interval: 12h
+  url: oci://registry-1.docker.io/bitnamicharts/kubeapps
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kubeapps
+  namespace: flux-system
+spec:
+  interval: 12h
+  chartRef:
+    kind: OCIRepository
+    name: kubeapps
+    namespace: flux-system
+  values:
+    replicaCount: 2
+    packaging:
+      helm:
+        enabled: false
+      flux:
+        enabled: true
+    frontend:
+      service:
+        type: LoadBalancer
