@@ -13,6 +13,7 @@ spec:
         kind: HelmRepository
         name: nextcloud
   interval: 1m0s
+  timeout: 30m
   values:
     cronjob:
       enabled: true
