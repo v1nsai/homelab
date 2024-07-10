@@ -33,6 +33,12 @@ spec:
         value: all
       waitForMigrations:
         enabled: true
+    createUserJob:
+      useHelmHooks: false
+      applyCustomEnv: false
+    migrateDatabaseJob:
+      useHelmHooks: false
+      applyCustomEnv: false
   valuesFrom:
   - kind: Secret
     name: secret-values
