@@ -40,5 +40,5 @@ kubectl create secret generic secret-values \
     --namespace airflow \
     --dry-run=client \
     --output=yaml > projects/airflow/secret-values-secret.yaml
-kubeseal --format=yaml --cert=./.sealed-secrets.pub < projects/airflow/secret-values-secret.yaml | tee -a projects/airflow/app/sealed-secret-values.yaml
+kubeseal --format=yaml --cert=./.sealed-secrets.pub < projects/airflow/secret-values-secret.yaml | tee -a projects/airflow/app/sealed-secrets.yaml
 rm projects/airflow/secret-values-secret.yaml projects/airflow/secret-values.yaml
