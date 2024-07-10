@@ -1,0 +1,31 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: bitnami
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  url: https://charts.bitnami.com/bitnami
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kubeapps
+  namespace: flux-system
+spec:
+  chart:
+    spec:
+      chart: kubeapps
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+  interval: 12h
+  timeout: 20m
+  values:
+    packaging:
+      helm:
+        enabled: false
+      flux:
+        enabled: true
