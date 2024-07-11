@@ -26,8 +26,8 @@ spec:
         usernameKey: mariadb-username
     internalDatabase:
       enabled: false
-    # livenessProbe:
-    #   initialDelaySeconds: 1800
+    livenessProbe:
+      initialDelaySeconds: 1800
     mariadb:
       auth:
         existingSecret: mariadb-passwords
@@ -50,8 +50,8 @@ spec:
       enabled: true
       nextcloudData:
         enabled: true
-    # readinessProbe:
-    #   initialDelaySeconds: 1800
+    readinessProbe:
+      initialDelaySeconds: 1800
     redis:
       auth:
         enabled: false
@@ -60,5 +60,5 @@ spec:
       enabled: true
     service:
       type: LoadBalancer
-    # startupProbe:
-    #   initialDelaySeconds: 1800
+    startupProbe:
+      initialDelaySeconds: 1800
