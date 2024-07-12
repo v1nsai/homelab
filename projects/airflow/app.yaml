@@ -38,3 +38,7 @@ spec:
   destination:
     name: in-cluster
     namespace: kubeseal
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
