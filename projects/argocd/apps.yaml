@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apps
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/v1nsai/homelab.git
+    targetRevision: argocd
+    path: projects/
+    directory:
+      recurse: true
+      include: "*.yaml"
+      exclude: "secret.yaml,secrets.yaml,*.yml"
+  destination:
+    # server: https://kubernetes.default.svc
+    name: in-cluster
+    namespace: "*"
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

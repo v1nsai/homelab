@@ -41,6 +41,8 @@ all-in-one
 projects/*/secrets
 *.env
 *.default.yaml
+secret.yaml
+secrets.yaml
 
 # Ignore images
 projects/diagrams/custom_icons

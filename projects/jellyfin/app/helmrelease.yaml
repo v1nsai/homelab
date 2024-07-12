@@ -32,5 +32,8 @@ spec:
     extraPodLabels:
       backup.velero.io/backup-volumes-excludes: "the-goods"
       velero.io/exclude-from-backup: "true"
+    resources:
+      limits:
+        nvidia.com/gpu: "1"
     # nodeSelector:
     #   nvidia.com/gpu.present: "true"

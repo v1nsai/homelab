@@ -23,3 +23,6 @@ configs:
   params:
     application:
       namespaces: "*"
+
+application:
+  resourceTrackingMethod: "annotation+label"
