@@ -1,22 +1,44 @@
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
+apiVersion: argoproj.io/v1alpha1
+kind: Application
 metadata:
   name: jellyfin
-  namespace: flux-system
+  namespace: jellyfin
 spec:
-  targetNamespace: jellyfin
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: jellyfin
-  path: ./projects/jellyfin/app
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: homelab
-    namespace: flux-system
-  wait: false
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
+  project: default
+  source:
+    chart: jellyfin
+    repoURL: https://github.com/v1nsai/jellyfin-helm
+    targetRevision: master
+    helm:
+      releaseName: jellyfin
+      valuesObject:
+        persistence:
+          config:
+            enabled: true
+            storageClass: microk8s-hostpath
+          media:
+            enabled: true
+            existingClaim: the-goods
+            accessMode: ReadWriteMany
+        extraEnvVars:
+          - name: NVIDIA_VISIBLE_DEVICES
+            value: "all"
+          - name: NVIDIA_DRIVER_CAPABILITIES
+            value: "all"
+          - name: DOTNET_SYSTEM_IO_DISABLEFILELOCKING
+            value: "true"
+        extraPodLabels:
+          backup.velero.io/backup-volumes-excludes: "the-goods"
+          velero.io/exclude-from-backup: "true"
+        resources:
+          limits:
+            nvidia.com/gpu: "1"
+        # nodeSelector:
+        #   nvidia.com/gpu.present: "true"
+  destination:
+    name: in-cluster
+    namespace: jellyfin
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
