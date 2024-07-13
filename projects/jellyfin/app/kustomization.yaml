@@ -6,4 +6,3 @@ resources:
   - ./gitrepository.yaml
   - ./helmrelease.yaml
   - ./the-goods.yaml
-  - ./namespace.yaml
