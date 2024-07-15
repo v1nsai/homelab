@@ -19,6 +19,8 @@ spec:
       enabled: "true"
       nvidiaDriverCRD:
         enabled: "true"
+        nodeSelector:
+          kubernetes.io/hostname: bigrig
     operator:
       defaultRuntime: containerd
     toolkit:
