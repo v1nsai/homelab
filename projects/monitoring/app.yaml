@@ -10,6 +10,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: homelab
-    namespace: monitoring
+    namespace: flux-system
   # validation: client
   
