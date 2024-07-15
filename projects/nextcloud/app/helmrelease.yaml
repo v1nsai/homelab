@@ -13,7 +13,7 @@ spec:
         kind: HelmRepository
         name: nextcloud
   interval: 1m0s
-  timeout: 30m
+  timeout: 15m
   values:
     cronjob:
       enabled: true
@@ -43,7 +43,6 @@ spec:
           redis.session.locking_enabled=1
           redis.session.lock_retries=-1
           redis.session.lock_wait_time=10000
-
       configs:
         redis-cluster.config.php: |-
           <?php 
