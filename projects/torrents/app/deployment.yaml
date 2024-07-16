@@ -20,7 +20,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: FIREWALL_OUTBOUND_SUBNETS
-              value: "192.168.1.0/24,10.0.0.0/8,172.16.0.0/12"
+              value: "192.168.1.0/24,10.0.0.0/8,172.16.0.0/12,10.152.183.0/24"
             - name: VPN_PORT_FORWARDING
               value: "on"
             - name: VPN_PORT_FORWARDING_PROVIDER
