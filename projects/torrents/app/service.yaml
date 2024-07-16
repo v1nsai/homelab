@@ -39,3 +39,15 @@ spec:
     app: torrents
 # pvcs commented out to persist between installations
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flaresolverr
+spec:
+  type: ClusterIP
+  ports:
+    - name: "8191"
+      port: 8191
+      targetPort: 8191
+  selector:
+    app: torrents
