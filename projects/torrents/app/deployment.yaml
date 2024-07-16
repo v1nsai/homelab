@@ -32,7 +32,7 @@ spec:
             - name: TZ
               value: "America/New_York"
             - name: FIREWALL_INPUT_PORTS
-              value: "9091,9696,8989"
+              value: "9091,9696,8989,8191"
           ports:
             - containerPort: 51820
           securityContext:
