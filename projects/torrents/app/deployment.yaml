@@ -91,6 +91,14 @@ spec:
             #   mountPath: /downloads
             #   subPath: sonarr-downloads
 
+        - name: flaresolverr
+          image: ghcr.io/flaresolverr/flaresolverr:latest
+          env:
+            - name: TZ
+              value: "America/New_York"
+          ports:
+            - containerPort: 8191
+
       volumes:
         - name: downloads
           persistentVolumeClaim:
