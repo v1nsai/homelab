@@ -15,4 +15,4 @@ spec:
   interval: 1m0s
   values:
     commonLabels:
-      velero.io/exclude-from-backup: true
+      velero.io/exclude-from-backup: "true"
