@@ -11,7 +11,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: vmware-tanzu
-      # version: "6.7.0"
+      version: "6.7.0"
   interval: 1m0s
   values:
     configuration:
@@ -19,7 +19,7 @@ spec:
       - name: aws-s3
         provider: aws
         bucket: "dr.ew-homelab-backups"
-        # default: true
+        default: true
         accessMode: ReadWrite
         credential:
           name: backuplocation-credentials
@@ -49,49 +49,49 @@ spec:
     deployNodeAgent: true
     upgradeCRDs: false
 
-    # schedules:
-    #   nightly:
-    #     schedule: 0 3 * * *
-    #     skipImmediately: false
-    #     template:
-    #       csiSnapshotTimeout: 0s
-    #       defaultVolumesToFsBackup: true
-    #       hooks: {}
-    #       includedNamespaces:
-    #       - '*'
-    #       includedResources:
-    #       - "pvc"
-    #       itemOperationTimeout: 0s
-    #       metadata: {}
-    #       ttl: 168h0m0s
-    #       uploaderConfig:
-    #         parallelFilesUpload: 10
-    #       storageLocation: aws-s3
-    #     useOwnerReferencesInBackup: false
+    schedules:
+      nightly:
+        schedule: 0 3 * * *
+        skipImmediately: false
+        template:
+          csiSnapshotTimeout: 0s
+          defaultVolumesToFsBackup: true
+          hooks: {}
+          includedNamespaces:
+          - '*'
+          includedResources:
+          - "pvc"
+          itemOperationTimeout: 0s
+          metadata: {}
+          ttl: 168h0m0s
+          uploaderConfig:
+            parallelFilesUpload: 10
+          storageLocation: aws-s3
+        useOwnerReferencesInBackup: false
 
-    # metrics:
-    #   prometheusRule:
-    #     autodetect: true
-    #     enabled: true
-    #     # Additional labels to add to deployed PrometheusRule
-    #     additionalLabels: {}
-    #     # PrometheusRule namespace. Defaults to Velero namespace.
-    #     # namespace: ""
-    #     # Rules to be deployed
-    #     spec:
-    #     - alert: VeleroBackupPartialFailures
-    #       annotations:
-    #         message: Velero backup {{ $labels.schedule }} has {{ $value | humanizePercentage }} partialy failed backups.
-    #       expr: |-
-    #         velero_backup_partial_failure_total{schedule!=""} / velero_backup_attempt_total{schedule!=""} > 0.25
-    #       for: 15m
-    #       labels:
-    #         severity: warning
-    #     - alert: VeleroBackupFailures
-    #       annotations:
-    #         message: Velero backup {{ $labels.schedule }} has {{ $value | humanizePercentage }} failed backups.
-    #       expr: |-
-    #         velero_backup_failure_total{schedule!=""} / velero_backup_attempt_total{schedule!=""} > 0.25
-    #       for: 15m
-    #       labels:
-    #         severity: warning
+    metrics:
+      prometheusRule:
+        autodetect: true
+        enabled: true
+        # Additional labels to add to deployed PrometheusRule
+        additionalLabels: {}
+        # PrometheusRule namespace. Defaults to Velero namespace.
+        # namespace: ""
+        # Rules to be deployed
+        spec:
+        - alert: VeleroBackupPartialFailures
+          annotations:
+            message: Velero backup {{ $labels.schedule }} has {{ $value | humanizePercentage }} partialy failed backups.
+          expr: |-
+            velero_backup_partial_failure_total{schedule!=""} / velero_backup_attempt_total{schedule!=""} > 0.25
+          for: 15m
+          labels:
+            severity: warning
+        - alert: VeleroBackupFailures
+          annotations:
+            message: Velero backup {{ $labels.schedule }} has {{ $value | humanizePercentage }} failed backups.
+          expr: |-
+            velero_backup_failure_total{schedule!=""} / velero_backup_attempt_total{schedule!=""} > 0.25
+          for: 15m
+          labels:
+            severity: warning
