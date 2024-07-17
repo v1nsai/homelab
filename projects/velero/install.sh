@@ -75,7 +75,7 @@ aws_access_key_id=${AWS_ACCESS_KEY_ID}
 aws_secret_access_key=${AWS_SECRET_ACCESS_KEY}
 EOF
 BACKUPLOCATION_SECRET_NAME="backuplocation-credentials"
-BACKUPLOCATION_SECRET_KEY="s3-credentials.env"
+BACKUPLOCATION_SECRET_KEY="cloud"
 kubectl create secret generic $BACKUPLOCATION_SECRET_NAME \
     --namespace velero \
     --from-file $BACKUPLOCATION_SECRET_KEY=projects/velero/s3-credentials.env \

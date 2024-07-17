@@ -17,7 +17,7 @@ spec:
       backupStorageLocation:
       - name: default
         provider: aws
-        bucket: dr.ew-homelab-backups
+        bucket: "dr.ew-homelab-backups"
         default: true
         accessMode: ReadWrite
         credential:
@@ -34,6 +34,10 @@ spec:
         volumeMounts:
           - mountPath: /target
             name: plugins
+
+    credentials:
+      useSecret: true
+      existingSecret: backuplocation-credentials
 
     snapshotsEnabled: false
     deployNodeAgent: true
