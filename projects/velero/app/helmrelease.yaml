@@ -35,9 +35,9 @@ spec:
           - mountPath: /target
             name: plugins
 
-    # credentials:
-    #   useSecret: true
-    #   existingSecret: backuplocation-credentials
+    credentials:
+      useSecret: true
+      existingSecret: backuplocation-credentials
 
     snapshotsEnabled: false
     deployNodeAgent: true
