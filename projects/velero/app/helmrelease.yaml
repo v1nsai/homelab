@@ -10,7 +10,7 @@ spec:
       reconcileStrategy: ChartVersion
       sourceRef:
         kind: HelmRepository
-        name: velero
+        name: vmware-tanzu
   interval: 1m0s
   values:
     configuration:
