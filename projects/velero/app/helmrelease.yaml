@@ -18,11 +18,11 @@ spec:
       - name: aws-s3
         provider: aws
         bucket: "dr.ew-homelab-backups"
-        default: true
+        # default: true
         accessMode: ReadWrite
         credential:
           name: backuplocation-credentials
-          key: s3-credentials.env
+          key: cloud
         config:
         region: us-east-1
       defaultVolumesToFsBackup: true
