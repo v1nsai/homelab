@@ -15,7 +15,7 @@ spec:
   values:
     configuration:
       backupStorageLocation:
-      - name: default
+      - name: aws-s3
         provider: aws
         bucket: "dr.ew-homelab-backups"
         default: true
