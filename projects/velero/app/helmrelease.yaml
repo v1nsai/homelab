@@ -26,7 +26,7 @@ spec:
           key: cloud
         config:
           region: us-east-1
-      # defaultVolumesToFsBackup: true
+      defaultVolumesToFsBackup: true
 
     initContainers:
       - name: velero-plugin-for-aws
@@ -36,9 +36,9 @@ spec:
           - mountPath: /target
             name: plugins
 
-    # credentials:
-    #   useSecret: true
-    #   existingSecret: backuplocation-credentials
+    credentials:
+      useSecret: true
+      existingSecret: backuplocation-credentials
 
     # kubectl:
     #   image:

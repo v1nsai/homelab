@@ -83,19 +83,19 @@ kubectl create secret generic $BACKUPLOCATION_SECRET_NAME \
     --output yaml | kubeseal --cert ./.sealed-secrets.pub --format yaml > projects/velero/app/sealed-secrets.yaml
 
 
-# echo "Installing velero..."
-# velero install \
-#     --provider aws \
-#     --plugins velero/velero-plugin-for-aws:latest \
-#     --bucket $BUCKET \
-#     --backup-location-config region=$REGION \
-#     --secret-file projects/velero/s3-credentials.env \
-#     --use-node-agent \
-#     --default-volumes-to-fs-backup \
-#     --use-volume-snapshots=false \
-#     --dry-run \
-#     --output yaml > projects/velero/velero-install.yaml
-#     # --parallel-files-upload 10
+echo "Installing velero..."
+velero install \
+    --provider aws \
+    --plugins velero/velero-plugin-for-aws:latest \
+    --bucket "dr.ew-homelab-backups" \
+    --backup-location-config region="us-east-1" \
+    --secret-file projects/velero/s3-credentials.env \
+    --use-node-agent \
+    --default-volumes-to-fs-backup \
+    --use-volume-snapshots=false \
+    --dry-run \
+    --output yaml > projects/velero/velero-install.yaml
+    # --parallel-files-upload 10
 
-# echo "Scheduling backups..."
-# velero schedule create nightly --schedule="0 3 * * *" --ttl 168h0m0s --default-volumes-to-fs-backup --parallel-files-upload 10
+echo "Scheduling backups..."
+velero schedule create nightly --schedule="0 3 * * *" --ttl 168h0m0s --default-volumes-to-fs-backup --parallel-files-upload 10
