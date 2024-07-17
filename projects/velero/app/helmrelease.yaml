@@ -52,6 +52,8 @@ spec:
           hooks: {}
           includedNamespaces:
           - '*'
+          includedResources:
+          - "pvc"
           itemOperationTimeout: 0s
           metadata: {}
           ttl: 168h0m0s
