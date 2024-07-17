@@ -2,11 +2,21 @@
 
 set -e
 source projects/velero/.env
+REGION=$(aws configure get region)
 
 if [ -z "$BUCKET" ] || [ -z "$AWS_ACCESS_KEY_ID" ] || [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
-    echo "Please set BUCKET in projects/velero/.env"
+    echo "Please create an IAM user and set the BUCKET, AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in projects/velero/.env"
     exit 1
 fi
+
+# aws iam create-user --user-name velero
+# aws iam put-user-policy \
+#   --user-name velero \
+#   --policy-name velero \
+#   --policy-document file://projects/velero/velero-policy.json
+# aws iam create-access-key --user-name velero > ~/.aws/velero-user.json
+# AWS_SECRET_ACCESS_KEY=$(jq -r '.AccessKey.SecretAccessKey' ~/.aws/velero-user.json)
+# AWS_ACCESS_KEY_ID=$(jq -r '.AccessKey.AccessKeyId' ~/.aws/velero-user.json)
 
 # echo "Installing velero CLI..."
 # wget https://github.com/vmware-tanzu/velero/releases/download/v1.13.2/velero-v1.13.2-linux-amd64.tar.gz
@@ -57,39 +67,35 @@ cat > projects/velero/velero-policy.json <<EOF
     ]
 }
 EOF
-cat > projects/velero/velero.env <<EOF
+
+echo "Creating backup location secrets..."
+cat > projects/velero/s3-credentials.env <<EOF
 [default]
 aws_access_key_id=${AWS_ACCESS_KEY_ID}
 aws_secret_access_key=${AWS_SECRET_ACCESS_KEY}
 EOF
-# aws iam create-user --user-name velero
-# aws iam put-user-policy \
-#   --user-name velero \
-#   --policy-name velero \
-#   --policy-document file://projects/velero/velero-policy.json
-# aws iam create-access-key --user-name velero > ~/.aws/velero-user.json
-# AWS_SECRET_ACCESS_KEY=$(jq -r '.AccessKey.SecretAccessKey' ~/.aws/velero-user.json)
-# AWS_ACCESS_KEY_ID=$(jq -r '.AccessKey.AccessKeyId' ~/.aws/velero-user.json)
-REGION=$(aws configure get region)
+BACKUPLOCATION_SECRET_NAME="backuplocation-credentials"
+BACKUPLOCATION_SECRET_KEY="s3-credentials.env"
+kubectl create secret generic $BACKUPLOCATION_SECRET_NAME \
+    --namespace velero \
+    --from-file $BACKUPLOCATION_SECRET_KEY=projects/velero/s3-credentials.env \
+    --dry-run=client \
+    --output yaml | kubeseal --cert ./.sealed-secrets.pub --format yaml > projects/velero/app/sealed-secrets.yaml
 
-echo "Installing velero..."
-velero install \
-    --provider aws \
-    --plugins velero/velero-plugin-for-aws:latest \
-    --bucket $BUCKET \
-    --backup-location-config region=$REGION \
-    --secret-file projects/velero/velero.env \
-    --use-node-agent \
-    --default-volumes-to-fs-backup \
-    --use-volume-snapshots=false
-    # --parallel-files-upload 10
 
-# echo "Setting up volume backup exclusions..."
-# JELLYFIN=$(kubectl get pods -n jellyfin | grep jellyfin | awk '{print $1}')
-# kubectl -n jellyfin annotate pod/$JELLYFIN backup.velero.io/backup-volumes-excludes=the-goods
+# echo "Installing velero..."
+# velero install \
+#     --provider aws \
+#     --plugins velero/velero-plugin-for-aws:latest \
+#     --bucket $BUCKET \
+#     --backup-location-config region=$REGION \
+#     --secret-file projects/velero/s3-credentials.env \
+#     --use-node-agent \
+#     --default-volumes-to-fs-backup \
+#     --use-volume-snapshots=false \
+#     --dry-run \
+#     --output yaml > projects/velero/velero-install.yaml
+#     # --parallel-files-upload 10
 
-echo "Scheduling backups..."
-velero schedule create nightly --schedule="0 3 * * *" --ttl 168h0m0s --default-volumes-to-fs-backup --parallel-files-upload 10
-
-# echo "Adding backup rules..."
-# kubectl apply -f projects/velero/change-storageclass.yaml
+# echo "Scheduling backups..."
+# velero schedule create nightly --schedule="0 3 * * *" --ttl 168h0m0s --default-volumes-to-fs-backup --parallel-files-upload 10

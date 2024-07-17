@@ -1,0 +1,83 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: velero
+  namespace: velero
+spec:
+  chart:
+    spec:
+      chart: velero
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: velero
+  interval: 1m0s
+  values:
+    configuration:
+      backupStorageLocation:
+      - name: default
+        provider: aws
+        bucket: dr.ew-homelab-backups
+        default: true
+        accessMode: ReadWrite
+        credential:
+          name: backuplocation-credentials
+          key: s3-credentials.env
+        config:
+        region: us-east-1
+      defaultVolumesToFsBackup: true
+
+    initContainers:
+      - name: velero-plugin-for-aws
+        image: velero/velero-plugin-for-aws:v1.10.0
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - mountPath: /target
+            name: plugins
+
+    snapshotsEnabled: false
+    deployNodeAgent: true
+
+    schedules:
+      nightly:
+        schedule: 0 3 * * *
+        skipImmediately: false
+        template:
+          csiSnapshotTimeout: 0s
+          defaultVolumesToFsBackup: true
+          hooks: {}
+          includedNamespaces:
+          - '*'
+          itemOperationTimeout: 0s
+          metadata: {}
+          ttl: 168h0m0s
+          uploaderConfig:
+            parallelFilesUpload: 10
+        useOwnerReferencesInBackup: false
+
+    metrics:
+      prometheusRule:
+        autodetect: true
+        enabled: true
+        # Additional labels to add to deployed PrometheusRule
+        additionalLabels: {}
+        # PrometheusRule namespace. Defaults to Velero namespace.
+        # namespace: ""
+        # Rules to be deployed
+        spec:
+        - alert: VeleroBackupPartialFailures
+          annotations:
+            message: Velero backup {{ $labels.schedule }} has {{ $value | humanizePercentage }} partialy failed backups.
+          expr: |-
+            velero_backup_partial_failure_total{schedule!=""} / velero_backup_attempt_total{schedule!=""} > 0.25
+          for: 15m
+          labels:
+            severity: warning
+        - alert: VeleroBackupFailures
+          annotations:
+            message: Velero backup {{ $labels.schedule }} has {{ $value | humanizePercentage }} failed backups.
+          expr: |-
+            velero_backup_failure_total{schedule!=""} / velero_backup_attempt_total{schedule!=""} > 0.25
+          for: 15m
+          labels:
+            severity: warning
