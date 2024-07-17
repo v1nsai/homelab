@@ -40,6 +40,11 @@ spec:
       useSecret: true
       existingSecret: backuplocation-credentials
 
+    kubectl:
+      image:
+        repository: docker.io/bitnami/kubectl
+        tag: 1.29.4
+
     snapshotsEnabled: false
     deployNodeAgent: true
 
