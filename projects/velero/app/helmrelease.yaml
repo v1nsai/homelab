@@ -26,7 +26,7 @@ spec:
           key: cloud
         config:
           region: us-east-1
-      defaultVolumesToFsBackup: true
+      defaultVolumesToFsBackup: false
 
     initContainers:
       - name: velero-plugin-for-aws
@@ -40,13 +40,8 @@ spec:
       useSecret: true
       existingSecret: backuplocation-credentials
 
-    # kubectl:
-    #   image:
-    #     repository: docker.io/bitnami/kubectl
-    #     tag: 1.29.4
-
-    snapshotsEnabled: false
-    deployNodeAgent: true
+    snapshotsEnabled: true
+    deployNodeAgent: false
     upgradeCRDs: true
 
     schedules:
@@ -55,12 +50,10 @@ spec:
         skipImmediately: false
         template:
           csiSnapshotTimeout: 0s
-          defaultVolumesToFsBackup: true
+          defaultVolumesToFsBackup: false
           hooks: {}
           includedNamespaces:
           - '*'
-          includedResources:
-          - "pvc"
           itemOperationTimeout: 0s
           metadata: {}
           ttl: 168h0m0s
