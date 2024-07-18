@@ -27,6 +27,15 @@ spec:
         config:
           region: us-east-1
       defaultVolumesToFsBackup: false
+      volumeSnapshotLocation:
+      - name: aws-s3
+        provider: aws
+        bucket: "dr.ew-homelab-backups"
+        credential:
+          name: backuplocation-credentials
+          key: cloud
+        config:
+          region: us-east-1
 
     initContainers:
       - name: velero-plugin-for-aws
