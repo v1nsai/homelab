@@ -48,10 +48,10 @@ spec:
       useSecret: true
       existingSecret: backuplocation-credentials
 
-    snapshotsEnabled: true
+    snapshotsEnabled: false
     deployNodeAgent: true
     upgradeCRDs: true
-    defaultVolumesToFsBackup: false
+    defaultVolumesToFsBackup: true
     features: EnableCSI
     defaultSnapshotMoveData: true
 
