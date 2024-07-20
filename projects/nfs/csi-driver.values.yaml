@@ -6,11 +6,10 @@ node:
   dnsPolicy: ClusterFirstWithHostNet
 storageClass:
   create: true
-  name: irma-nfs-csi
+  name: irma-csi-driver-nfs
   parameters:
-    server: 192.168.1.169
-    share: /mnt/irma/kubernetes/csi-nfs-driver
-    subDir:
+    server: 192.168.1.170
+    share: /mnt/irma/kubernetes/csi-driver-nfs
     mountPermissions: "0"
     # csi.storage.k8s.io/provisioner-secret is only needed for providing mountOptions in DeleteVolume
     # csi.storage.k8s.io/provisioner-secret-name: "mount-options"
@@ -19,3 +18,6 @@ storageClass:
   volumeBindingMode: Immediate
   # mountOptions:
   #   - nfsvers=4.1
+externalSnapshotter:
+  enabled: true
+  name: snapshot-controller
