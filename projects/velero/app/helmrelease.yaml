@@ -28,6 +28,7 @@ spec:
           region: us-east-1
       defaultVolumesToFsBackup: false
       features: EnableCSI
+      defaultSnapshotMoveData: true
       volumeSnapshotLocation:
       - name: aws-s3
         provider: aws
@@ -66,6 +67,8 @@ spec:
         template:
           csiSnapshotTimeout: 0s
           defaultVolumesToFsBackup: false
+          defaultSnapshotMoveData: true
+          features: EnableCSI
           hooks: {}
           includedNamespaces:
           - '*'
