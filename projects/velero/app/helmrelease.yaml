@@ -27,6 +27,7 @@ spec:
         config:
           region: us-east-1
       defaultVolumesToFsBackup: false
+      features: EnableCSI
       volumeSnapshotLocation:
       - name: aws-s3
         provider: aws
@@ -50,8 +51,13 @@ spec:
       existingSecret: backuplocation-credentials
 
     snapshotsEnabled: true
-    deployNodeAgent: false
+    deployNodeAgent: true
     upgradeCRDs: true
+
+    nodeAgent:
+      podSecurityContext:
+        runAsUser: 0
+        runAsGroup: 0
 
     schedules:
       nightly:
