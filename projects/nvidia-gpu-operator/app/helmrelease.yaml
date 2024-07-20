@@ -16,9 +16,9 @@ spec:
   timeout: 30m
   values:
     driver:
-      enabled: "false"
+      enabled: "true"
       nvidiaDriverCRD:
-        enabled: "false"
+        enabled: "true"
         # nodeSelector:
         #   kubernetes.io/hostname: bigrig
     operator:
