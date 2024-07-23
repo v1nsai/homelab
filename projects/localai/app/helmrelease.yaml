@@ -17,7 +17,8 @@ spec:
   values:
     models:
       list:
-        - url: "https://huggingface.co/lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF/blob/main/Meta-Llama-3-8B-Instruct-IQ3_M.gguf"
+        - url: https://huggingface.co/unsloth/llama-3-8b-bnb-4bit/raw/main/model.safetensors
+        # - url: https://huggingface.co/lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF/blob/main/Meta-Llama-3-8B-Instruct-IQ3_M.gguf
     service:
       type: LoadBalancer
     affinity:
@@ -29,3 +30,9 @@ spec:
               operator: In
               values:
               - bigrig
+    persistence:
+      models:
+        storageClass: irma
+        size: 20Gi
+      output:
+        storageClass: irma
