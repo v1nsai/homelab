@@ -26,6 +26,7 @@ spec:
           key: cloud
         config:
           region: us-east-1
+
       volumeSnapshotLocation:
       - name: aws-s3
         provider: aws
@@ -37,7 +38,6 @@ spec:
           region: us-east-1
           
       defaultVolumesToFsBackup: true
-
 
     initContainers:
       - name: velero-plugin-for-aws
