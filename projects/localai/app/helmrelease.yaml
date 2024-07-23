@@ -17,8 +17,7 @@ spec:
   values:
     models:
       list:
-        - name: llama3-8b
-          url: https://huggingface.co/unsloth/llama-3-8b-bnb-4bit/raw/main/model.safetensors
+        - url: https://huggingface.co/unsloth/llama-3-8b-bnb-4bit/raw/main/model.safetensors
     service:
       type: LoadBalancer
     affinity:
