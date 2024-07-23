@@ -21,5 +21,12 @@ spec:
           url: https://huggingface.co/unsloth/llama-3-8b-bnb-4bit/raw/main/model.safetensors
     service:
       type: LoadBalancer
-    nodeSelector:
-      kubernetes.io/hostname: bigrig
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - bigrig
