@@ -19,7 +19,8 @@ spec:
         - url: "https://huggingface.co/unsloth/llama-3-8b-bnb-4bit/raw/main/model.safetensors"
         - url: "https://huggingface.co/lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF/blob/main/Meta-Llama-3-8B-Instruct-IQ3_M.gguf"
     deployment:
-      tag: master-cublas-cuda12
+      image:
+        tag: master-cublas-cuda12
       runtimeClassName: nvidia
     service:
       type: LoadBalancer
