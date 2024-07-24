@@ -34,7 +34,7 @@ spec:
               - bigrig
     persistence:
       models:
-        storageClass: microk8s-hostpath
+        storageClass: silverstick
         size: 20Gi
       output:
-        storageClass: microk8s-hostpath
+        storageClass: silverstick
