@@ -1,0 +1,36 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ollama
+  namespace: ollama
+spec:
+  chart:
+    spec:
+      chart: ollama-helm/ollama
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: ollama-helm
+  interval: 1m0s
+  values:
+    ollama:
+      gpu:
+        enabled: true
+      models:
+        - TinyLlama/TinyLlama-1.1B-Chat-v1.0
+      insecure: true
+    runtimeClassName: nvidia
+    service:
+      type: LoadBalancer
+    persistentVolume:
+      enabled: false
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+              - bigrig
