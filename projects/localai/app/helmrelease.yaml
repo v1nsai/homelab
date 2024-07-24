@@ -19,6 +19,8 @@ spec:
     #   list:
     #     - url: "https://huggingface.co/unsloth/llama-3-8b-bnb-4bit/raw/main/model.safetensors"
     #     - url: "https://huggingface.co/lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF/blob/main/Meta-Llama-3-8B-Instruct-IQ3_M.gguf"
+    deployment:
+      runtimeClassName: gpu
     service:
       type: LoadBalancer
     affinity:
@@ -32,7 +34,7 @@ spec:
               - bigrig
     persistence:
       models:
-        storageClass: irma
+        storageClass: microk8s-hostpath
         size: 20Gi
       output:
-        storageClass: irma
+        storageClass: microk8s-hostpath
