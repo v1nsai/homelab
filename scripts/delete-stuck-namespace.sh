@@ -7,8 +7,7 @@ echo "Deleting remaining resources in $1..."
 export NAMESPACE="$1"
 
 # list all resources in namespace
-kubectl api-resources --verbs=list --namespaced -o name \
-  | xargs -n 1 kubectl get --show-kind --ignore-not-found -n $NAMESPACE
+kubectl api-resources --verbs=list --namespaced -o name | xargs -n 1 kubectl get --show-kind --ignore-not-found -n $NAMESPACE
 # TODO add some awk/sed fu to automate deleting all the resources from the previous command
 kubectl get ns $NAMESPACE -ojson | jq '.spec.finalizers = []' | kubectl replace --raw "/api/v1/namespaces/$NAMESPACE/finalize" -f -
 
