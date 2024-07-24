@@ -20,7 +20,7 @@ spec:
         - url: "https://huggingface.co/lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF/blob/main/Meta-Llama-3-8B-Instruct-IQ3_M.gguf"
     deployment:
       image:
-        tag: master-cublas-cuda12
+        tag: master-cublas-cuda11
       runtimeClassName: nvidia
     service:
       type: LoadBalancer
