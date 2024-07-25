@@ -18,7 +18,7 @@ spec:
       gpu:
         enabled: true
       models:
-        - TinyLlama/TinyLlama-1.1B-Chat-v1.0
+        - tinyllama
       insecure: true
     runtimeClassName: nvidia
     service:
