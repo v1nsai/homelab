@@ -21,17 +21,15 @@ spec:
         enabled: true
     certResolvers:
       letsencrypt:
-        acme:
-          email: support@doctor-ew.com
-          storage: /data/acme.json
-          httpChallenge:
-            # used during the challenge
-            entryPoint: web
+        email: support@doctor-ew.com
+        storage: /data/acme.json
+        httpChallenge:
+          # used during the challenge
+          entryPoint: web
       letsencrypt-staging:
-        acme:
-          email: support@doctor-ew.com
-          storage: /data/acme.json
-          caserver: https://acme-staging-v02.api.letsencrypt.org/directory
-          httpChallenge:
-            # used during the challenge
-            entryPoint: web
+        email: support@doctor-ew.com
+        storage: /data/acme.json
+        caserver: https://acme-staging-v02.api.letsencrypt.org/directory
+        httpChallenge:
+          # used during the challenge
+          entryPoint: web
