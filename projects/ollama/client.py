@@ -7,7 +7,7 @@ model = "tinyllama"  # TODO: update this for whatever model you wish to use
 def chat(messages):
     r = requests.post(
         "http://192.168.1.16:11434/api/chat",
-        json={"model": model, "messages": messages, "stream": True, "keep_alive": -1},
+        json={"model": model, "messages": messages, "stream": True},
 	stream=True
     )
     r.raise_for_status()

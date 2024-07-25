@@ -4,3 +4,5 @@ namespace: ollama
 resources:
   - helmrepository.yaml
   - helmrelease.yaml
+  - ../ui/helmrepository.yaml
+  - ../ui/helmrelease.yaml
