@@ -31,6 +31,7 @@ spec:
         acme:
           email: support@doctor-ew.com
           storage: /data/acme.json
+          caserver: https://acme-staging-v02.api.letsencrypt.org/directory
           httpChallenge:
             # used during the challenge
             entryPoint: web
