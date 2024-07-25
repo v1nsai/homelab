@@ -11,7 +11,7 @@ spec:
       reconcileStrategy: ChartVersion
       sourceRef:
         kind: HelmRepository
-        name: ollama-helm
+        name: ollama
   interval: 1m0s
   values:
     ollama:
