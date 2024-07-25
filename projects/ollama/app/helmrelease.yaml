@@ -23,8 +23,6 @@ spec:
     runtimeClassName: nvidia
     service:
       type: LoadBalancer
-    persistentVolume:
-      enabled: false
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -34,3 +32,6 @@ spec:
               operator: In
               values:
               - bigrig
+    persistentVolume:
+      enabled: true
+      storageClass: microk8s-hostpath
