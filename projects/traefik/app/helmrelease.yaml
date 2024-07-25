@@ -16,12 +16,12 @@ spec:
   values:
     deployment:
       kind: DaemonSet
-    ingressRoute:
-      dashboard:
-        enabled: true
-        entryPoints:
-          - web
-          - websecure
+    # ingressRoute:
+    #   dashboard:
+    #     enabled: true
+    #     entryPoints:
+    #       - web
+    #       - websecure
     certResolvers:
       letsencrypt:
         email: support@doctor-ew.com
