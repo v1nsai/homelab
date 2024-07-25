@@ -6,7 +6,7 @@ metadata:
   namespace: ollama
 spec:
   interval: 1m0s
-  path: ./ollama
+  path: ./projects/ollama/app
   prune: true
   sourceRef:
     kind: GitRepository
