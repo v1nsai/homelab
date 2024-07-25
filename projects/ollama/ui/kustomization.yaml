@@ -4,3 +4,4 @@ namespace: ollama
 resources:
   - helmrepository.yaml
   - helmrelease.yaml
+  - selfsigned-tls-secret.yaml

@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: open-webui-route
+  namespace: ollama
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`chat.homelab.com`)
+      kind: Rule
+      services:
+        - name: open-webui
+          port: 80  # Adjust this port to match your ollama service's port
+  tls:
+    secretName: selfsigned-tls

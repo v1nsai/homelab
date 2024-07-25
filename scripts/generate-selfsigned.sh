@@ -59,13 +59,13 @@ openssl req \
     -subj "/CN=$URL"
 
 # Create k8s secret yaml and seal it
-kubectl create secret tls traefik-tls \
+kubectl create secret tls selfsigned-tls \
     --key=tls.key \
     --cert=tls.crt \
     --namespace $NAMESPACE \
     --dry-run=client \
-    --output yaml > projects/$PROJECTNAME/tls.yaml
-kubeseal --format=yaml --cert=./sealed-secrets.pub < projects/$PROJECTNAME/tls.yaml > projects/$PROJECTNAME/app/tls-sealed.yaml
+    --output yaml > projects/$PROJECTNAME/selfsigned-tls.yaml
+kubeseal --format=yaml --cert=./.sealed-secrets.pub < projects/$PROJECTNAME/selfsigned-tls.yaml > projects/$PROJECTNAME/app/selfsigned-tls-sealed.yaml
 
 # Cleanup
-rm tls.key tls.crt projects/$PROJECTNAME/tls.yaml
+rm tls.key tls.crt projects/$PROJECTNAME/selfsigned-tls.yaml
