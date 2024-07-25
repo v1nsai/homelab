@@ -14,10 +14,10 @@ spec:
         name: go-skynet
   interval: 1m0s
   values:
-    models:
-      list:
-        - url: "https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0/blob/main/model.safetensors"
-          name: tinyllama-1.0
+    # models:
+    #   list:
+    #     - url: "https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0/blob/main/model.safetensors"
+    #       name: tinyllama-1.0
     deployment:
       image:
         tag: latest-gpu-nvidia-cuda-11 # master-cublas-cuda11-ffmpeg # master-cublas-cuda11
