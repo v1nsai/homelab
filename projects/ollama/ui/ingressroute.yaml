@@ -11,6 +11,7 @@ spec:
       kind: Rule
       services:
         - name: open-webui
-          port: 80  # Adjust this port to match your ollama service's port
+          namespace: ollama
+          port: 80 
   tls:
     secretName: selfsigned-tls
