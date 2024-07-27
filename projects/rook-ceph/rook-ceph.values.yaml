@@ -1,4 +1,0 @@
-# allowLoopDevices: true
-csi:
-  kubeletDirPath: /var/snap/microk8s/common/var/lib/kubelet
-clusterName: rook-ceph-cluster
