@@ -14,6 +14,7 @@ spec:
         name: rook-release
   interval: 1h0m0s
   values:
+    clusterName: rook-ceph-cluster
     toolbox:
       enabled: true
       containerSecurityContext:

@@ -16,3 +16,4 @@ spec:
   values:
     monitoring:
       enabled: true
+    clusterName: rook-ceph-cluster
