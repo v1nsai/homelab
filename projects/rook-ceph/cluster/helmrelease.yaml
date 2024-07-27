@@ -51,6 +51,7 @@ spec:
     cephBlockPools:
     - name: ceph-blockpool
       storageClass:
+        name: ceph-block
         isDefault: false
         enabled: true
         parameters:
@@ -66,6 +67,7 @@ spec:
     cephObjectStores:
     - name: ceph-objectstore
       storageClass:
+        name: ceph-object
         isDefault: false
         enabled: true
         parameters:
