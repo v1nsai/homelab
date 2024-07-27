@@ -23,15 +23,17 @@ kubectl delete namespace rook-ceph --wait
 
 echo "Wiping ceph OSDs and deleting config files on hosts..."
 echo "Wiping bigrig OSDs..."
-DISK="/dev/sdb"
-sudo sgdisk --zap-all $DISK
-sudo dd if=/dev/zero of="$DISK" bs=1M count=100 oflag=direct,dsync
-sudo blkdiscard $DISK
-sudo partprobe $DISK
-sudo rm -rf /var/lib/rook
+DISKS=("/dev/sdb" "/dev/sdc")
+for DISK in "${DISKS[@]}"; do
+    sudo sgdisk --zap-all $DISK
+    sudo dd if=/dev/zero of="$DISK" bs=1M count=100 oflag=direct,dsync
+    sudo blkdiscard $DISK
+    sudo partprobe $DISK
+    sudo rm -rf /var/lib/rook
+done
 
 echo "Wiping oppenheimer OSDs..."
-DISK="/dev/sdc"
+DISK="/dev/sdb"
 ssh oppenheimer /bin/bash << EOF
     sudo sgdisk --zap-all $DISK
     sudo dd if=/dev/zero of="$DISK" bs=1M count=100 oflag=direct,dsync

@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devbox
+spec:
+  selector:
+    matchLabels:
+      app: devbox
+  template:
+    metadata:
+      labels:
+        app: devbox
+    spec:
+      hostNetwork: true
+      initContainers:
+        - name: setup
+          image: ubuntu:24.04
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              truncate -s0 /tmp/preseed.cfg
+              echo "tzdata tzdata/Areas select USA" >> /tmp/preseed.cfg
+              echo "tzdata tzdata/Zones/USA select New_York" >> /tmp/preseed.cfg
+              debconf-set-selections /tmp/preseed.cfg
+              rm -f /etc/timezone /etc/localtime 
+              apt update
+              apt install -y ubuntu-server
+          env:
+            - name: DEBIAN_FRONTEND
+              value: noninteractive
+      containers:
+        - name: devbox
+          image: ubuntu:24.04
+          command:
+            - sleep
+            - infinity
+          ports:
+            - containerPort: 22
+          volumeMounts:
+            - name: devbox-homelab
+              mountPath: /homelab
+          env:
+            - name: NVIDIA_VISIBLE_DEVICES
+              value: all
+            - name: NVIDIA_DRIVER_CAPABILITIES
+              value: all
+      volumes:
+        - name: devbox-homelab
+          persistentVolumeClaim:
+            claimName: devbox-homelab
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: devbox-homelab
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: devbox
+spec:
+  selector:
+    app: devbox
+  ports:
+    - port: 22
+      targetPort: 22
+  type: LoadBalancer

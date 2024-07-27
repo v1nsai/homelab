@@ -43,7 +43,7 @@ spec:
               - name: "/dev/sdc"
           - name: oppenheimer
             devices:
-              - name: "/dev/sdc"
+              - name: "/dev/sdb"
     cephFileSystemVolumeSnapshotClass:
       enabled: true
     cephBlockPoolsVolumeSnapshotClass:
