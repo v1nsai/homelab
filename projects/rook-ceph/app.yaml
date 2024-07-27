@@ -18,7 +18,7 @@ metadata:
   name: rook-ceph-cluster
   namespace: rook-ceph
 spec:
-  dependencies:
+  dependsOn:
     - name: rook-ceph
       namespace: rook-ceph
   interval: 1h0m0s
