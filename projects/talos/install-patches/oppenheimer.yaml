@@ -1,0 +1,23 @@
+machine:
+  install:
+    disk: /dev/sdc
+  network:
+    hostname: oppenheimer
+    interfaces:
+      - interface: eno1
+        dhcp: true
+        vip: 
+          ip: 192.168.1.133
+  certSANs:
+    - 192.168.1.155
+    - 192.168.1.162
+    - 192.168.1.170
+    - 192.168.1.133
+cluster:
+  apiServer:
+    certSANs:
+      - 192.168.1.155
+      - 192.168.1.162
+      - 192.168.1.170
+      - 192.168.1.133
+  allowSchedulingOnControlPlanes: true

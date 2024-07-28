@@ -2,3 +2,4 @@
 *docker-compose*.yaml
 test.yaml
 *.yml
+projects/talos/
