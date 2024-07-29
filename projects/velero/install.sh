@@ -69,6 +69,7 @@ EOF
 # echo 'source <(velero completion bash)' >>~/.bashrc
 
 echo "Creating backup location secrets..."
+source projects/velero/.env
 cat > projects/velero/s3-credentials.env <<EOF
 [default]
 aws_access_key_id=${AWS_ACCESS_KEY_ID}
@@ -81,3 +82,16 @@ kubectl create secret generic $BACKUPLOCATION_SECRET_NAME \
     --from-file $BACKUPLOCATION_SECRET_KEY=projects/velero/s3-credentials.env \
     --dry-run=client \
     --output yaml | kubeseal --cert ./.sealed-secrets.pub --format yaml > projects/velero/app/sealed-secrets.yaml
+
+# Install before restoring a cluster without fluxcd
+helm repo add vmware-tanzu https://vmware-tanzu.github.io/helm-charts
+helm repo update
+cat projects/velero/app/helmrelease.yaml | yq '.spec.values' > /tmp/values.yaml
+helm install velero vmware-tanzu/velero \
+    --namespace velero \
+    --values /tmp/values.yaml
+
+velero create restore the-big-one-0 --from-backup velero-nightly-20240727030016 --exclude-namespaces nvidia-gpu-operator,silverstick-provisioner,silverstick-csi-driver-nfs,irma-provisioner,irma-csi-driver-nfs,metallb
+
+# get all namespaces in Terminating phase
+kubectl get ns --no-headers | awk '$2=="Terminating" {print $1}' | xargs kubectl get ns -o json | jq -r '.items[] | select(.metadata.deletionTimestamp!=null) | .metadata.name' | xargs -I {} kubectl patch ns {} -p '{"metadata":{"finalizers":[]}}' --type=merge

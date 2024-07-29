@@ -26,7 +26,7 @@ talosctl upgrade \
 talosctl patch machineconfig \
     --endpoints 192.168.1.133 \
     --nodes 192.168.1.162,192.168.1.155,192.168.1.170 \
-    --patch-file projects/talos/extensions/hostpath/patch.yaml
+    --patch-file projects/talos/extensions/replicated-local-storage/patch.yaml
 
 # install openebs-jiva
 kubectl create ns openebs
@@ -34,11 +34,21 @@ kubectl label ns openebs \
     pod-security.kubernetes.io/audit=privileged \
     pod-security.kubernetes.io/enforce=privileged \
     pod-security.kubernetes.io/warn=privileged
-helm repo add openebs-jiva https://openebs-archive.github.io/jiva-operator
+# helm repo add openebs-jiva https://openebs-archive.github.io/jiva-operator
+# helm repo update
+# helm upgrade --install openebs-jiva openebs-jiva/jiva \
+#     --namespace openebs
+
+helm repo add openebs https://openebs.github.io/openebs
 helm repo update
-helm upgrade --install openebs-jiva openebs-jiva/jiva \
-    --namespace openebs
+helm upgrade --install openebs \
+  --create-namespace \
+  --namespace openebs \
+  --set engines.local.lvm.enabled=false \
+  --set engines.local.zfs.enabled=false \
+  --set mayastor.csi.node.initContainers.enabled=false \
+  openebs/openebs
 
 # configure openebs-jiva
-kubectl --namespace openebs apply --filename projects/talos/extensions/hostpath/config.yaml
+kubectl --namespace openebs apply --filename projects/talos/extensions/replicated-local-storage/config.yaml
 kubectl --namespace openebs patch daemonset openebs-jiva-csi-node --type=json --patch '[{"op": "add", "path": "/spec/template/spec/hostPID", "value": true}]'

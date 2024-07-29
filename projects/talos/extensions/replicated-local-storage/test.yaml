@@ -3,7 +3,7 @@ apiVersion: v1
 metadata:
   name: example-jiva-csi-pvc
 spec:
-  storageClassName: openebs-jiva-csi-default
+  storageClassName: openebs-hostpath
   accessModes:
     - ReadWriteOnce
   resources:
