@@ -22,8 +22,8 @@ spec:
         runAsUser: 0
         runAsGroup: 0
     monitoring:
-      enabled: true
-      createPrometheusRules: true
+      enabled: false
+      createPrometheusRules: false
     cephClusterSpec:
       # Important: if you reinstall the cluster, make sure you delete this directory from each host or else the mons will fail to start on the new cluster.
       dataDirHostPath: /var/lib/rook
@@ -39,15 +39,18 @@ spec:
         nodes:
           - name: bigrig
             devices:
+              - name: "/dev/sda"
               - name: "/dev/sdb"
-              - name: "/dev/sdc"
           - name: oppenheimer
             devices:
               - name: "/dev/sdb"
+          - name: tiffrig
+            devices:
+              - name: "/dev/sda"
     cephFileSystemVolumeSnapshotClass:
-      enabled: true
+      enabled: false
     cephBlockPoolsVolumeSnapshotClass:
-      enabled: true
+      enabled: false
     cephBlockPools:
     - name: ceph-blockpool
       spec:
