@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# sudo cp scripts/talosctlwrapper.sh /usr/local/bin/talosctlwrapper
+
 set -e
 
 POSITIONAL_ARGS=()
@@ -23,6 +25,10 @@ while [[ $# -gt 0 ]]; do
       TARGET="192.168.1.162"
       shift
       ;;
+    all)
+      TARGET="192.168.1.162,192.168.1.155,192.168.1.170"
+      shift
+      ;;
     *)
       POSITIONAL_ARGS+=("$1") # save positional arg
       shift
@@ -30,7 +36,14 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+# Prevent upgrading without the --preserve flag due to using localpath storage
+for i in "${POSITIONAL_ARGS[@]}"; do
+  if [[ $i == "upgrade" ]]; then
+    POSITIONAL_ARGS+=("--preserve")
+  fi
+done
+
 talosctl \
-    --nodes $TARGET \
-    --endpoints $TARGET \
-    "${POSITIONAL_ARGS[@]}"
+  --nodes $TARGET \
+  --endpoints 192.168.1.133 \
+  "${POSITIONAL_ARGS[@]}"
