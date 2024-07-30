@@ -10,7 +10,7 @@ if [ -z "$BUCKET" ] || [ -z "$AWS_ACCESS_KEY_ID" ] || [ -z "$AWS_SECRET_ACCESS_K
 fi
 
 echo "Configuring AWS IAM user policy..."
-cat > projects/velero/velero-policy.json <<EOF
+cat > /tmp/velero-policy.json <<EOF
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -56,7 +56,7 @@ EOF
 # aws iam put-user-policy \
 #   --user-name velero \
 #   --policy-name velero \
-#   --policy-document file://projects/velero/velero-policy.json
+#   --policy-document file:///tmp/velero-policy.json
 # aws iam create-access-key --user-name velero > ~/.aws/velero-user.json
 # AWS_SECRET_ACCESS_KEY=$(jq -r '.AccessKey.SecretAccessKey' ~/.aws/velero-user.json)
 # AWS_ACCESS_KEY_ID=$(jq -r '.AccessKey.AccessKeyId' ~/.aws/velero-user.json)
@@ -84,9 +84,9 @@ kubectl create secret generic $BACKUPLOCATION_SECRET_NAME \
     --output yaml | kubeseal --cert ./.sealed-secrets.pub --format yaml > projects/velero/app/sealed-secrets.yaml
 
 # Install before restoring a cluster without fluxcd
-helm repo add vmware-tanzu https://vmware-tanzu.github.io/helm-charts
-helm repo update
-cat projects/velero/app/helmrelease.yaml | yq '.spec.values' > /tmp/values.yaml
-helm install velero vmware-tanzu/velero \
-    --namespace velero \
-    --values /tmp/values.yaml
+# helm repo add vmware-tanzu https://vmware-tanzu.github.io/helm-charts
+# helm repo update
+# cat projects/velero/app/helmrelease.yaml | yq '.spec.values' > /tmp/values.yaml
+# helm install velero vmware-tanzu/velero \
+#     --namespace velero \
+#     --values /tmp/values.yaml

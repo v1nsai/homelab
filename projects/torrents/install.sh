@@ -10,8 +10,8 @@ if [ "$RECREATE_SECRET" == "y" ]; then
         --namespace jellyfin \
         --from-file=projects/torrents/secrets/gluetun/wg0.conf \
         --dry-run=client \
-        -o yaml > projects/torrents/secrets/wireguard-config.yaml
+        -o yaml | \
     kubeseal \
         --format=yaml \
-        --cert=./.sealed-secrets.pub < projects/torrents/secrets/wireguard-config.yaml > projects/torrents/app/wireguard-config-sealed.yaml
+        --cert=./.sealed-secrets.pub > projects/torrents/app/wireguard-config-sealed.yaml
 fi
