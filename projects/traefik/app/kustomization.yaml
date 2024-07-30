@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: traefik
+resources:
+  - namespace.yaml
+  - helmrepository.yaml
+  - helmrelease.yaml
+  - dashboard-ingress.yaml
+  - selfsigned-tls-sealed.yaml
