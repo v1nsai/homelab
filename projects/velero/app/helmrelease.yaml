@@ -36,7 +36,8 @@ spec:
           key: cloud
         config:
           region: us-east-1
-          
+
+      defaultSnapshotMoveData: true
       defaultVolumesToFsBackup: true
 
     initContainers:
@@ -51,11 +52,10 @@ spec:
       useSecret: true
       existingSecret: backuplocation-credentials
 
-    snapshotsEnabled: false
-    deployNodeAgent: true
+    snapshotsEnabled: true
+    deployNodeAgent: false
     upgradeCRDs: true
     features: EnableCSI
-    defaultSnapshotMoveData: true
 
     nodeAgent:
       podSecurityContext:

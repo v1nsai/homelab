@@ -19,7 +19,7 @@ NAMESPACE=$1
 kubectl api-resources --verbs=list --namespaced -o name | xargs -n 1 kubectl get --show-kind --ignore-not-found -n $NAMESPACE
 
 read -sn1 -p "Force delete namespace $NAMESPACE? [y/N] " CONFIRM
-if [ "$CONFIRM" == "yY" ]; then
+if [ "$CONFIRM" == "y" ]; then
     echo "Deleting namespace $NAMESPACE..."
     kubectl get ns $NAMESPACE -ojson | jq '.spec.finalizers = []' | kubectl replace --raw "/api/v1/namespaces/$NAMESPACE/finalize" -f -
     exit 0
