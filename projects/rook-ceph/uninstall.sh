@@ -23,18 +23,20 @@ kubectl delete namespace rook-ceph --wait
 
 echo "Wiping ceph OSDs and deleting config files on hosts..."
 echo "Wiping bigrig OSDs..."
-DISKS=("/dev/sdb" "/dev/sdc")
-for DISK in "${DISKS[@]}"; do
-    sudo sgdisk --zap-all $DISK
-    sudo dd if=/dev/zero of="$DISK" bs=1M count=100 oflag=direct,dsync
-    sudo blkdiscard $DISK
-    sudo partprobe $DISK
-    sudo rm -rf /var/lib/rook
-done
+ssh bigrig /bin/bash << EOF
+    DISKS=("/dev/sdb" "/dev/sdc")
+    for DISK in "${DISKS[@]}"; do
+        sudo sgdisk --zap-all $DISK
+        sudo dd if=/dev/zero of="$DISK" bs=1M count=100 oflag=direct,dsync
+        sudo blkdiscard $DISK
+        sudo partprobe $DISK
+        sudo rm -rf /var/lib/rook
+    done
+EOF
 
 echo "Wiping oppenheimer OSDs..."
-DISK="/dev/sdb"
 ssh oppenheimer /bin/bash << EOF
+    DISK="/dev/sdb"
     sudo sgdisk --zap-all $DISK
     sudo dd if=/dev/zero of="$DISK" bs=1M count=100 oflag=direct,dsync
     sudo blkdiscard $DISK
@@ -43,6 +45,11 @@ ssh oppenheimer /bin/bash << EOF
 EOF
 
 echo "Wiping tiffrig OSDs..."
-ssh tiffrig /bin/bash << EOF
+ssh bigrig /bin/bash << EOF
+    DISK="/dev/sda"
+    sudo sgdisk --zap-all $DISK
+    sudo dd if=/dev/zero of="$DISK" bs=1M count=100 oflag=direct,dsync
+    # sudo blkdiscard $DISK
+    sudo partprobe $DISK
     sudo rm -rf /var/lib/rook
 EOF

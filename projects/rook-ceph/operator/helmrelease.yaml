@@ -17,3 +17,5 @@ spec:
     monitoring:
       enabled: true
     clusterName: rook-ceph-cluster
+    csi:
+      kubeletDirPath: /var/snap/microk8s/common/var/lib/kubelet

@@ -2,12 +2,7 @@
 
 set -e
 
-# source projects/rook-ceph/secrets.env
-
-read -sn1 -p "Delete existing rook-ceph and rook-cluster deploys? [y/N] " delete
-if [[ $delete == [yY] ]]; then
-    projects/rook-ceph/uninstall.sh
-fi
+# Use to install before restoring a cluster
 
 helm repo add rook-release https://charts.rook.io/release
 helm repo update

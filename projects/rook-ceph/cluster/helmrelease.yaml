@@ -39,8 +39,8 @@ spec:
         nodes:
           - name: bigrig
             devices:
-              - name: "/dev/sda"
               - name: "/dev/sdb"
+              - name: "/dev/sdc"
           - name: oppenheimer
             devices:
               - name: "/dev/sdb"
@@ -48,9 +48,9 @@ spec:
             devices:
               - name: "/dev/sda"
     cephFileSystemVolumeSnapshotClass:
-      enabled: false
+      enabled: true
     cephBlockPoolsVolumeSnapshotClass:
-      enabled: false
+      enabled: true
     cephBlockPools:
     - name: ceph-blockpool
       spec:
