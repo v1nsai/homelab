@@ -6,7 +6,7 @@ metadata:
   namespace: cloudflare
 spec:
   interval: 1h0m0s
-  path: ./projects/cloudflared/app
+  path: ./projects/cloudflare/app
   prune: true
   sourceRef:
     kind: GitRepository
