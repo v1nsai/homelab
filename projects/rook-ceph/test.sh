@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # Set variables
-STORAGE_CLASS="cephfs"
-CSI_DRIVER="ceph-filesystem"
+STORAGE_CLASS="ceph-block"
+VOLUMESNAPSHOTCLASS="ceph-block"
 
 # Function to wait for resource creation
 wait_for_resource() {
     echo "Waiting for $1 $2 to be created..."
     while ! kubectl get $1 $2 &>/dev/null; do
-        sleep 2
+        sleep 5
     done
     echo "$1 $2 created successfully."
 }
@@ -63,7 +63,7 @@ kind: VolumeSnapshot
 metadata:
   name: test-snapshot
 spec:
-  volumeSnapshotClassName: ceph-filesystem
+  volumeSnapshotClassName: $VOLUMESNAPSHOTCLASS
   source:
     persistentVolumeClaimName: test-pvc
 EOF
@@ -102,6 +102,7 @@ spec:
   - name: verify-container
     image: busybox
     command: ["/bin/sh", "-c", "cat /data/test.txt && sleep 3600"]
+    # command: ["sleep", "infinity"]
     volumeMounts:
     - name: restored-volume
       mountPath: /data

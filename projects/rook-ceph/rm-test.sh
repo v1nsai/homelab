@@ -1,5 +1,6 @@
+#!/bin/bash
 
-cat <<EOF | kubectl delete -f -
+kubectl delete -f - <<EOF
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
