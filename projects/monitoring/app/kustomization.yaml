@@ -6,3 +6,4 @@ namespace: monitoring
 resources:
   - ./helmrepository.yaml
   - ./helmrelease.yaml
+  - ./namespace.yaml
