@@ -13,4 +13,3 @@ kubectl create secret generic -n cloudflare secret-values \
     --dry-run=client \
     --output yaml | \
     kubeseal --cert ./.sealed-secrets.pub --format yaml > projects/cloudflare/app/sealed-secret-values.yaml
-
