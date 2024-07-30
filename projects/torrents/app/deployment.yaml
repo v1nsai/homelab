@@ -11,7 +11,7 @@ spec:
     metadata:
       labels:
         app: torrents
-        backup.velero.io/backup-volumes-excludes: "the-goods"
+        backup.velero.io/backup-volumes-excludes: "media-pvc"
         velero.io/exclude-from-backup: "true"
     spec:
       containers:
@@ -102,7 +102,7 @@ spec:
       volumes:
         - name: downloads
           persistentVolumeClaim:
-            claimName: the-goods
+            claimName: media-pvc
         - name: wg-config
           secret:
             secretName: wireguard-config

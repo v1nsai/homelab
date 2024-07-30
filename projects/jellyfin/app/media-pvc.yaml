@@ -1,9 +1,10 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: the-goods
+  name: media-pvc
   namespace: jellyfin
 spec:
+  storageClassName: cephfs
   accessModes:
     - ReadWriteMany
   resources:

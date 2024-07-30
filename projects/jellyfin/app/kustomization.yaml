@@ -5,5 +5,5 @@ kind: Kustomization
 resources:
   - ./gitrepository.yaml
   - ./helmrelease.yaml
-  - ./the-goods.yaml
+  - ./media-pvc.yaml
   - ./namespace.yaml

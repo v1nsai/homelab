@@ -20,7 +20,7 @@ spec:
         storageClass: microk8s-hostpath
       media:
         enabled: true
-        existingClaim: the-goods
+        existingClaim: media-pvc
         accessMode: ReadWriteMany
     extraEnvVars:
       - name: NVIDIA_VISIBLE_DEVICES
@@ -30,7 +30,7 @@ spec:
       - name: DOTNET_SYSTEM_IO_DISABLEFILELOCKING
         value: "true"
     extraPodLabels:
-      backup.velero.io/backup-volumes-excludes: "the-goods"
+      backup.velero.io/backup-volumes-excludes: "media-pvc"
       velero.io/exclude-from-backup: "true"
     # nodeSelector:
     #   nvidia.com/gpu.present: "true"
