@@ -17,6 +17,7 @@ spec:
   valuesFrom:
     - kind: Secret
       name: secret-values
+      valuesKey: secret-values.yaml
   values:
     cronjob:
       enabled: true
