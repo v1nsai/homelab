@@ -62,26 +62,16 @@ kubectl create secret -n nextcloud tls selfsigned-tls \
     --output=yaml > projects/nextcloud/secret.yaml
 kubeseal --format=yaml --cert=./.sealed-secrets.pub < projects/nextcloud/secret.yaml | tee -a projects/nextcloud/app/sealed-secrets.yaml
 
-rm -rf /tmp/nextcloud.key /tmp/nextcloud.crt
+echo "Configuring secret values..."
+cat << EOF > /tmp/secret-values.yaml
+nextcloud:
+  host: $NC_HOST
+EOF
+kubectl create secret generic -n nextcloud secret-values \
+    --from-file=/tmp/secret-values.yaml \
+    --dry-run=client \
+    --output yaml | \
+kubeseal --cert ./.sealed-secrets.pub --format yaml | tee -a projects/nextcloud/app/sealed-secrets.yaml
+
+rm -rf /tmp/nextcloud.key /tmp/nextcloud.crt /tmp/secret-values.yaml
 rm -rf projects/nextcloud/secret.yaml
-
-# echo "Creating app config files..."
-# flux create kustomization nextcloud \
-#     --source=GitRepository/homelab \
-#     --path="./projects/nextcloud/app" \
-#     --prune=true \
-#     --interval=60m \
-#     --wait=true \
-#     --health-check-timeout=3m \
-#     --export > projects/nextcloud/app.yaml
-
-# flux create source helm nextcloud \
-#     --url https://nextcloud.github.io/helm/ \
-#     --namespace flux-system \
-#     --export > projects/nextcloud/app/helmrepository.yaml
-
-# flux create helmrelease nextcloud \
-#     --chart nextcloud \
-#     --source HelmRepository/nextcloud \
-#     --values projects/nextcloud/values.yaml \
-#     --export > projects/nextcloud/app/helmrelease.yaml

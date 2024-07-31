@@ -14,6 +14,9 @@ spec:
         name: nextcloud
   interval: 1m0s
   timeout: 15m
+  valuesFrom:
+    - kind: Secret
+      name: secret-values
   values:
     cronjob:
       enabled: true
