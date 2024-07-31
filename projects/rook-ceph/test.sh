@@ -55,6 +55,7 @@ wait_for_resource pod test-pod
 # Wait for the pod to be ready
 echo "Waiting for test-pod to be ready..."
 kubectl wait --for=condition=ready pod/test-pod --timeout=60s
+kubectl delete pod test-pod --wait # delete pod to force writing to the PVC
 
 # Create VolumeSnapshot
 cat <<EOF | kubectl apply -f -

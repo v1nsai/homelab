@@ -11,7 +11,5 @@ if [ "$RECREATE_SECRET" == "y" ]; then
         --from-file=projects/torrents/secrets/gluetun/wg0.conf \
         --dry-run=client \
         -o yaml | \
-    kubeseal \
-        --format=yaml \
-        --cert=./.sealed-secrets.pub > projects/torrents/app/wireguard-config-sealed.yaml
+    kubeseal --format=yaml --cert=./.sealed-secrets.pub > projects/torrents/app/wireguard-config-sealed.yaml
 fi
