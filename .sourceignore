@@ -3,3 +3,4 @@
 test.yaml
 *.yml
 projects/talos/
+projects/nvidia-gpu-operator/ # not supported in ubuntu 24.04
