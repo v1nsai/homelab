@@ -1,4 +1,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: nvidia-k8s-device-plugin
+  name: nvidia-device-plugin
