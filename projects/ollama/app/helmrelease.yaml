@@ -38,3 +38,11 @@ spec:
     extraEnv:
       - name: OLLAMA_KEEP_ALIVE
         value: "-1"
+      - name: CUDA_VISIBLE_DEVICES
+        value: "all"
+      - name: NVIDIA_VISIBLE_DEVICES
+        value: "all"
+      - name: NVIDIA_DRIVER_CAPABILITIES
+        value: "all"
+      - name: GPU_DEVICE_ORDINAL
+        value: "0"
