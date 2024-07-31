@@ -3,3 +3,4 @@
 test.yaml
 *.yml
 projects/talos/
+projects/nvidia-device-plugin/
