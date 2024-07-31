@@ -7,4 +7,3 @@ resources:
   - helmrelease.yaml
   - dashboard-ingress.yaml
   - selfsigned-tls-sealed.yaml
-  - ../ingressroutes/ollama-webui.yaml
