@@ -6,5 +6,5 @@ namespace: nextcloud
 resources:
   - ./helmrelease.yaml
   - ./helmrepository.yaml
-  # - ./sealed-secrets.yaml
+  - ./sealed-secrets.yaml
   - ./namespace.yaml
