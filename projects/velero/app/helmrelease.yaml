@@ -39,6 +39,7 @@ spec:
 
       defaultSnapshotMoveData: true
       defaultVolumesToFsBackup: false
+      features: EnableCSI
 
     initContainers:
       - name: velero-plugin-for-aws
@@ -55,7 +56,6 @@ spec:
     snapshotsEnabled: true
     deployNodeAgent: true
     upgradeCRDs: true
-    features: EnableCSI
 
     nodeAgent:
       podSecurityContext:
