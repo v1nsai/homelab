@@ -31,6 +31,7 @@ spec:
       - name: aws-s3
         provider: aws
         bucket: "dr.ew-homelab-backups"
+        default: true
         credential:
           name: backuplocation-credentials
           key: cloud
@@ -38,7 +39,7 @@ spec:
           region: us-east-1
 
       defaultSnapshotMoveData: true
-      defaultVolumesToFsBackup: true
+      defaultVolumesToFsBackup: false
 
     initContainers:
       - name: velero-plugin-for-aws
@@ -76,7 +77,10 @@ spec:
           ttl: 168h0m0s
           uploaderConfig:
             parallelFilesUpload: 10
+          snapshotVolumes: true
           storageLocation: aws-s3
+          volumeSnapshotLocations:
+          - aws-s3
         useOwnerReferencesInBackup: false
 
     metrics:
