@@ -10,5 +10,5 @@ spec:
   runtimeClassName: nvidia
   containers:
   - name: vectoradd
-    image: nvcr.io/nvidia/k8s/cuda-sample:vectoradd-cuda10.2
+    image: nvcr.io/nvidia/k8s/cuda-sample:vectoradd-cuda12.5.0
 EOF
