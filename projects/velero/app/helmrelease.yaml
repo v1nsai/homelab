@@ -11,7 +11,6 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: vmware-tanzu
-      version: "6.7.0"
   interval: 1m0s
   values:
     configuration:
@@ -43,7 +42,13 @@ spec:
 
     initContainers:
       - name: velero-plugin-for-aws
-        image: velero/velero-plugin-for-aws:v1.10.0
+        image: velero/velero-plugin-for-aws:v1.10.
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - mountPath: /target
+            name: plugins
+      - name: velero-plugin-for-csi
+        image: velero/velero-plugin-for-csi:v1.10.0
         imagePullPolicy: IfNotPresent
         volumeMounts:
           - mountPath: /target
