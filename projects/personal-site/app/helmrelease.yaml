@@ -1,0 +1,18 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: wordpress
+spec:
+  chart:
+    spec:
+      chart: wordpress
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+  interval: 1m0s
+  values:
+    wordpressUsername: doctor_ew
+    existingSecret: wordpress-password
+    externalDatabase:
+      existingSecret: externaldb-password
