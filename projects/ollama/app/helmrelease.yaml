@@ -14,8 +14,8 @@ spec:
         name: ollama
   interval: 1m0s
   values:
-    image: 
-      tag: latest
+    # image: 
+    #   tag: latest
     ollama:
       gpu:
         enabled: true
@@ -46,3 +46,5 @@ spec:
         value: "all"
       - name: NVIDIA_DRIVER_CAPABILITIES
         value: "all"
+      - name: OLLAMA_MAX_LOADED_MODELS
+        value: "1"
