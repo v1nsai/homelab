@@ -53,7 +53,7 @@ spec:
       existingSecret: backuplocation-credentials
 
     snapshotsEnabled: true
-    deployNodeAgent: false
+    deployNodeAgent: true
     upgradeCRDs: true
     features: EnableCSI
 
