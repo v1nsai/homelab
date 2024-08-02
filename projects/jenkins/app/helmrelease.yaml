@@ -1,0 +1,14 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: jenkins
+spec:
+  chart:
+    spec:
+      chart: bitnami/jenkins
+      sourceRef:
+        kind: HelmRepository
+        name: jenkins
+  interval: 1m0s
+  releaseName: jenkins
