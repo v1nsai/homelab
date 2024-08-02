@@ -70,6 +70,20 @@ spec:
           storageLocation: aws-s3
           volumeSnapshotLocations:
           - aws-s3
+      test:
+        schedule: 0 3 * * *
+        template:
+          includedNamespaces:
+          - 'personal-site'
+          ttl: 168h0m0s
+          uploaderConfig:
+            parallelFilesUpload: 10
+          snapshotVolumes: true
+          defaultVolumesToFsBackup: false
+          snapshotMoveData: true
+          storageLocation: aws-s3
+          volumeSnapshotLocations:
+          - aws-s3     
     metrics:
       prometheusRule:
         autodetect: true
