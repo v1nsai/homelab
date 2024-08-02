@@ -6,9 +6,9 @@ metadata:
 spec:
   chart:
     spec:
-      chart: bitnami/jenkins
+      chart: jenkins
       sourceRef:
         kind: HelmRepository
-        name: jenkins
+        name: bitnami
   interval: 1m0s
   releaseName: jenkins
