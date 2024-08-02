@@ -12,8 +12,8 @@ helm upgrade --install rook-ceph rook-release/rook-ceph \
     --namespace rook-ceph \
     --values /tmp/rook-ceph.values.yaml
 
-cat projects/rook-ceph/cluster/helmrelease.yaml | yq '.spec.values' > /tmp/rook-ceph-cluster.values.yamls
+cat projects/rook-ceph/cluster/helmrelease.yaml | yq '.spec.values' > /tmp/rook-ceph-cluster.values.yaml
 helm upgrade --install rook-ceph-cluster rook-release/rook-ceph-cluster \
     --create-namespace \
     --namespace rook-ceph \
-    --values /tmp/rook-ceph-cluster.values.yamls
+    --values /tmp/rook-ceph-cluster.values.yaml

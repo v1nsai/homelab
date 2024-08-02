@@ -33,6 +33,7 @@ spec:
           enabled: "false"
         compression:
           enabled: "false"
+      removeOSDsIfOutAndSafeToRemove: true
       storage:
         # config:
         #   osdsPerDevice: 3
