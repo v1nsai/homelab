@@ -25,7 +25,6 @@ spec:
           key: cloud
         config:
           region: us-east-1
-
       volumeSnapshotLocation:
       - name: aws-s3
         provider: aws
@@ -36,11 +35,9 @@ spec:
           key: cloud
         config:
           region: us-east-1
-
       defaultSnapshotMoveData: true
       defaultVolumesToFsBackup: false
       features: EnableCSI
-
     initContainers:
       - name: velero-plugin-for-aws
         image: velero/velero-plugin-for-aws
@@ -48,31 +45,22 @@ spec:
         volumeMounts:
           - mountPath: /target
             name: plugins
-
     credentials:
       useSecret: true
       existingSecret: backuplocation-credentials
-
     snapshotsEnabled: true
     deployNodeAgent: true
     upgradeCRDs: true
-
     nodeAgent:
       podSecurityContext:
         runAsUser: 0
         runAsGroup: 0
-
     schedules:
       nightly:
         schedule: 0 3 * * *
-        skipImmediately: false
         template:
-          csiSnapshotTimeout: 0s
-          hooks: {}
           includedNamespaces:
           - '*'
-          itemOperationTimeout: 0s
-          metadata: {}
           ttl: 168h0m0s
           uploaderConfig:
             parallelFilesUpload: 10
@@ -80,8 +68,6 @@ spec:
           storageLocation: aws-s3
           volumeSnapshotLocations:
           - aws-s3
-        useOwnerReferencesInBackup: false
-
     metrics:
       prometheusRule:
         autodetect: true
