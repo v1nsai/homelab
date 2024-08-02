@@ -122,7 +122,7 @@ spec:
           size: 3
       storageClass:
         name: ceph-block
-        isDefault: false
+        isDefault: true
         enabled: true
         parameters:
           archiveOnDelete: "true"
