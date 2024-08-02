@@ -65,6 +65,8 @@ spec:
           uploaderConfig:
             parallelFilesUpload: 10
           snapshotVolumes: true
+          defaultVolumesToFsBackup: false
+          snapshotMoveData: true
           storageLocation: aws-s3
           volumeSnapshotLocations:
           - aws-s3
