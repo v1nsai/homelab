@@ -43,7 +43,7 @@ spec:
               - name: "/dev/sdc"
           - name: oppenheimer
             devices:
-              - name: "/dev/sdb"
+              - name: "/dev/loop3"
           - name: tiffrig
             devices:
               - name: "/dev/sda"
