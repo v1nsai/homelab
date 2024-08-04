@@ -35,8 +35,6 @@ spec:
           enabled: "false"
       removeOSDsIfOutAndSafeToRemove: true
       storage:
-        # config:
-        #   osdsPerDevice: 3
         nodes:
           - name: bigrig
             devices:
@@ -120,7 +118,7 @@ spec:
       spec:
         failureDomain: host
         replicated:
-          size: 3
+          size: 2
       storageClass:
         name: ceph-block
         isDefault: true
@@ -141,11 +139,11 @@ spec:
       spec:
         metadataPool:
           replicated:
-            size: 3
+            size: 2
         dataPools:
           - failureDomain: host
             replicated:
-              size: 3
+              size: 2
             # Optional and highly recommended, 'data0' by default, see https://github.com/rook/rook/blob/v1.14.9/Documentation/CRDs/Shared-Filesystem/ceph-filesystem-crd.md#pools
             name: data0
         metadataServer:
@@ -177,7 +175,7 @@ spec:
         metadataPool:
           failureDomain: host
           replicated:
-            size: 3
+            size: 2
         dataPool:
           failureDomain: host
           erasureCoded:
