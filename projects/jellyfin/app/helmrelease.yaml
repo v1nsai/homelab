@@ -17,7 +17,7 @@ spec:
     persistence:
       config:
         enabled: true
-        # storageClass: microk8s-hostpath
+        storageClass: microk8s-hostpath
       media:
         enabled: true
         existingClaim: media-pvc
@@ -32,5 +32,5 @@ spec:
     extraPodLabels:
       backup.velero.io/backup-volumes-excludes: "media-pvc"
       velero.io/exclude-from-backup: "true"
-    # nodeSelector:
-    #   nvidia.com/gpu.present: "true"
+    nodeSelector:
+      kubernetes.io/hostname: "bigrig"
