@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: data-mover
+  namespace: jellyfin
+spec:
+  template:
+    spec:
+      containers:
+        - name: data-mover
+          image: alpine
+          command: ["/bin/sh", "-c", "apk update && apk add rsync && rsync -avI /source/* /destination/"]
+          volumeMounts:
+          - name: source
+            mountPath: /source
+          - name: destination
+            mountPath: /destination
+      volumes:
+        - name: source
+          hostPath:
+            path: /mnt/irma/the-goods/
+            type: Directory
+        - name: destination
+          persistentVolumeClaim:
+            claimName: media-pvc
+      restartPolicy: Never
+      nodeSelector:
+        kubernetes.io/hostname: bigrig
+  backoffLimit: 4
