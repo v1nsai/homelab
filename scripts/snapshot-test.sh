@@ -3,8 +3,17 @@
 set -e
 
 # Set variables
-STORAGE_CLASS="ceph-block"
-VOLUMESNAPSHOTCLASS="ceph-block"
+STORAGE_CLASS="$1"
+VOLUMESNAPSHOTCLASS="$2"
+
+if [ -z "$STORAGE_CLASS" ]; then
+    echo "Usage: $0 <storage-class> <volume-snapshot-class>"
+    exit 1
+fi
+
+if [ -z "$VOLUMESNAPSHOTCLASS" ]; then
+    VOLUMESNAPSHOTCLASS="$STORAGE_CLASS"
+fi
 
 # Function to wait for resource creation
 wait_for_resource() {
@@ -126,3 +135,11 @@ echo "Checking the logs of verify-pod:"
 kubectl logs verify-pod
 
 echo "Script completed. If you see 'Hello, Kubernetes!' above, the VolumeSnapshot test was successful."
+
+read -sn1 -p "Cleanup created objects? (y/n): " CLEANUP
+if [ "$CLEANUP" == "y" ]; then
+    kubectl delete pvc test-pvc restored-pvc
+    kubectl delete volumesnapshot test-snapshot
+    kubectl delete pod verify-pod
+    kubectl delete pod test-pod
+fi
