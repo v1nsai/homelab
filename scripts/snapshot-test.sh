@@ -138,8 +138,8 @@ echo "Script completed. If you see 'Hello, Kubernetes!' above, the VolumeSnapsho
 
 read -sn1 -p "Cleanup created objects? (y/n): " CLEANUP
 if [ "$CLEANUP" == "y" ]; then
-    kubectl delete pvc test-pvc restored-pvc
     kubectl delete volumesnapshot test-snapshot
+    kubectl delete pvc test-pvc restored-pvc
     kubectl delete pod verify-pod
     kubectl delete pod test-pod
 fi
