@@ -1,8 +1,0 @@
-nfs:
-  path: /mnt/irma/kubernetes
-  server: 192.168.1.170
-storageClass:
-  name: irma
-  provisionerName: k8s-sigs.io/irma-nfs-subdir-external-provisioner
-labels:
-  velero.io/exclude-from-backup: "true"

@@ -1,8 +1,0 @@
-nfs:
-  path: /mnt/silverstick/kubernetes
-  server: 192.168.1.162
-storageClass:
-  name: silverstick
-  provisionerName: k8s-sigs.io/silverstick-nfs-subdir-external-provisioner
-labels:
-  velero.io/exclude-from-backup: "true"
