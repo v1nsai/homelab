@@ -10,6 +10,6 @@ spec:
       reconcileStrategy: ChartVersion
       sourceRef:
         kind: HelmRepository
-        name: irma-nfs
+        name: csi-driver-nfs
   interval: 1h0m0s
   targetNamespace: irma-nfs
