@@ -17,7 +17,7 @@ spec:
     persistence:
       config:
         enabled: true
-        storageClass: microk8s-hostpath
+        # storageClass: microk8s-hostpath
       media:
         enabled: true
         existingClaim: media-pvc
