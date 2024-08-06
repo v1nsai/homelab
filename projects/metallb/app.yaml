@@ -5,6 +5,7 @@ metadata:
   name: metallb
   namespace: metallb
 spec:
+  targetNamespace: metallb
   interval: 1h0m0s
   path: ./projects/metallb/app
   prune: true
