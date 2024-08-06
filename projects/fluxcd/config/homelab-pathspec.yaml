@@ -10,4 +10,3 @@ spec:
   sourceRef:
     name: homelab
     kind: GitRepository
-  suspend: true
