@@ -21,6 +21,9 @@ metadata:
 spec:
   interval: 1m0s
   path: ./projects/ollama/ui
+  dependsOn:
+    - name: traefik
+      namespace: traefik
   prune: true
   sourceRef:
     kind: GitRepository
