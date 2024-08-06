@@ -13,6 +13,12 @@ spec:
     kind: GitRepository
     name: homelab
     namespace: flux-system
+  healthChecks:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: backend
+      namespace: dev
+
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
