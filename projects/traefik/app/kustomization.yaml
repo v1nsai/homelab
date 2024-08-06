@@ -5,5 +5,5 @@ resources:
   - namespace.yaml
   - helmrepository.yaml
   - helmrelease.yaml
-  - dashboard-ingress.yaml
+  # - dashboard-ingress.yaml
   - selfsigned-tls-sealed.yaml
