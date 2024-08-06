@@ -3,3 +3,4 @@ kind: Kustomization
 namespace: metallb
 resources:
   - ipaddresspool.yaml
+  - l2advertisement.yaml
