@@ -8,5 +8,6 @@ spec:
   path: ./projects/
   prune: true
   sourceRef:
+    name: homelab
     kind: GitRepository
   suspend: true
