@@ -1,0 +1,25 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: longhorn
+  namespace: longhorn-system
+spec:
+  chart:
+    spec:
+      chart: longhorn/longhorn
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: longhorn
+  interval: 1h0m0s
+  values:
+    service:
+      ui:
+        type: LoadBalancer
+    persistence:
+      defaultClass: true
+      defaultDataLocality: best-effort
+      defaultClassReplicaCount: 3
+    defaultSettings:
+      defaultDataLocality: best-effort
