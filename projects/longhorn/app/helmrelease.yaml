@@ -14,14 +14,14 @@ spec:
         name: longhorn
   interval: 1h0m0s
   values:
-    csi:
-      kubeletRootDir: /var/snap/microk8s/common/var/lib/kubelet
+    # csi:
+    #   kubeletRootDir: /var/snap/microk8s/common/var/lib/kubelet
     service:
       ui:
         type: LoadBalancer
     persistence:
       defaultClass: true
       defaultDataLocality: best-effort
-      defaultClassReplicaCount: 3
+      defaultClassReplicaCount: 2
     defaultSettings:
       defaultDataLocality: best-effort
