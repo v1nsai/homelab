@@ -13,9 +13,6 @@ spec:
         kind: HelmRepository
         name: sealed-secrets
       version: '>=1.15.0-0'
-  values:
-    nodeSelector:
-      kubernetes.io/hostname: bigrig # https://github.com/bitnami-labs/sealed-secrets/issues/1563
   install:
     crds: Create
   interval: 1h0m0s

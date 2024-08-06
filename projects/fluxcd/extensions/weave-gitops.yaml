@@ -37,7 +37,6 @@ spec:
     WEAVE_GITOPS_FEATURE_TELEMETRY: "true"
     adminUser:
       create: true
-      passwordHash: $2a$10$qixOuhiAQNyQDC1nuNHAYuE7q1BZhPwJYHvLxuZ9WW8EaDZHWL.iG
+      passwordHash: $2a$10$I.Yc3JqaAvRwnXeUl6hzH.EWRikwsJtrGfT./4QmxWgdxBgepizoO
       username: admin
-    service:
-      type: LoadBalancer
+
