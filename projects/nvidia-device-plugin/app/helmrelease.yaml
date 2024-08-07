@@ -12,3 +12,5 @@ spec:
         kind: HelmRepository
         name: nvdp
   interval: 1m0s
+  values:
+    runtimeClassName: nvidia
