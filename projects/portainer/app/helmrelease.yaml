@@ -1,0 +1,17 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: portainer
+spec:
+  chart:
+    spec:
+      chart: portainer
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: portainer
+  interval: 1m0s
+  values:
+    service:
+      type: LoadBalancer
