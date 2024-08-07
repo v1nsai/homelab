@@ -9,7 +9,7 @@ talosctl upgrade \
 talosctl patch machineconfig \
   --nodes 192.168.1.170 \
   --endpoints 192.168.1.170 \
-  --patch-file projects/talos/nvidia/gpu-worker-patch.yaml
+  --patch-file projects/talos/extensions/nvidia/gpu-worker-patch.yaml
 
 ## allow running privileged containers in nvidia namespace
 kubectl apply -f projects/talos/nvidia/runtimeclass.yaml

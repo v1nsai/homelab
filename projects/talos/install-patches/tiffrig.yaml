@@ -1,4 +1,15 @@
 machine:
+  # implemented in https://github.com/siderolabs/talos/pull/9093 but not in a stable branch yet
+  # nodeLabels:
+  #   node.longhorn.io/create-default-disk: config
+  # nodeAnnotations:
+  #   node.longhorn.io/default-disks-config: |
+  #     [
+  #       { 
+  #           "path":"/var/mnt/disk0",
+  #           "allowScheduling":true
+  #       }
+  #     ]
   install:
     disk: /dev/nvme0n1
     wipe: true

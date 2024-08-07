@@ -16,7 +16,7 @@ kubeseal --cert ./.sealed-secrets.pub --format yaml < /tmp/talos-secrets.yaml.en
 talosctl kubeconfig \
   --nodes 192.168.1.133 \
   --endpoints 192.168.1.133 \
-  --talosconfig ~/.talos/config > ~/.kube/config-talos
+  --talosconfig ~/.talos/config 
 
 # bigrig
 talosctl gen config \
@@ -28,7 +28,8 @@ talosctl apply-config \
   --insecure \
   --nodes 192.168.1.170 \
   --file /tmp/bigrig.yaml \
-  --config-patch @projects/talos/install-patches/bigrig.yaml
+  --config-patch @projects/talos/install-patches/bigrig.yaml \
+  --config-patch @projects/talos/extensions/longhorn/patch.yaml
 talosctl bootstrap \
   --nodes 192.168.1.170 \
   --endpoints 192.168.1.170
@@ -43,8 +44,8 @@ talosctl apply-config \
   --insecure \
   --nodes 192.168.1.155 \
   --file /tmp/tiffrig.yaml \
-  --config-patch @projects/talos/install-patches/tiffrig.yaml 
-
+  --config-patch @projects/talos/install-patches/tiffrig.yaml \
+  --config-patch @projects/talos/extensions/longhorn/patch.yaml
 # oppenheimer
 talosctl gen config \
   --with-secrets projects/talos/secrets.yaml.env \
@@ -55,4 +56,5 @@ talosctl apply-config \
   --insecure \
   --nodes 192.168.1.162 \
   --file /tmp/oppenheimer.yaml \
-  --config-patch @projects/talos/install-patches/oppenheimer.yaml
+  --config-patch @projects/talos/install-patches/oppenheimer.yaml \
+  --config-patch @projects/talos/extensions/longhorn/patch.yaml

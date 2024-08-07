@@ -1,6 +1,8 @@
 machine:
   install:
     disk: /dev/nvme0n1
+    wipe: true
+    image: factory.talos.dev/installer/8f8a8d4be4bde03c257e0cac6274c567053a5ed8dfa0a00ce234abef61e5067d:v1.7.6
   network:
     hostname: bigrig
     interfaces:
@@ -8,6 +10,19 @@ machine:
         dhcp: true
         vip: 
           ip: 192.168.1.133
+  kubelet:
+    extraMounts:
+      - destination: /var/mnt/disk0
+        type: bind
+        source: /var/mnt/disk0
+        options:
+          - bind
+          - rshared
+          - rw
+  disks:
+    - device: /dev/sdc
+      partitions:
+        - mountpoint: /var/mnt/disk0
   certSANs:
     - 192.168.1.155
     - 192.168.1.162
