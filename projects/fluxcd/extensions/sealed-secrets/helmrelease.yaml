@@ -20,3 +20,5 @@ spec:
   targetNamespace: flux-system
   upgrade:
     crds: CreateReplace
+  values:
+    secretName: sealed-secrets-key

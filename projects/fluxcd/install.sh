@@ -25,3 +25,9 @@ fi
 gitops create dashboard ww-gitops \
   --password=$WW_DASH_PASS \
   --export > ./projects/fluxcd/extensions/weave-gitops.yaml
+
+# get sealed secret keys from safe place (bitwarden)
+kubectl create secret tls sealed-secrets-key \
+  --cert=projects/fluxcd/secrets/tls.crt \
+  --key=projects/fluxcd/secrets/tls.pem \
+  --namespace flux-system
