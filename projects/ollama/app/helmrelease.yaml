@@ -36,7 +36,7 @@ spec:
               - bigrig
     persistentVolume:
       enabled: true
-      storageClass: microk8s-hostpath
+      # storageClass: microk8s-hostpath
     extraEnv:
       - name: OLLAMA_KEEP_ALIVE
         value: "-1"
