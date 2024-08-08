@@ -5,4 +5,4 @@ resources:
   - helmrepository.yaml
   - helmrelease.yaml
   - selfsigned-tls-sealed.yaml
-  - ingressroute.yaml
+  - ingress.yaml
