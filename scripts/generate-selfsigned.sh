@@ -40,8 +40,8 @@ if [ -z "$NAMESPACE" ]; then
   NAMESPACE="$PROJECTNAME"
 fi
 if [ -z "$URL" ]; then
-  echo "URL is required"
-  exit 1
+  echo "URL is required, defaulting to '*'"
+  URL="*"
 fi
 if [ -z "$PROJECTNAME" ] && [ -z "$NAMESPACE" ]; then
   echo "Project name or namespace is required"
@@ -54,18 +54,18 @@ openssl req \
     -nodes \
     -days 365 \
     -newkey rsa:2048 \
-    -keyout tls.key \
-    -out tls.crt \
+    -keyout /tmp/tls.key \
+    -out /tmp/tls.crt \
     -subj "/CN=$URL"
 
 # Create k8s secret yaml and seal it
 kubectl create secret tls selfsigned-tls \
-    --key=tls.key \
-    --cert=tls.crt \
+    --key=/tmp/tls.key \
+    --cert=/tmp/tls.crt \
     --namespace $NAMESPACE \
     --dry-run=client \
-    --output yaml > projects/$PROJECTNAME/selfsigned-tls.yaml
-kubeseal --format=yaml --cert=./.sealed-secrets.pub < projects/$PROJECTNAME/selfsigned-tls.yaml > projects/$PROJECTNAME/app/selfsigned-tls-sealed.yaml
+    --output yaml | \
+kubeseal --format=yaml --cert=./.sealed-secrets.pub > projects/$PROJECTNAME/app/selfsigned-tls-sealed.yaml
 
 # Cleanup
-rm tls.key tls.crt projects/$PROJECTNAME/selfsigned-tls.yaml
+rm /tmp/tls.key /tmp/tls.crt 
