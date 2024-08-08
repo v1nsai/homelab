@@ -3,7 +3,7 @@
 set -e
 
 flux reconcile source git homelab
-flux reconcile kustomization add-projects-folder
+flux reconcile kustomization watch-projects
 
 APPNAME="$1"
 if [ ! -z "$APPNAME" ]; then
