@@ -7,7 +7,7 @@ metadata:
 spec:
   targetNamespace: portainer
   interval: 1m0s
-  path: ./
+  path: ./projects/portainer/app
   prune: true
   sourceRef:
     kind: GitRepository
