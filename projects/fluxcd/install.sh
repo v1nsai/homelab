@@ -4,7 +4,7 @@ set -e
 source projects/fluxcd/fluxcd.env
 
 echo "Installing fluxcd..."
-if [ -z "$GITHUB_USER" ] || [ -z "$GITHUB_REPO" ]; then
+if [ -z "$GITHUB_USER" ] || [ -z "$GITHUB_REPO" ] || [ -z "$GITHUB_TOKEN" ]; then
   echo "GITHUB_TOKEN, GITHUB_USER and GITHUB_REPO must be set in projects/fluxcd/secrets.env"
   exit 1
 fi
@@ -25,6 +25,16 @@ fi
 gitops create dashboard ww-gitops \
   --password=$WW_DASH_PASS \
   --export > ./projects/fluxcd/extensions/weave-gitops.yaml
+
+read -sn1 -p "Generate a tls cert and key for sealed secrets? [y/n]" GENERATE
+if [ "$GENERATE" == "y" ]; then
+  echo "Generating tls cert and key for sealed secrets..."
+  mkdir -p ./projects/fluxcd/secrets
+  openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+    -keyout ./projects/fluxcd/secrets/tls.pem \
+    -out ./projects/fluxcd/secrets/tls.crt \
+    -subj "/CN=sealed-secrets/O=sealed-secrets"
+fi
 
 # get sealed secret keys from safe place (bitwarden)
 kubectl create secret tls sealed-secrets-key \
