@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: open-webui-ingress
+  namespace: ollama
+  # annotations:
+  #   kubernetes.io/ingress.class: traefik
+  #   traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  tls:
+    - hosts:
+        - chat.internal
+      secretName: selfsigned-tls
+  rules:
+    - host: chat.internal
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: open-webui
+                port: 
+                  number: 80
