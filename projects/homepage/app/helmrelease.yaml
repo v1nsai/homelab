@@ -1,0 +1,14 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: homepage
+spec:
+  chart:
+    spec:
+      chart: homepage
+      sourceRef:
+        kind: HelmRepository
+        name: jameswynn
+  interval: 1h0m0s
+  targetNamespace: homepage
