@@ -5,6 +5,7 @@ metadata:
   name: portainer
   namespace: portainer
 spec:
+  targetNamespace: portainer
   interval: 1m0s
   path: ./
   prune: true
