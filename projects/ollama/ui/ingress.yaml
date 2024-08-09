@@ -3,6 +3,16 @@ kind: Ingress
 metadata:
   name: open-webui-ingress
   namespace: ollama
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Local LLM Chat
+    gethomepage.dev/group: Generative AI
+    gethomepage.dev/icon: https://openwebui.com/favicon.png
+    gethomepage.dev/name: Open WebUI
+    gethomepage.dev/widget.type: "service"
+    gethomepage.dev/widget.url: "https://chat.internal/"
+    # gethomepage.dev/podSelector: ""
+    # gethomepage.dev/weight: 10 # optional
 spec:
   ingressClassName: traefik
   tls:
