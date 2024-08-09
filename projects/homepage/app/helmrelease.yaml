@@ -12,3 +12,6 @@ spec:
         name: jameswynn
   interval: 1h0m0s
   targetNamespace: homepage
+  values:
+    serviceAccount:
+      create: true
