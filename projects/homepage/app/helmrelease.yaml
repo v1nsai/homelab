@@ -13,40 +13,29 @@ spec:
   interval: 1h0m0s
   targetNamespace: homepage
   values:
-    enableRbac: true
-    serviceAccount:
-      create: true
-    ingress:
-      main:
-        enabled: true
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/name: "Homepage"
-          gethomepage.dev/description: "A modern, secure, highly customizable application dashboard."
-          gethomepage.dev/group: "A New Group"
-          gethomepage.dev/icon: "homepage.png"
-        ingressClassName: "traefik"
-        hosts:
-          - host: &host "homepage.internal"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - *host
-            secretName: selfsigned-tls
     config:
+      bookmarks:
+        - Developer:
+            - Github:
+                - abbr: GH
+                  href: https://github.com/
+      services:
+        - My First Group:
+            - My First Service:
+                href: http://localhost/
+                description: Homepage is awesome
+
+        - My Second Group:
+            - My Second Service:
+                href: http://localhost/
+                description: Homepage is the best
+
+        - My Third Group:
+            - My Third Service:
+                href: http://localhost/
+                description: Homepage is 😎
       widgets:
-        - resources:
-            # change backend to 'kubernetes' to use Kubernetes integration. Requires RBAC.
-            backend: kubernetes
-            expanded: true
-            cpu: true
-            memory: true
-        - search:
-            provider: duckduckgo
-            target: _blank
-        ## Uncomment to enable Kubernetes integration
+        # show the kubernetes widget, with the cluster summary and individual nodes
         - kubernetes:
             cluster:
               show: true
@@ -59,6 +48,33 @@ spec:
               cpu: true
               memory: true
               showLabel: true
+        - search:
+            provider: duckduckgo
+            target: _blank
       kubernetes:
-        # change mode to 'cluster' to use RBAC service account
         mode: cluster
+      settings:
+
+    # The service account is necessary to allow discovery of other services
+    serviceAccount:
+      create: true
+      name: homepage
+
+    # This enables the service account to access the necessary resources
+    enableRbac: true
+
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          # Example annotations to add Homepage to your Homepage!
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/name: "Homepage"
+          gethomepage.dev/description: "Dynamically Detected Homepage"
+          gethomepage.dev/group: "Dynamic"
+          gethomepage.dev/icon: "homepage.png"
+        hosts:
+          - host: homepage.internal
+            paths:
+              - path: /
+                pathType: Prefix
