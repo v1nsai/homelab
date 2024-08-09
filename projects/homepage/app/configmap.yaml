@@ -2,8 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: homepage
-  namespace: default
-  labels:
+    labels:
     app.kubernetes.io/name: homepage
 data:
   kubernetes.yaml: |
