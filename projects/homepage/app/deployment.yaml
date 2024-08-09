@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: homepage
-    labels:
+  labels:
     app.kubernetes.io/name: homepage
 spec:
   revisionHistoryLimit: 3
