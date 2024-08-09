@@ -10,4 +10,5 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: homepage
+    name: homelab
+    namespace: flux-system
