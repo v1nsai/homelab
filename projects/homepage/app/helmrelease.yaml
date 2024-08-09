@@ -61,4 +61,4 @@ spec:
               showLabel: true
       kubernetes:
         # change mode to 'cluster' to use RBAC service account
-        mode: enable
+        mode: cluster
