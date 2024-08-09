@@ -13,4 +13,4 @@ spec:
               service:
                 name: hajimari
                 port:
-                  number: 80
+                  number: 3000
