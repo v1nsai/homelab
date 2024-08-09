@@ -15,3 +15,5 @@ spec:
   values:
     service:
       type: LoadBalancer
+    image:
+      tag: 2.20.3
