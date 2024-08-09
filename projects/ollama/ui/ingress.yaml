@@ -3,10 +3,8 @@ kind: Ingress
 metadata:
   name: open-webui-ingress
   namespace: ollama
-  # annotations:
-  #   kubernetes.io/ingress.class: traefik
-  #   traefik.ingress.kubernetes.io/router.tls: "true"
 spec:
+  ingressClassName: traefik
   tls:
     - hosts:
         - chat.internal
