@@ -13,6 +13,7 @@ spec:
   interval: 1h0m0s
   targetNamespace: homepage
   values:
+    enableRbac: true
     serviceAccount:
       create: true
     ingress:
