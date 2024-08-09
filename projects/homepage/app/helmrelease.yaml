@@ -18,10 +18,8 @@ spec:
     ingress:
       main:
         enabled: true
-        labels:
-          # This label will enable discover of this deployment in Homepage
-          gethomepage.dev/enabled: "true"
         annotations:
+          gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "Homepage"
           gethomepage.dev/description: "A modern, secure, highly customizable application dashboard."
           gethomepage.dev/group: "A New Group"
