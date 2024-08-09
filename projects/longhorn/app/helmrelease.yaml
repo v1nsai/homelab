@@ -25,3 +25,5 @@ spec:
       defaultClassReplicaCount: 2
     defaultSettings:
       defaultDataLocality: best-effort
+      backupTarget: s3://dr.ew-homelab-backups@us-east-1/
+      backupTargetCredentialSecret: backup-target-credentials

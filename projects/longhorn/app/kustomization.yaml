@@ -6,3 +6,4 @@ resources:
   - helmrelease.yaml
   - namespace.yaml
   - ingress.yaml
+  - sealed-secrets.yaml
