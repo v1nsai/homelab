@@ -6,7 +6,7 @@ metadata:
   namespace: rook-ceph
 spec:
   interval: 1h0m0s
-  path: ./projects/rook-ceph/operator
+  path: ./cluster/addons/rook-ceph/operator
   prune: true
   sourceRef:
     kind: GitRepository
@@ -23,7 +23,7 @@ spec:
     - name: rook-ceph
       namespace: rook-ceph
   interval: 1h0m0s
-  path: ./projects/rook-ceph/cluster
+  path: ./cluster/addons/rook-ceph/cluster
   prune: true
   sourceRef:
     kind: GitRepository
