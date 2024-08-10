@@ -6,7 +6,7 @@ metadata:
   namespace: nextcloud
 spec:
   interval: 1h0m0s
-  path: ./apps/services/app
+  path: ./apps/services/nextcloud/app
   prune: true
   sourceRef:
     kind: GitRepository
