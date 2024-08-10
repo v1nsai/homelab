@@ -9,7 +9,7 @@ This diagram was generated using the `mingrammer diagrams` lib for Python from t
 ![homelab](https://github.com/v1nsai/homelab/blob/develop/projects/diagrams/homelab.png)
 
 ## Cluster Hardware
-* The configuration I use to deploy Talos Kubernetes Linux onto my home lab is in `projects/talos/`
+* The configuration I use to deploy Talos Kubernetes Linux onto my home lab is in `cluster/bootstrap/talos/`
 * My cluster contains 3 control plane nodes a total of 28 CPUs, 64 GB of RAM, and 4GB of VRAM
 * Talos Linux Kubernetes cluster with 3 nodes called bigrig, tiffrig and oppenheimer
 * bigrig is my old gaming machine and the only machine with an Nvidia GPU
@@ -17,8 +17,8 @@ This diagram was generated using the `mingrammer diagrams` lib for Python from t
 * oppenheimer is an Intel NUC (I'm choosing to pronounce it "nuke").  They're great cheap low power servers with upgradeable RAM and SSD.  I plan to buy more NUCs and finish the Manhattan Project team.
 
 ## Cluster bootstrapping
-* The `projects/talos/install.sh` contains commented code blocks to generate secrets and config, apply patches (see `projects/talos/install-patches`) and deploy nodes
-* Talos system extension images are generated using https://factory.talos.dev and installed using the upgrade commands in `projects/talos/extensions/extensions.sh`
+* The `cluster/bootstrap/talos/install.sh` contains commented code blocks to generate secrets and config, apply patches (see `cluster/bootstrap/talos/install-patches`) and deploy nodes
+* Talos system extension images are generated using https://factory.talos.dev and installed using the upgrade commands in `cluster/bootstrap/talos/extensions/extensions.sh`
 * Once system images have been installed, the `install.sh` script in each subfolder contains additional patches and upgrade commands specific to each extension.
 
 ## GitOps with FluxCD
@@ -32,12 +32,12 @@ This diagram was generated using the `mingrammer diagrams` lib for Python from t
 
 ## Cluster Addons
 * Storage
-    * Longhorn in `projects/longhorn`
-    * Rook Ceph Operator in `projects/rook-ceph`
-    * NFS in `projects/nfs`
-    * External Snapshotter `projects/external-snapshotter`
+    * Longhorn in `cluster/addons/longhorn`
+    * Rook Ceph Operator in `cluster/addons/rook-ceph`
+    * NFS in `cluster/addons/nfs`
+    * External Snapshotter `cluster/addons/external-snapshotter`
 * Ingress
-    * Traefik in `projects/traefik`
+    * Traefik in `cluster/addons/traefik`
 * GPU
-    * Nvidia K8s Device Plugin in `projects/nvidia-device-plugin`
-    * Nvidia GPU Operator in `projects/nvidia-gpu-operator`
+    * Nvidia K8s Device Plugin in `cluster/addons/nvidia-device-plugin`
+    * Nvidia GPU Operator in `cluster/addons/nvidia-gpu-operator`
