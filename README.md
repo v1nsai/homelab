@@ -23,8 +23,8 @@ This diagram was generated using the `mingrammer diagrams` lib for Python from t
 
 ## GitOps with FluxCD
 * You can enable and disable apps by ignoring their project folders the `.sourceignore` file
-* Create a `projects/fluxcd/fluxcd.env` file and define `GITHUB_REPO`, `GITHUB_USER` and `GITHUB_TOKEN`
-* Run the `projects/fluxcd/install.sh`
+* Create a `cluster/bootstrap/fluxcd/fluxcd.env` file and define `GITHUB_REPO`, `GITHUB_USER` and `GITHUB_TOKEN`
+* Run the `cluster/bootstrap/fluxcd/install.sh`
 * This will also install Sealed Secrets and Weave Flux UI
 * Use the scripts `scripts/generate-selfsigned.sh` will generate a new selfsigned cert and key, create a kubernetes secret and encrypt it with sealed secrets.  You can remove the last line of the script if you want to store the certs somewhere before removing.
 * If there is an `install.sh` file in the root of the project folder, run it.  It will generate necessary secrets before deployment
