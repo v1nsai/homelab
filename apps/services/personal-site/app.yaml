@@ -6,7 +6,7 @@ metadata:
   namespace: personal-site
 spec:
   interval: 1m0s
-  path: ./projects/personal-site/app
+  path: ./apps/services/personal-site/app
   prune: true
   sourceRef:
     kind: GitRepository
