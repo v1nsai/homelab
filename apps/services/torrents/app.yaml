@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: sealed-secrets
-  path: ./projects/torrents/app
+  path: ./apps/services/torrents/app
   prune: true
   sourceRef:
     kind: GitRepository
