@@ -26,7 +26,7 @@ talosctl upgrade \
 talosctl patch machineconfig \
     --endpoints 192.168.1.133 \
     --nodes 192.168.1.162,192.168.1.155,192.168.1.170 \
-    --patch-file projects/talos/extensions/replicated-local-storage/patch.yaml
+    --patch-file cluster/bootstrap/talos/extensions/replicated-local-storage/patch.yaml
 
 # install openebs-jiva
 kubectl create ns openebs
@@ -50,5 +50,5 @@ helm upgrade --install openebs \
   openebs/openebs
 
 # configure openebs-jiva
-kubectl --namespace openebs apply --filename projects/talos/extensions/replicated-local-storage/config.yaml
+kubectl --namespace openebs apply --filename cluster/bootstrap/talos/extensions/replicated-local-storage/config.yaml
 kubectl --namespace openebs patch daemonset openebs-jiva-csi-node --type=json --patch '[{"op": "add", "path": "/spec/template/spec/hostPID", "value": true}]'
