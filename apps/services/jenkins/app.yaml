@@ -6,7 +6,7 @@ metadata:
   namespace: jenkins
 spec:
   interval: 1m0s
-  path: ./projects/jenkins/app
+  path: ./apps/services/jenkins/app
   prune: true
   sourceRef:
     kind: GitRepository

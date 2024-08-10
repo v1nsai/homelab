@@ -9,4 +9,4 @@ kubectl create secret generic jenkins-secret \
     --from-file=/tmp/secret-values.yaml \
     --dry-run=client \
     --output yaml | \
-kubeseal --cert ./.sealed-secrets.pub --format yaml > ./projects/jenkins/app/sealed-secrets.yaml
+kubeseal --cert ./.sealed-secrets.pub --format yaml > ./apps/services/jenkins/app/sealed-secrets.yaml
