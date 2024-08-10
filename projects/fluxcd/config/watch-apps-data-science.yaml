@@ -1,0 +1,12 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: watch-apps-data-science
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  path: ./apps/data-science/
+  prune: true
+  sourceRef:
+    name: homelab
+    kind: GitRepository
