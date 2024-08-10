@@ -6,7 +6,7 @@ metadata:
   namespace: harbor
 spec:
   interval: 1m0s
-  path: ./projects/harbor/app
+  path: ./apps/services/harbor/app
   prune: true
   sourceRef:
     kind: GitRepository
