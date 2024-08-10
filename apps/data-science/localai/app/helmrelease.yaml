@@ -35,7 +35,7 @@ spec:
               - bigrig
     persistence:
       models:
-        storageClass: microk8s-hostpath
+        storageClass: local-path
         size: 100Gi
       output:
-        storageClass: microk8s-hostpath
+        storageClass: local-path

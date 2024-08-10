@@ -37,15 +37,9 @@ spec:
               - bigrig
     persistentVolume:
       enabled: true
-      # storageClass: microk8s-hostpath
+      storageClass: local-path
     extraEnv:
       - name: OLLAMA_KEEP_ALIVE
         value: "-1"
-      # - name: CUDA_VISIBLE_DEVICES
-      #   value: "all"
-      # - name: NVIDIA_VISIBLE_DEVICES
-      #   value: "all"
-      # - name: NVIDIA_DRIVER_CAPABILITIES
-      #   value: "all"
       - name: OLLAMA_MAX_LOADED_MODELS
         value: "1"
