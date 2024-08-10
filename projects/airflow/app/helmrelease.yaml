@@ -34,4 +34,4 @@ spec:
         subPath: apps/data-science/airflow/dags
         # depth: 1
     webserverSecretKeySecretName: webserver-secret
-    webserverSecretKey: webserver-secret
+    webserverSecretKey: webserver-secret-key
