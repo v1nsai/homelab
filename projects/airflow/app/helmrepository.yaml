@@ -5,4 +5,4 @@ metadata:
   name: apache-airflow
 spec:
   interval: 1h0m0s
-  url: https://airflow.apache.org/charts
+  url: https://airflow.apache.org
