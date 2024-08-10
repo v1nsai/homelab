@@ -6,7 +6,7 @@ metadata:
   namespace: homepage
 spec:
   interval: 1h0m0s
-  path: ./projects/homepage/app
+  path: ./apps/services/homepage/app
   prune: true
   sourceRef:
     kind: GitRepository
