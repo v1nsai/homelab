@@ -6,7 +6,7 @@ metadata:
   namespace: hajimari
 spec:
   interval: 1h0m0s
-  path: ./projects/hajimari/app
+  path: ./apps/services/hajimari/app
   prune: true
   sourceRef:
     kind: GitRepository
