@@ -5,7 +5,7 @@ metadata:
   namespace: velero
 spec:
   interval: 5m
-  path: ./projects/velero/app
+  path: ./cluster/addons/velero/app
   prune: true
   sourceRef:
     kind: GitRepository

@@ -1,11 +1,11 @@
 #!/bin/bash
 
 set -e
-source projects/velero/.env
+source cluster/addons/velero/.env
 REGION=$(aws configure get region)
 
 if [ -z "$BUCKET" ] || [ -z "$AWS_ACCESS_KEY_ID" ] || [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
-    echo "Please create an IAM user and set the BUCKET, AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in projects/velero/.env"
+    echo "Please create an IAM user and set the BUCKET, AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in cluster/addons/velero/.env"
     exit 1
 fi
 
@@ -69,8 +69,8 @@ EOF
 # echo 'source <(velero completion bash)' >>~/.bashrc
 
 echo "Creating backup location secrets..."
-source projects/velero/.env
-cat > projects/velero/s3-credentials.env <<EOF
+source cluster/addons/velero/.env
+cat > cluster/addons/velero/s3-credentials.env <<EOF
 [default]
 aws_access_key_id=${AWS_ACCESS_KEY_ID}
 aws_secret_access_key=${AWS_SECRET_ACCESS_KEY}
@@ -79,14 +79,14 @@ BACKUPLOCATION_SECRET_NAME="backuplocation-credentials"
 BACKUPLOCATION_SECRET_KEY="cloud"
 kubectl create secret generic $BACKUPLOCATION_SECRET_NAME \
     --namespace velero \
-    --from-file $BACKUPLOCATION_SECRET_KEY=projects/velero/s3-credentials.env \
+    --from-file $BACKUPLOCATION_SECRET_KEY=cluster/addons/velero/s3-credentials.env \
     --dry-run=client \
-    --output yaml | kubeseal --cert ./.sealed-secrets.pub --format yaml > projects/velero/app/sealed-secrets.yaml
+    --output yaml | kubeseal --cert ./.sealed-secrets.pub --format yaml > cluster/addons/velero/app/sealed-secrets.yaml
 
 # Install before restoring a cluster without fluxcd
 # helm repo add vmware-tanzu https://vmware-tanzu.github.io/helm-charts
 # helm repo update
-# cat projects/velero/app/helmrelease.yaml | yq '.spec.values' > /tmp/values.yaml
+# cat cluster/addons/velero/app/helmrelease.yaml | yq '.spec.values' > /tmp/values.yaml
 # helm install velero vmware-tanzu/velero \
 #     --namespace velero \
 #     --values /tmp/values.yaml
