@@ -3,7 +3,6 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: apache-airflow
-  namespace: airflow
 spec:
   interval: 1h0m0s
   url: https://airflow.apache.org/charts
