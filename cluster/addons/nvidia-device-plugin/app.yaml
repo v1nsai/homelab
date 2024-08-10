@@ -7,7 +7,7 @@ metadata:
 spec:
   targetNamespace: nvidia-device-plugin
   interval: 1m0s
-  path: ./projects/nvidia-device-plugin
+  path: ./cluster/addons/nvidia-device-plugin
   prune: true
   sourceRef:
     kind: GitRepository
