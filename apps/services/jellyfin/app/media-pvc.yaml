@@ -4,8 +4,9 @@ metadata:
   name: media-pvc
   namespace: jellyfin
 spec:
+  storageClassName: local-path
   accessModes:
     - ReadWriteMany
   resources:
     requests:
-      storage: 2600Gi
+      storage: 2000Gi

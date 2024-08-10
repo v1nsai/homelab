@@ -5,5 +5,6 @@ test.yaml
 talos/
 nvidia-gpu-operator/
 rook-ceph/
-velero
-nfs
+velero/
+nfs/
+localai/
