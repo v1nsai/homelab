@@ -43,6 +43,6 @@ secrets/
 *.default.yaml
 
 # Ignore images
-*/diagrams/custom_icons
-*/diagrams/diagrams_image.png
+diagrams/custom_icons
+diagrams/diagrams_image.png
 
