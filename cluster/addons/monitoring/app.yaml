@@ -5,7 +5,7 @@ metadata:
   namespace: monitoring
 spec:
   interval: 5m
-  path: ./projects/monitoring/app
+  path: ./cluster/addons/monitoring/app
   prune: true
   sourceRef:
     kind: GitRepository
