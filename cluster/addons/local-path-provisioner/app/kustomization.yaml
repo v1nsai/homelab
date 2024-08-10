@@ -13,12 +13,6 @@ patches:
       data:
         config.json: |-
           {
-            "nodePathMap":[
-              {
-                "node":"DEFAULT_PATH_FOR_NON_LISTED_NODES",
-                "paths":["/var/local-path-provisioner"]
-              }
-            ],
             "sharedFileSystemPath": "/var/local-path-provisioner"
           }
   - patch: |-
