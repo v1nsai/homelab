@@ -2,8 +2,8 @@
 *docker-compose*.yaml
 test.yaml
 *.yml
-*/talos/
-*/nvidia-gpu-operator/
-*/rook-ceph/
-*/velero
-*/nfs
+talos/
+nvidia-gpu-operator/
+rook-ceph/
+velero
+nfs
