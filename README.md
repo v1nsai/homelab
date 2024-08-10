@@ -4,9 +4,9 @@
 This is a mono repository for my homelab infrastructure.  I keep it production-ready within reason for a one-man hobby operation.
 
 ## Network Diagram
-This diagram was generated using the `mingrammer diagrams` lib for Python from the code in the Jupyter Notebook at `projects/diagrams/homelab.ipynb`
+This diagram was generated using the `mingrammer diagrams` lib for Python from the code in the Jupyter Notebook at `diagrams/homelab.ipynb`
 
-![homelab](https://github.com/v1nsai/homelab/blob/develop/projects/diagrams/homelab.png)
+![homelab](https://github.com/v1nsai/homelab/blob/develop/diagrams/homelab.png)
 
 ## Cluster Hardware
 * The configuration I use to deploy Talos Kubernetes Linux onto my home lab is in `cluster/bootstrap/talos/`
