@@ -6,7 +6,7 @@ metadata:
   namespace: ollama
 spec:
   interval: 1m0s
-  path: ./projects/ollama/app
+  path: ./apps/data-science/ollama/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -20,7 +20,7 @@ metadata:
   namespace: ollama
 spec:
   interval: 1m0s
-  path: ./projects/ollama/ui
+  path: ./apps/data-science/ollama/ui
   dependsOn:
     - name: traefik
       namespace: traefik
