@@ -6,7 +6,7 @@ metadata:
   namespace: traefik
 spec:
   interval: 1h0m0s
-  path: ./projects/traefik/app
+  path: ./cluster/addons/traefik/app
   prune: true
   sourceRef:
     kind: GitRepository
