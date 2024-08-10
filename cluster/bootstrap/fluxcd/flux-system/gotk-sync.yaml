@@ -20,7 +20,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./projects/fluxcd
+  path: ./cluster/bootstrap/fluxcd
   prune: true
   sourceRef:
     kind: GitRepository
