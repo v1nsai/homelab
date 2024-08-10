@@ -32,7 +32,7 @@ spec:
         repo: https://github.com/v1nsai/homelab
         branch: develop
         rev: HEAD
-        subPath: projects/airflow/dags
+        subPath: apps/data-science/airflow/dags
         # depth: 1
     webserverSecretKeySecretName: webserver-secret
     webserverSecretKey: webserver-secret

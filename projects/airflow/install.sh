@@ -8,4 +8,4 @@ kubectl create secret generic webserver-secret \
     --namespace=airflow \
     --dry-run=client \
     --output yaml | \
-kubeseal --format=yaml --cert=./.sealed-secrets.pub > projects/airflow/app/sealed-secrets.yaml
+kubeseal --format=yaml --cert=./.sealed-secrets.pub > apps/data-science/airflow/app/sealed-secrets.yaml

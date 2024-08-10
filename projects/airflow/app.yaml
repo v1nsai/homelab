@@ -5,6 +5,7 @@ metadata:
   name: apache-airflow
   namespace: flux-system
 spec:
+  targetNamespace: airflow
   interval: 1h0m0s
   path: ./deploy
   prune: true
