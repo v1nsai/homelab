@@ -6,7 +6,7 @@ metadata:
   namespace: irma-nfs
 spec:
   interval: 1h0m0s
-  path: ./projects/nfs/app
+  path: ./cluster/addons/nfs/app
   prune: true
   sourceRef:
     kind: GitRepository
