@@ -7,7 +7,7 @@ metadata:
   namespace: localai
 spec:
   interval: 1m0s
-  path: ./projects/localai/app
+  path: ./apps/data-science/localai/app
   prune: true
   sourceRef:
     kind: GitRepository
