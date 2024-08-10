@@ -6,7 +6,7 @@ metadata:
   namespace: nvidia-gpu-operator
 spec:
   interval: 1h0m0s
-  path: ./projects/nvidia-gpu-operator/app
+  path: ./cluster/addons/nvidia-gpu-operator/app
   prune: true
   sourceRef:
     kind: GitRepository
