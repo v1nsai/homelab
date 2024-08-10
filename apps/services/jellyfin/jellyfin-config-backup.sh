@@ -13,4 +13,4 @@ kubectl exec -it -n jellyfin $JELLYFIN_POD -- mkdir -p /media/jellyfin-backup/co
 kubectl exec -it -n jellyfin $JELLYFIN_POD -- rsync -av /config/ /media/jellyfin-backup/config
 
 # add script to crontabs
-# cp -f projects/jellyfin/jellyfin-config-backup.sh /etc/cron.daily/jellyfin-config-backup.sh
+# cp -f apps/services/jellyfin/jellyfin-config-backup.sh /etc/cron.daily/jellyfin-config-backup.sh
