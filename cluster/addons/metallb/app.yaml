@@ -7,7 +7,7 @@ metadata:
 spec:
   targetNamespace: metallb
   interval: 1h0m0s
-  path: ./projects/metallb/app
+  path: ./cluster/addons/metallb/app
   prune: true
   sourceRef:
     kind: GitRepository
