@@ -7,7 +7,7 @@ metadata:
 spec:
   targetNamespace: kube-system
   interval: 1h0m0s
-  path: ./projects/external-snapshotter/crd
+  path: ./cluster/addons/external-snapshotter/crd
   prune: true
   sourceRef:
     kind: GitRepository
@@ -22,7 +22,7 @@ metadata:
 spec:
   targetNamespace: kube-system
   interval: 1h0m0s
-  path: ./projects/external-snapshotter/controller
+  path: ./cluster/addons/external-snapshotter/controller
   prune: true
   sourceRef:
     kind: GitRepository
@@ -37,7 +37,7 @@ metadata:
 spec:
   targetNamespace: kube-system
   interval: 1h0m0s
-  path: ./projects/external-snapshotter/driver
+  path: ./cluster/addons/external-snapshotter/driver
   prune: true
   sourceRef:
     kind: GitRepository
