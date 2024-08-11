@@ -7,11 +7,11 @@ metadata:
 data:
   kubernetes.yaml: |
     mode: cluster
-  settings.yaml: ""
-  #settings.yaml: |
-  #  providers:
-  #    longhorn:
-  #      url: https://longhorn.my.network
+  settings.yaml: |
+    title: Drew's Cool Shit
+    background: https://doctor-ew.com/wp-content/uploads/2024/08/background.png
+    theme: dark
+    color: cyan
   custom.css: ""
   custom.js: ""
   bookmarks.yaml: |
