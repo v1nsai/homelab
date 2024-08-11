@@ -2,9 +2,12 @@
 *docker-compose*.yaml
 test.yaml
 *.yml
+
+# disabled apps
 talos/
 nvidia-gpu-operator/
 rook-ceph/
 velero/
 nfs/
 localai/
+homepage/
