@@ -1,5 +1,5 @@
 ## allow running privileged containers in nvidia namespace
-kubectl apply -f cluster/bootstrap/talos/nvidia/runtimeclass.yaml
+kubectl apply -f cluster/bootstrap/talos/extensions/nvidia/runtimeclass.yaml
 kubectl create ns nvidia-device-plugin
 kubectl label --overwrite namespace nvidia-device-plugin \
     pod-security.kubernetes.io/enforce=privileged \

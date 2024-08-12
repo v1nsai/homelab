@@ -4,7 +4,7 @@ set -e
 source cluster/bootstrap/fluxcd/fluxcd.env
 
 echo "Installing fluxcd..."
-if [ -z "$GITHUB_USER" ] || [ -z "$GITHUB_REPO" ] || [ -z "$GITHUB_TOKEN" ]; then
+if [ -z "$GITHUB_USER" ] || [ -z "$GITHUB_REPO" ] || [ -z "$GITHUB_TOKEN" ] || [ -z "$WW_DASH_PASS" ]; then
   echo "GITHUB_TOKEN, GITHUB_USER and GITHUB_REPO must be set in cluster/bootstrap/fluxcd/secrets.env"
   exit 1
 fi
