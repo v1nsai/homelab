@@ -5,18 +5,27 @@ talosctl gen secrets -o cluster/bootstrap/talos/secrets.yaml.env
 talosctl gen config \
   --with-secrets cluster/bootstrap/talos/secrets.yaml.env \
   --output-types talosconfig \
-  --output ~/.talos/config \
-  talos-homelab https://192.168.1.133:6443
-talosctl --talosconfig=~/.talos/config config endpoint 192.168.1.170 192.168.1.162 192.168.1.155
+  --output talosconfig \
+  talos-homelab https://192.168.1.155:6443
+talosctl config endpoint 192.168.1.155 \
+  --talosconfig talosconfig
 kubectl create secret generic talos-secrets \
   --from-file=cluster/bootstrap/talos/secrets.yaml.env \
   --dry-run=client \
   --output yaml > /tmp/talos-secrets.yaml.env
 kubeseal --cert ./.sealed-secrets.pub --format yaml < /tmp/talos-secrets.yaml.env > cluster/bootstrap/talos/sealed-secrets.yaml.env
+
+# DO NOT RUN until at least one node has been booted using apply-config below
+talosctl bootstrap \
+  --nodes 192.168.1.155 \
+  --endpoints 192.168.1.155 \
+  --talosconfig talosconfig
 talosctl kubeconfig \
-  --nodes 192.168.1.133 \
-  --endpoints 192.168.1.133 \
-  --talosconfig ~/.talos/config 
+  --nodes 192.168.1.155 \
+  --endpoints 192.168.1.155 \
+  --talosconfig talosconfig
+# can't use ~ in talosctl path
+mv talosconfig ~/.talos/config
 
 # bigrig
 talosctl gen config \
@@ -30,9 +39,6 @@ talosctl apply-config \
   --file /tmp/bigrig.yaml \
   --config-patch @cluster/bootstrap/talos/install-patches/bigrig.yaml \
   --config-patch @cluster/bootstrap/talos/extensions/longhorn/patch.yaml
-talosctl bootstrap \
-  --nodes 192.168.1.170 \
-  --endpoints 192.168.1.170
 
 # tiffrig
 talosctl gen config \
@@ -45,7 +51,10 @@ talosctl apply-config \
   --nodes 192.168.1.155 \
   --file /tmp/tiffrig.yaml \
   --config-patch @cluster/bootstrap/talos/install-patches/tiffrig.yaml \
-  --config-patch @cluster/bootstrap/talos/extensions/longhorn/patch.yaml
+  --config-patch @cluster/bootstrap/talos/extensions/longhorn/patch.yaml \
+  --config-patch @cluster/bootstrap/talos/extensions/metrics-server/patch.yaml \
+  --config-patch @cluster/bootstrap/talos/extensions/local-path-provisioner/patch.yaml
+
 # oppenheimer
 talosctl gen config \
   --with-secrets cluster/bootstrap/talos/secrets.yaml.env \
