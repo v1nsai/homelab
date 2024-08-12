@@ -10,3 +10,5 @@ rook-ceph/
 velero/
 nfs/
 localai/
+
+cluster/bootstrap/fluxcd/config/watch-apps*
