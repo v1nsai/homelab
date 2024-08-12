@@ -1,16 +1,3 @@
-# nvidia
-talosctl upgrade \
-  --nodes 192.168.1.170 \
-  --endpoints 192.168.1.170 \
-  --image factory.talos.dev/installer/aefe418d4647eb3ecb93d2c5d583c663aa54c790165493b0414bf01442d93897:v1.7.5
-  # --image ghcr.io/siderolabs/installer:v1.7.5
-  # --reboot-mode powercycle
-  # --stage
-talosctl patch machineconfig \
-  --nodes 192.168.1.170 \
-  --endpoints 192.168.1.170 \
-  --patch-file cluster/bootstrap/talos/extensions/nvidia/gpu-worker-patch.yaml
-
 ## allow running privileged containers in nvidia namespace
 kubectl apply -f cluster/bootstrap/talos/nvidia/runtimeclass.yaml
 kubectl create ns nvidia-device-plugin

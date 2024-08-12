@@ -6,9 +6,10 @@ talosctl gen config \
   --with-secrets cluster/bootstrap/talos/secrets.yaml.env \
   --output-types talosconfig \
   --output talosconfig \
-  talos-homelab https://192.168.1.155:6443
-talosctl config endpoint 192.168.1.155 \
-  --talosconfig talosconfig
+  talos-homelab https://192.168.1.133:6443
+mv talosconfig ~/.talos/config # can't use ~/ in talosconfig path
+# talosctl config endpoint 192.168.1.133 \
+#   --talosconfig talosconfig
 kubectl create secret generic talos-secrets \
   --from-file=cluster/bootstrap/talos/secrets.yaml.env \
   --dry-run=client \
@@ -17,15 +18,11 @@ kubeseal --cert ./.sealed-secrets.pub --format yaml < /tmp/talos-secrets.yaml.en
 
 # DO NOT RUN until at least one node has been booted using apply-config below
 talosctl bootstrap \
-  --nodes 192.168.1.155 \
-  --endpoints 192.168.1.155 \
-  --talosconfig talosconfig
+  --nodes 192.168.1.162 \
+  --endpoints 192.168.1.162
 talosctl kubeconfig \
-  --nodes 192.168.1.155 \
-  --endpoints 192.168.1.155 \
-  --talosconfig talosconfig
-# can't use ~ in talosctl path
-mv talosconfig ~/.talos/config
+  --nodes 192.168.1.162 \
+  --endpoints 192.168.1.162 
 
 # bigrig
 talosctl gen config \
@@ -38,7 +35,10 @@ talosctl apply-config \
   --nodes 192.168.1.170 \
   --file /tmp/bigrig.yaml \
   --config-patch @cluster/bootstrap/talos/install-patches/bigrig.yaml \
-  --config-patch @cluster/bootstrap/talos/extensions/longhorn/patch.yaml
+  --config-patch @cluster/bootstrap/talos/extensions/longhorn/patch.yaml \
+  --config-patch @cluster/bootstrap/talos/extensions/metrics-server/patch.yaml \
+  --config-patch @cluster/bootstrap/talos/extensions/nvidia/patch.yaml \
+  --config-patch @cluster/bootstrap/talos/extensions/local-path-provisioner/patch.yaml
 
 # tiffrig
 talosctl gen config \
@@ -66,4 +66,6 @@ talosctl apply-config \
   --nodes 192.168.1.162 \
   --file /tmp/oppenheimer.yaml \
   --config-patch @cluster/bootstrap/talos/install-patches/oppenheimer.yaml \
-  --config-patch @cluster/bootstrap/talos/extensions/longhorn/patch.yaml
+  --config-patch @cluster/bootstrap/talos/extensions/longhorn/patch.yaml \
+  --config-patch @cluster/bootstrap/talos/extensions/metrics-server/patch.yaml \
+  --config-patch @cluster/bootstrap/talos/extensions/local-path-provisioner/patch.yaml
