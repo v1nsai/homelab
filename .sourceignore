@@ -4,6 +4,7 @@ test.yaml
 *.yml
 
 # disabled apps
+traefik/
 talos/
 nvidia-gpu-operator/
 rook-ceph/
