@@ -12,3 +12,6 @@ spec:
         kind: HelmRepository
         name: ingress-nginx
   interval: 1h0m0s
+  values:
+    controller:
+      kind: DaemonSet
