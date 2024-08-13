@@ -8,6 +8,8 @@ spec:
   targetNamespace: longhorn-system
   interval: 1h0m0s
   path: ./cluster/addons/longhorn/app
+  dependsOn:
+    - name: ingress-nginx
   prune: true
   sourceRef:
     kind: GitRepository
