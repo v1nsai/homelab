@@ -1,0 +1,15 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: ingress-nginx
+  namespace: ingress-nginx
+spec:
+  targetNamespace: ingress-nginx
+  interval: 1h0m0s
+  path: ./cluster/addons/nginx/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: homelab
+    namespace: flux-system
