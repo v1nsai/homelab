@@ -4,3 +4,4 @@ namespace: metallb
 resources:
   - ipaddresspool.yaml
   - l2advertisement.yaml
+  - crds.yaml
