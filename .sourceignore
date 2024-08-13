@@ -6,7 +6,7 @@ test.yaml
 # disabled apps
 traefik/
 talos/
-nvidia-gpu-operator/
+nvidia-device-plugin/
 rook-ceph/
 velero/
 nfs/
