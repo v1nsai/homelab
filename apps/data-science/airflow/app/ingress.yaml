@@ -2,6 +2,12 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: airflow
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Data Pipeline Orchestration
+    gethomepage.dev/group: Data Science
+    gethomepage.dev/icon: https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/AirflowLogo.png/640px-AirflowLogo.png
+    gethomepage.dev/name: Apache Airflow
 spec:
   rules:
     - host: airflow.internal
