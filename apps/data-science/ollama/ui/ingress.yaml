@@ -11,7 +11,6 @@ metadata:
     hajimari.io/targetBlank: false # open in new window
     hajimari.io/info: Open WebUI is a web-based interface for local LLM's
 spec:
-  ingressClassName: traefik
   tls:
     - hosts:
         - chat.internal
