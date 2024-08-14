@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jellyfin
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Media Server
+    gethomepage.dev/group: Media
+    gethomepage.dev/icon: jellyfin.png
+    gethomepage.dev/name: Jellyfin
+    # gethomepage.dev/widget.type: "emby"
+    # gethomepage.dev/widget.url: "https://emby.example.com"
+    # gethomepage.dev/pod-selector: ""
+    # gethomepage.dev/weight: 10 # optional
+    # gethomepage.dev/instance: "public" # optional
+spec:
+  rules:
+    - host: jellyfin.internal
+      http:
+        paths:
+          - backend:
+              service:
+                name: jellyfin
+                port:
+                  number: 8096
+            path: /
+            pathType: Prefix
