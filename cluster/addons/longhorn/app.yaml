@@ -10,6 +10,7 @@ spec:
   path: ./cluster/addons/longhorn/app
   dependsOn:
     - name: ingress-nginx
+      namespace: ingress-nginx
   prune: true
   sourceRef:
     kind: GitRepository
