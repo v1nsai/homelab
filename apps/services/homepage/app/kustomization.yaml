@@ -4,7 +4,7 @@ namespace: homepage
 resources:
   - configmap.yaml
   - deployment.yaml
-  # - ingress.yaml
+  - ingress.yaml
   - namespace.yaml
   - roles.yaml
   - secret.yaml
