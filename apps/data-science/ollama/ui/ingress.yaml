@@ -4,12 +4,11 @@ metadata:
   name: open-webui-ingress
   namespace: ollama
   annotations:
-    hajimari.io/enable: true
-    hajimari.io/icon: https://openwebui.com/favicon.png
-    hajimari.io/appName: Open WebUI
-    hajimari.io/group: Generative AI
-    hajimari.io/targetBlank: false # open in new window
-    hajimari.io/info: Open WebUI is a web-based interface for local LLM's
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Local Chatbot UI
+    gethomepage.dev/group: Data Science
+    gethomepage.dev/icon: https://openwebui.com/favicon.png
+    gethomepage.dev/name: Open WebUI
 spec:
   tls:
     - hosts:
