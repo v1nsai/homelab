@@ -6,7 +6,7 @@ set -e
 curl -sLS https://get.k3sup.dev | sh
 sudo install k3sup /usr/local/bin/
 
-# visudo command to remove password for sudo group
+# visudo command to remove password for sudo group, or do it manually on each node
 
 # Generate bootstrap script
 k3sup plan \
@@ -21,5 +21,9 @@ chmod +x cluster/bootstrap/k3s/bootstrap.sh
 
 # Run bootstrap script
 cluster/bootstrap/k3s/bootstrap.sh
-
 mv kubeconfig ~/.kube/config
+
+# run post install on each node
+ssh bigrig 'bash -s' < cluster/bootstrap/k3s/post-install.sh
+ssh tiffrig 'bash -s' < cluster/bootstrap/k3s/post-install.sh
+ssh oppenheimer 'bash -s' < cluster/bootstrap/k3s/post-install.sh

@@ -9,7 +9,8 @@ NAMESPACE=$(cat $PROJECT_PATH/app.yaml | yq '.metadata.namespace')
 CHART_NAME=$(cat $PROJECT_PATH/app/helmrelease.yaml | yq '.spec.chart.spec.chart')
 RELEASE_NAME=$(cat $PROJECT_PATH/app/helmrelease.yaml | yq '.metadata.name')
 
-echo "Project: $PROJECT"
+echo "Release Name: $RELEASE_NAME"
+echo "Chart Name: $CHART_NAME"
 echo "Repository Name: $REPO_NAME"
 echo "Repository URL: $REPO_URL"
 echo "Namespace: $NAMESPACE"
@@ -17,8 +18,8 @@ echo "Namespace: $NAMESPACE"
 cat $PROJECT_PATH/app/helmrelease.yaml | \
     yq '.spec.values' > /tmp/values.yaml
 
-helm repo add $REPO_NAME $REPO_URL
-helm repo update
+# helm repo add $REPO_NAME $REPO_URL
+# helm repo update
 helm upgrade --install $RELEASE_NAME $CHART_NAME/$REPO_NAME \
     --create-namespace \
     --namespace $NAMESPACE \
