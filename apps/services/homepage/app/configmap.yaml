@@ -19,21 +19,21 @@ data:
         - HomeAssistant:
             - abbr: hass
               href: http://home-assistant.internal:8123
-  services.yaml: |
-    - My First Group:
-        - My First Service:
-            href: http://localhost/
-            description: Homepage is awesome
+  services.yaml: "" # |
+    # - My First Group:
+    #     - My First Service:
+    #         href: http://localhost/
+    #         description: Homepage is awesome
 
-    - My Second Group:
-        - My Second Service:
-            href: http://localhost/
-            description: Homepage is the best
+    # - My Second Group:
+    #     - My Second Service:
+    #         href: http://localhost/
+    #         description: Homepage is the best
 
-    - My Third Group:
-        - My Third Service:
-            href: http://localhost/
-            description: Homepage is 😎
+    # - My Third Group:
+    #     - My Third Service:
+    #         href: http://localhost/
+    #         description: Homepage is 😎
   widgets.yaml: |
     - kubernetes:
         cluster:
@@ -53,6 +53,6 @@ data:
         cpu: true
         memory: true
     - search:
-        provider: duckduckgo
+        provider: google
         target: _blank
   docker.yaml: ""
