@@ -9,31 +9,31 @@ data:
     mode: cluster
   settings.yaml: |
     title: Drew's Cool Shit
-    background: https://doctor-ew.com/wp-content/uploads/2024/08/background.png
+    background: http://doctor-ew.com/wp-content/uploads/2024/08/background-small.png
     theme: dark
     color: cyan
   custom.css: ""
   custom.js: ""
   bookmarks.yaml: |
-    - Developer:
-        - Github:
-            - abbr: GH
-              href: https://github.com/
-  services.yaml: |
-    - My First Group:
-        - My First Service:
-            href: http://localhost/
-            description: Homepage is awesome
+    - Home:
+        - HomeAssistant:
+            - abbr: hass
+              href: http://home-assistant.internal:8123
+  # services.yaml: |
+  #   - My First Group:
+  #       - My First Service:
+  #           href: http://localhost/
+  #           description: Homepage is awesome
 
-    - My Second Group:
-        - My Second Service:
-            href: http://localhost/
-            description: Homepage is the best
+  #   - My Second Group:
+  #       - My Second Service:
+  #           href: http://localhost/
+  #           description: Homepage is the best
 
-    - My Third Group:
-        - My Third Service:
-            href: http://localhost/
-            description: Homepage is 😎
+  #   - My Third Group:
+  #       - My Third Service:
+  #           href: http://localhost/
+  #           description: Homepage is 😎
   widgets.yaml: |
     - kubernetes:
         cluster:
