@@ -9,7 +9,7 @@ data:
     mode: cluster
   settings.yaml: |
     title: Drew's Cool Shit
-    background: https://doctor-ew.com/wp-content/uploads/2024/08/background-small.png
+    background: slate
     theme: dark
     color: cyan
   custom.css: ""
