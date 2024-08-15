@@ -27,7 +27,7 @@ data:
         - HomeAssistant:
             href: http://home-assistant.internal:8123
             description: HomeAssistant Dashboard
-        - Homepage Documentation
+        - Homepage Documentation:
             href: https://gethomepage.dev/latest/configs/
             description: Homepage Configuration Docs
   widgets.yaml: |
