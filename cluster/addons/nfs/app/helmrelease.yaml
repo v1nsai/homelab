@@ -24,7 +24,7 @@ spec:
       create: true
       name: irma-nfs
       annotations:
-        storageclass.kubernetes.io/is-default-class: "true"
+        storageclass.kubernetes.io/is-default-class: "false"
       parameters:
         server: 192.168.1.170
         share: /mnt/irma/kubernetes/
