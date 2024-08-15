@@ -11,3 +11,4 @@ rook-ceph/
 velero/
 nfs/
 localai/
+airflow/
