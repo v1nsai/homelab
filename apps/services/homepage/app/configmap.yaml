@@ -19,6 +19,8 @@ data:
         - HomeAssistant:
             - abbr: hass
               href: http://home-assistant.internal:8123
+        - Homepage Documentation
+            - href: https://gethomepage.dev/latest/configs/
   services.yaml: "" # |
     # - My First Group:
     #     - My First Service:
