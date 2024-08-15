@@ -24,12 +24,12 @@ spec:
         enabled: true
         existingClaim: media-pvc
         accessMode: ReadWriteMany
-    extraEnvVars:
-      - name: NVIDIA_VISIBLE_DEVICES
-        value: "all"
-      - name: NVIDIA_DRIVER_CAPABILITIES
-        value: "all"
-      - name: DOTNET_SYSTEM_IO_DISABLEFILELOCKING
-        value: "true"
+    # extraEnvVars:
+    #   - name: NVIDIA_VISIBLE_DEVICES
+    #     value: "all"
+    #   - name: NVIDIA_DRIVER_CAPABILITIES
+    #     value: "all"
+    #   - name: DOTNET_SYSTEM_IO_DISABLEFILELOCKING
+    #     value: "true"
     nodeSelector:
       kubernetes.io/hostname: "bigrig"
