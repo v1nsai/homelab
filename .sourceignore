@@ -9,6 +9,5 @@ talos/
 nvidia-gpu-operator/
 rook-ceph/
 velero/
-nfs/
 localai/
 airflow/
