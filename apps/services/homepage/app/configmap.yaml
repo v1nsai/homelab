@@ -14,28 +14,22 @@ data:
     color: cyan
   custom.css: ""
   custom.js: ""
-  bookmarks.yaml: |
+  bookmarks.yaml: "" # |
+    # - Home:
+    #   - HomeAssistant:
+    #       - abbr: hass
+    #         href: http://home-assistant.internal:8123
+    #   - Homepage Documentation
+    #       - abbr: HD
+    #         href: https://gethomepage.dev/latest/configs/
+  services.yaml: |
     - Home:
         - HomeAssistant:
-            - abbr: hass
-              href: http://home-assistant.internal:8123
+            href: http://home-assistant.internal:8123
+            description: HomeAssistant Dashboard
         - Homepage Documentation
-            - href: https://gethomepage.dev/latest/configs/
-  services.yaml: "" # |
-    # - My First Group:
-    #     - My First Service:
-    #         href: http://localhost/
-    #         description: Homepage is awesome
-
-    # - My Second Group:
-    #     - My Second Service:
-    #         href: http://localhost/
-    #         description: Homepage is the best
-
-    # - My Third Group:
-    #     - My Third Service:
-    #         href: http://localhost/
-    #         description: Homepage is 😎
+            href: https://gethomepage.dev/latest/configs/
+            description: Homepage Configuration Docs
   widgets.yaml: |
     - kubernetes:
         cluster:
