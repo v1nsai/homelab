@@ -12,16 +12,12 @@ data:
     background: slate
     theme: dark
     color: cyan
-  custom.css: ""
+  custom.css: |
+    .services-group, #widgets-wrap {
+      background-color: rgba(0,0,0,0.75);
+    }
   custom.js: ""
-  bookmarks.yaml: "" # |
-    # - Home:
-    #   - HomeAssistant:
-    #       - abbr: hass
-    #         href: http://home-assistant.internal:8123
-    #   - Homepage Documentation
-    #       - abbr: HD
-    #         href: https://gethomepage.dev/latest/configs/
+  bookmarks.yaml: ""
   services.yaml: |
     - Home:
         - HomeAssistant:
