@@ -11,5 +11,3 @@ rook-ceph/
 velero/
 localai/
 airflow/
-
-apps/
