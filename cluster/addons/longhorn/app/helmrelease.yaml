@@ -18,7 +18,7 @@ spec:
     #   kubeletRootDir: /var/snap/microk8s/common/var/lib/kubelet
     service:
       ui:
-        type: LoadBalancer
+        type: ClusterIP
     persistence:
       defaultClass: true
       defaultDataLocality: best-effort

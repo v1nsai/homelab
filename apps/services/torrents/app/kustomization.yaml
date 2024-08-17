@@ -8,3 +8,4 @@ resources:
   - ./pvc.yaml
   - ./service.yaml
   - ./wireguard-config-sealed.yaml
+  - ./ingress.yaml

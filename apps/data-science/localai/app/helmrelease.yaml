@@ -23,7 +23,7 @@ spec:
         tag: latest-gpu-nvidia-cuda-11 # master-cublas-cuda11-ffmpeg # master-cublas-cuda11
       runtimeClassName: nvidia
     service:
-      type: LoadBalancer
+      type: ClusterIP
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:

@@ -1,0 +1,68 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: Prowlarr
+  annotations:
+    gethomepage.dev/description: Find Torrents
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Torrents
+    gethomepage.dev/icon: prowlarr.png
+    gethomepage.dev/name: Prowlarr
+spec:
+  rules:
+    - host: prowlarr.internal
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: prowlarr
+                port:
+                  number: 9696
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: qBittorrent
+  annotations:
+    gethomepage.dev/description: Download Torrents
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Torrents
+    gethomepage.dev/icon: qbittorrent.png
+    gethomepage.dev/name: qBittorrent
+spec:
+  rules:
+    - host: qbittorrent.internal
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: qbittorrent
+                port:
+                  number: 9091
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: Sonarr
+  annotations:
+    gethomepage.dev/description: Find Torrents Automatically
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Torrents
+    gethomepage.dev/icon: sonarr.png
+    gethomepage.dev/name: Sonarr
+spec:
+  rules:
+    - host: sonarr.internal
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: sonarr
+                port:
+                  number: 8989

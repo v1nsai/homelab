@@ -8,3 +8,4 @@ resources:
   - ./helmrepository.yaml
   - ./sealed-secrets.yaml
   - ./namespace.yaml
+  - ./ingress.yaml

@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: Portainer
+  annotations:
+    gethomepage.dev/description: Kubernetes Management
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Cluster Management
+    gethomepage.dev/icon: portainer.png
+    gethomepage.dev/name: Portainer
+spec:
+  rules:
+    - host: portainer.internal
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: localai
+                port:
+                  number: 9000

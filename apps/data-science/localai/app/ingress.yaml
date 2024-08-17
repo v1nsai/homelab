@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: LocalAI
+  annotations:
+    gethomepage.dev/description: Find and serve multimodal AI models
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Data Science
+    gethomepage.dev/icon: localai.png
+    gethomepage.dev/name: LocalAI
+spec:
+  rules:
+    - host: localai.internal
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: localai
+                port:
+                  number: 9696

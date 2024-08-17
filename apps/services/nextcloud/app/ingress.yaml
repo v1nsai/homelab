@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: Nextcloud
+  annotations:
+    gethomepage.dev/description: File sharing and collaboration
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Productivity
+    gethomepage.dev/icon: nextcloud.png
+    gethomepage.dev/name: Nextcloud
+spec:
+  rules:
+    - host: nextcloud.internal
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nextcloud
+                port:
+                  number: 8080

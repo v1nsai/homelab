@@ -2,6 +2,12 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: longhorn-ingress
+  annotations:
+    gethomepage.dev/description: Distributed storage that isn't Ceph
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Cluster Management
+    gethomepage.dev/icon: longhorn.png
+    gethomepage.dev/name: Longhorn
 spec:
   rules:
     - host: longhorn.internal

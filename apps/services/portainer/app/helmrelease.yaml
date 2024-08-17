@@ -14,6 +14,6 @@ spec:
   interval: 1m0s
   values:
     service:
-      type: LoadBalancer
+      type: ClusterIP
     image:
       tag: 2.20.3

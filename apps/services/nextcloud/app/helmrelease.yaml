@@ -86,6 +86,6 @@ spec:
         existingSecretKey: redis-password
       enabled: true
     service:
-      type: LoadBalancer
+      type: ClusterIP
     # startupProbe:
     #   initialDelaySeconds: 1800
