@@ -8,21 +8,14 @@ talosctl gen config \
   --output talosconfig \
   talos-homelab https://192.168.1.133:6443
 mv talosconfig ~/.talos/config # can't use ~/ in talosconfig path
-# talosctl config endpoint 192.168.1.133 \
-#   --talosconfig talosconfig
-kubectl create secret generic talos-secrets \
-  --from-file=cluster/bootstrap/talos/secrets.yaml.env \
-  --dry-run=client \
-  --output yaml > /tmp/talos-secrets.yaml.env
-kubeseal --cert ./.sealed-secrets.pub --format yaml < /tmp/talos-secrets.yaml.env > cluster/bootstrap/talos/sealed-secrets.yaml.env
 
 # DO NOT RUN until at least one node has been booted using apply-config below
 talosctl bootstrap \
-  --nodes 192.168.1.162 \
-  --endpoints 192.168.1.162
+  --nodes 192.168.1.155 \
+  --endpoints 192.168.1.155
 talosctl kubeconfig \
-  --nodes 192.168.1.162 \
-  --endpoints 192.168.1.162 
+  --nodes 192.168.1.155 \
+  --endpoints 192.168.1.155 
 
 # bigrig
 talosctl gen config \
@@ -66,6 +59,20 @@ talosctl apply-config \
   --nodes 192.168.1.162 \
   --file /tmp/oppenheimer.yaml \
   --config-patch @cluster/bootstrap/talos/install-patches/oppenheimer.yaml \
+  --config-patch @cluster/bootstrap/talos/extensions/longhorn/patch.yaml \
+  --config-patch @cluster/bootstrap/talos/extensions/metrics-server/patch.yaml \
+  --config-patch @cluster/bootstrap/talos/extensions/local-path-provisioner/patch.yaml
+
+# ASUSan
+talosctl gen config \
+  --with-secrets cluster/bootstrap/talos/secrets.yaml.env \
+  --output-types controlplane \
+  --output /tmp/ASUSan.yaml \
+  talos-homelab https://192.168.1.186:6443
+talosctl apply-config \
+  --nodes 192.168.1.186 \
+  --file /tmp/ASUSan.yaml \
+  --config-patch @cluster/bootstrap/talos/install-patches/ASUSan.yaml \
   --config-patch @cluster/bootstrap/talos/extensions/longhorn/patch.yaml \
   --config-patch @cluster/bootstrap/talos/extensions/metrics-server/patch.yaml \
   --config-patch @cluster/bootstrap/talos/extensions/local-path-provisioner/patch.yaml
