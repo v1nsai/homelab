@@ -11,7 +11,7 @@ k3sup install --host 192.168.1.170 \
 
 echo "Fetching the server's node-token into memory"
 
-export NODE_TOKEN=$(k3sup node-token --host 192.168.1.170 --user doctor_ew)
+export NODE_TOKEN=$(k3sup node-token --host 192.168.1.170 --user doctor_ew --ssh-key ~/.ssh/homelab)
 
 echo "Setting up additional server: 2"
 k3sup join \
