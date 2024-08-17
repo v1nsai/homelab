@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: Prowlarr
+  name: prowlarr
   annotations:
     gethomepage.dev/description: Find Torrents
     gethomepage.dev/enabled: "true"
@@ -24,7 +24,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: qBittorrent
+  name: qbittorrent
   annotations:
     gethomepage.dev/description: Download Torrents
     gethomepage.dev/enabled: "true"
@@ -47,7 +47,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: Sonarr
+  name: sonarr
   annotations:
     gethomepage.dev/description: Find Torrents Automatically
     gethomepage.dev/enabled: "true"
