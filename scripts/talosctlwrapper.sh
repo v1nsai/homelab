@@ -25,6 +25,10 @@ while [[ $# -gt 0 ]]; do
       TARGET="192.168.1.162"
       shift
       ;;
+    asusan)
+      TARGET="192.168.1.186"
+      shift
+      ;;
     all)
       TARGET="192.168.1.162,192.168.1.155,192.168.1.170"
       shift
