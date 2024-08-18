@@ -12,3 +12,6 @@ spec:
         kind: HelmRepository
         name: metallb
   interval: 1h0m0s
+  values:
+    crds:
+      enabled: false
