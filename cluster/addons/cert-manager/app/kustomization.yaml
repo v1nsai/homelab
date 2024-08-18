@@ -4,5 +4,5 @@ namespace: cert-manager
 resources:
   - helmrepository.yaml
   - helmrelease.yaml
-  - https://github.com/cert-manager/cert-manager/tree/master/deploy/crds
+  - https://github.com/cert-manager/cert-manager//deploy/crds
   - issuers.yaml
