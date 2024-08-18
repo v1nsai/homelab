@@ -7,4 +7,4 @@ resources:
   - namespace.yaml
   - ipaddresspool.yaml
   - l2advertisement.yaml
-  - https://github.com/metallb/metallb/blob/main/charts/metallb/charts/crds/templates/crds.yaml
+  - https://raw.githubusercontent.com/metallb/metallb/main/charts/metallb/charts/crds/templates/crds.yaml
