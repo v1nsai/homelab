@@ -12,3 +12,6 @@ spec:
         kind: HelmRepository
         name: jetstack
   interval: 1m0s
+  values:
+    crds:
+      enabled: true
