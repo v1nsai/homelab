@@ -23,3 +23,7 @@ spec:
                 name: homepage
                 port:
                   number: 3000
+  tls:
+    - hosts:
+        - "homepage.internal"
+      secretName: homepage-tls
