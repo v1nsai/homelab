@@ -24,4 +24,4 @@ spec:
   tls:
     - hosts:
         - localai.internal
-      secretName: homepage-tls
+      secretName: homelab-tls

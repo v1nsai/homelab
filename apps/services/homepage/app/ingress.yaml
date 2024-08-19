@@ -26,4 +26,4 @@ spec:
   tls:
     - hosts:
         - "homepage.internal"
-      secretName: homepage-tls
+      secretName: homelab-tls

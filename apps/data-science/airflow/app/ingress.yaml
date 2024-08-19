@@ -24,4 +24,4 @@ spec:
   tls:
     - hosts:
         - airflow.internal
-      secretName: homepage-tls
+      secretName: homelab-tls

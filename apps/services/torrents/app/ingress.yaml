@@ -24,7 +24,7 @@ spec:
   tls:
     - hosts:
         - prowlarr.internal
-      secretName: homepage-tls
+      secretName: homelab-tls
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -52,7 +52,7 @@ spec:
   tls:
     - hosts:
         - qbittorrent.internal
-      secretName: homepage-tls
+      secretName: homelab-tls
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -80,4 +80,4 @@ spec:
   tls:
     - hosts:
         - sonarr.internal
-      secretName: homepage-tls
+      secretName: homelab-tls
