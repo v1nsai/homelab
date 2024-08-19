@@ -8,11 +8,7 @@ metadata:
     gethomepage.dev/group: Media
     gethomepage.dev/icon: jellyfin.png
     gethomepage.dev/name: Jellyfin
-    # gethomepage.dev/widget.type: "emby"
-    # gethomepage.dev/widget.url: "https://emby.example.com"
-    # gethomepage.dev/pod-selector: ""
-    # gethomepage.dev/weight: 10 # optional
-    # gethomepage.dev/instance: "public" # optional
+    cert-manager.io/cluster-issuer: homelab-issuer
 spec:
   rules:
     - host: jellyfin.internal
@@ -25,3 +21,7 @@ spec:
                   number: 8096
             path: /
             pathType: Prefix
+  tls:
+    - hosts:
+        - jellyfin.internal
+      secretName: homepage-tls

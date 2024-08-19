@@ -8,6 +8,7 @@ metadata:
     gethomepage.dev/group: Cluster Management
     gethomepage.dev/icon: portainer.png
     gethomepage.dev/name: Portainer
+    cert-manager.io/cluster-issuer: homelab-issuer
 spec:
   rules:
     - host: portainer.internal
@@ -20,3 +21,7 @@ spec:
                 name: localai
                 port:
                   number: 9000
+  tls:
+    - hosts:
+        - portainer.internal
+      secretName: homepage-tls

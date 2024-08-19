@@ -9,11 +9,8 @@ metadata:
     gethomepage.dev/group: Data Science
     gethomepage.dev/icon: https://openwebui.com/favicon.png
     gethomepage.dev/name: Open WebUI
+    cert-manager.io/cluster-issuer: homelab-issuer
 spec:
-  tls:
-    - hosts:
-        - chat.internal
-      secretName: selfsigned-tls
   rules:
     - host: chat.internal
       http:
@@ -25,3 +22,7 @@ spec:
                 name: open-webui
                 port: 
                   number: 80
+  tls:
+    - hosts:
+        - chat.internal
+      secretName: homelab-tls

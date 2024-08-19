@@ -8,6 +8,7 @@ metadata:
     gethomepage.dev/group: Cluster Management
     gethomepage.dev/icon: longhorn.png
     gethomepage.dev/name: Longhorn
+    cert-manager.io/cluster-issuer: homelab-issuer
 spec:
   rules:
     - host: longhorn.internal
@@ -20,3 +21,7 @@ spec:
                 name: longhorn-frontend
                 port:
                   number: 80
+  tls:
+    - hosts:
+        - longhorn.internal
+      secretName: homepage-tls

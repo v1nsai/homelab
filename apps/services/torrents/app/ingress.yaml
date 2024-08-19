@@ -8,6 +8,7 @@ metadata:
     gethomepage.dev/group: Torrents
     gethomepage.dev/icon: prowlarr.png
     gethomepage.dev/name: Prowlarr
+    cert-manager.io/cluster-issuer: homelab-issuer
 spec:
   rules:
     - host: prowlarr.internal
@@ -20,6 +21,10 @@ spec:
                 name: prowlarr
                 port:
                   number: 9696
+  tls:
+    - hosts:
+        - prowlarr.internal
+      secretName: homepage-tls
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -31,6 +36,7 @@ metadata:
     gethomepage.dev/group: Torrents
     gethomepage.dev/icon: qbittorrent.png
     gethomepage.dev/name: qBittorrent
+    cert-manager.io/cluster-issuer: homelab-issuer
 spec:
   rules:
     - host: qbittorrent.internal
@@ -43,6 +49,10 @@ spec:
                 name: qbittorrent
                 port:
                   number: 9091
+  tls:
+    - hosts:
+        - qbittorrent.internal
+      secretName: homepage-tls
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -54,6 +64,7 @@ metadata:
     gethomepage.dev/group: Torrents
     gethomepage.dev/icon: sonarr.png
     gethomepage.dev/name: Sonarr
+    cert-manager.io/cluster-issuer: homelab-issuer
 spec:
   rules:
     - host: sonarr.internal
@@ -66,3 +77,7 @@ spec:
                 name: sonarr
                 port:
                   number: 8989
+  tls:
+    - hosts:
+        - sonarr.internal
+      secretName: homepage-tls
