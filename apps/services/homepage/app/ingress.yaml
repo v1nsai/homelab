@@ -10,6 +10,7 @@ metadata:
     gethomepage.dev/group: Cluster Management
     gethomepage.dev/icon: homepage.png
     gethomepage.dev/name: Homepage
+    cert-manager.io/cluster-issuer: homelab-issuer
 spec:
   rules:
     - host: "homepage.internal"
