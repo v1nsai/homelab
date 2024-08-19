@@ -36,7 +36,7 @@ metadata:
 spec:
   acme:
     server: https://acme-staging-v02.api.letsencrypt.org/directory
-    email: user@example.com
+    email: drew@doctor-ew.com
     privateKeySecretRef:
       name: letsencrypt-staging
     solvers:
@@ -51,7 +51,7 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: user@example.com
+    email: drew@doctor-ew.com
     privateKeySecretRef:
       name: letsencrypt-prod
     solvers:
