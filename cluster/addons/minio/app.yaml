@@ -21,8 +21,6 @@ metadata:
   namespace: minio-tenant
 spec:
   targetNamespace: minio-tenant
-  dependsOn:
-    - name: minio-operator
   interval: 1m0s
   path: ./cluster/addons/minio/tenant
   prune: true
