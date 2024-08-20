@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minio-ingress
+  annotations:
+    gethomepage.dev/description: Local S3 storage
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Cluster Management
+    gethomepage.dev/icon: minio.png
+    gethomepage.dev/name: MinIO
+    cert-manager.io/cluster-issuer: homelab-issuer
+spec:
+  rules:
+    - host: minio.internal
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: homelab-minio-console
+                port:
+                  number: 9443
+  tls:
+    - hosts:
+        - minio.internal
+      secretName: homelab-tls
