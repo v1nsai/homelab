@@ -4,4 +4,3 @@ namespace: minio-tenant
 resources:
   - helmrelease.yaml
   - namespace.yaml
-  - ingress.yaml
