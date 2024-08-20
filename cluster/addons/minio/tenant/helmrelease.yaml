@@ -16,3 +16,7 @@ spec:
   values:
     tenant:
       name: homelab-minio
+      configSecret:
+        name: user-config
+        accessKey: {{ randAlphaNum 32 }}
+        secretKey: {{ randAlphaNum 32 }}
