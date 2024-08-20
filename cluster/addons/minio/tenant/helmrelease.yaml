@@ -16,4 +16,3 @@ spec:
   values:
     tenant:
       name: homelab-minio
-
