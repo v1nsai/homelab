@@ -45,6 +45,13 @@ kind: Ingress
 metadata:
   name: ww-gitops-ingress
   namespace: flux-system
+  annotations:
+    gethomepage.dev/description: The Weave GitOps Dashboard
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Cluster Management
+    gethomepage.dev/icon: weave-gitops.png
+    gethomepage.dev/name: Weave GitOps
+    cert-manager.io/cluster-issuer: homelab-issuer
 spec:
   ingressClassName: nginx
   rules:
@@ -58,3 +65,7 @@ spec:
                 name: ww-gitops-weave-gitops
                 port:
                   number: 9001
+  tls:
+    - hosts:
+        - fluxcd.internal
+      secretName: homelab-tls
