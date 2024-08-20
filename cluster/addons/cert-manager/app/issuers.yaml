@@ -11,6 +11,8 @@ metadata:
   name: homelab-ca
 spec:
   isCA: true
+  duration: 8760h # 1y
+  renewBefore: 360h # 15d
   commonName: homelab-ca
   secretName: homelab-ca
   privateKey:
