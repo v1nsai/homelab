@@ -4,3 +4,4 @@ namespace: minio-operator
 resources:
   - helmrepository.yaml
   - helmrelease.yaml
+  - namespace.yaml
