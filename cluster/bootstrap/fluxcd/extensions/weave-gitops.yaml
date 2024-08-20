@@ -45,9 +45,8 @@ kind: Ingress
 metadata:
   name: ww-gitops-ingress
   namespace: flux-system
-  annotations:
-    kubernetes.io/ingress.class: nginx
 spec:
+  ingressClassName: nginx
   rules:
     - host: fluxcd.internal
       http:
