@@ -27,3 +27,7 @@ spec:
           gethomepage.dev/icon: minio.png
           gethomepage.dev/name: MinIO
           cert-manager.io/cluster-issuer: homelab-issuer
+        tls:
+          hosts:
+            - minio.internal
+          secretName: homelab-tls
