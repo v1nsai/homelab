@@ -1,8 +1,0 @@
----
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: hajimari
-spec:
-  interval: 1h0m0s
-  url: https://hajimari.io
