@@ -46,10 +46,10 @@ metadata:
   name: ww-gitops-ingress
   namespace: flux-system
   annotations:
-    gethomepage.dev/description: The Weave GitOps Dashboard
+    gethomepage.dev/description: Weave FluxCD GitOps Dashboard
     gethomepage.dev/enabled: "true"
     gethomepage.dev/group: Cluster Management
-    gethomepage.dev/icon: weave-gitops.png
+    gethomepage.dev/icon: https://gitops.weave.works/img/weave-logo.png
     gethomepage.dev/name: Weave GitOps
     cert-manager.io/cluster-issuer: homelab-issuer
 spec:
