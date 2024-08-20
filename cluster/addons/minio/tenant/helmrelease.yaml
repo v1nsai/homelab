@@ -28,6 +28,4 @@ spec:
           gethomepage.dev/name: MinIO
           cert-manager.io/cluster-issuer: homelab-issuer
         tls:
-          hosts:
-            - minio.internal
-          secretName: homelab-tls
+          - minio.internal
