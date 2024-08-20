@@ -20,7 +20,7 @@ spec:
               service:
                 name: homelab-minio-console
                 port:
-                  name: https-console
+                  number: 9443
   tls:
     - hosts:
         - minio.internal
