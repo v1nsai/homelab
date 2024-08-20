@@ -16,16 +16,4 @@ spec:
   values:
     tenant:
       name: homelab-minio
-    ingress:
-      console:
-        enabled: true
-        host: minio.internal
-        annotations:
-          gethomepage.dev/description: Local S3 storage
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Cluster Management
-          gethomepage.dev/icon: minio.png
-          gethomepage.dev/name: MinIO
-          cert-manager.io/cluster-issuer: homelab-issuer
-        tls:
-          - minio.internal
+
