@@ -39,4 +39,23 @@ spec:
       create: true
       passwordHash: $2a$10$I.Yc3JqaAvRwnXeUl6hzH.EWRikwsJtrGfT./4QmxWgdxBgepizoO
       username: admin
-
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ww-gitops-ingress
+  namespace: flux-system
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: fluxcd.internal
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ww-gitops-weave-gitops
+                port:
+                  number: 9001
