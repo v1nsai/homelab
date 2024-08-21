@@ -14,6 +14,7 @@ spec:
         namespace: minio-operator
   interval: 1m0s
   values:
+    secrets: {}
     tenant:
       name: homelab-minio
       configSecret:
