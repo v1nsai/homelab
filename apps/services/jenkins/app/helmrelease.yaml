@@ -12,3 +12,7 @@ spec:
         name: bitnami
   interval: 1m0s
   releaseName: jenkins
+  valuesFrom:
+    - kind: Secret
+      name: secret-values
+      valuesKey: secret-values.yaml
