@@ -25,5 +25,6 @@ spec:
       defaultClassReplicaCount: 2
     defaultSettings:
       defaultDataLocality: best-effort
-      backupTarget: s3://dr.ew-homelab-backups@us-east-1/
-      backupTargetCredentialSecret: backup-target-credentials
+      backupTarget: nfs://192.168.1.170:/mnt/irma/longhorn
+      # backupTarget: s3://dr.ew-homelab-backups@us-east-1/
+      # backupTargetCredentialSecret: backup-target-credentials
