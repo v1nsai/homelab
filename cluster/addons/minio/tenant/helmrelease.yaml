@@ -13,10 +13,13 @@ spec:
         name: minio-operator
         namespace: minio-operator
   interval: 1m0s
+  valuesFrom:
+    - kind: Secret
+      name: secret-values
+      valuesKey: secret-values.yaml
   values:
-    secrets: {}
     tenant:
       name: homelab-minio
-      configSecret:
-        name: user-config
-        existingSecret: true
+      # configSecret: # TODO rm once https://github.com/minio/operator/pull/2284 is fixed
+      #   name: user-config
+      #   existingSecret: true
