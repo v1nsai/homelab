@@ -6,6 +6,7 @@ jenkinsPassword: $(openssl rand -base64 20)
 EOF
 
 kubectl create secret generic jenkins-secret \
+    --namespace jenkins \
     --from-file=/tmp/secret-values.yaml \
     --dry-run=client \
     --output yaml | \
