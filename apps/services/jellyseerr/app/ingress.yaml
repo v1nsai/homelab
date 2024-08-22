@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jellyseerr
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Media Requests
+    gethomepage.dev/group: Media
+    gethomepage.dev/icon: jellyseerr.png
+    gethomepage.dev/name: Jellyseerr
+    cert-manager.io/cluster-issuer: homelab-issuer
+spec:
+  rules:
+    - host: jellyseerr.internal
+      http:
+        paths:
+          - backend:
+              service:
+                name: jellyseerr
+                port:
+                  number: 5055
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - jellyseerr.internal
+      secretName: homelab-tls
