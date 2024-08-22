@@ -24,4 +24,4 @@ spec:
   tls:
     - hosts:
         - jellyseerr.internal
-      secretName: homelab-tls
+      secretName: homelab-tls-jellyseerr
