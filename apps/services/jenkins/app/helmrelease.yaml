@@ -16,3 +16,12 @@ spec:
     - kind: Secret
       name: jenkins-secret
       valuesKey: secret-values.yaml
+  values:
+    plugins:
+      - git
+      - docker
+      - harbor
+    configAsCode:
+      enabled: true
+    agent:
+      enabled: true
