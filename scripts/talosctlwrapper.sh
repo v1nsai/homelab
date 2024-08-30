@@ -5,6 +5,7 @@
 set -e
 
 POSITIONAL_ARGS=()
+MAINTENANCE=false
 
 while [[ $# -gt 0 ]]; do
   case $1 in
@@ -33,12 +34,28 @@ while [[ $# -gt 0 ]]; do
       TARGET="192.168.1.162,192.168.1.155,192.168.1.170"
       shift
       ;;
+    maintenance)
+      MAINTENANCE=true
+      shift
+      ;;
     *)
       POSITIONAL_ARGS+=("$1") # save positional arg
       shift
       ;;
   esac
 done
+
+# put node into maintenance mode
+if $MAINTENANCE; then
+  talosctl \
+    reset \
+    --nodes $TARGET \
+    --endpoints $TARGET \
+    --system-labels-to-wipe EPHEMERAL,STATE \
+    --reboot \
+    "${POSITIONAL_ARGS[@]}"
+    exit 0
+fi
 
 # Prevent upgrading without the --preserve flag due to using localpath storage
 for i in "${POSITIONAL_ARGS[@]}"; do
@@ -49,5 +66,5 @@ done
 
 talosctl \
   --nodes $TARGET \
-  --endpoints 192.168.1.133 \
+  --endpoints $TARGET \
   "${POSITIONAL_ARGS[@]}"
