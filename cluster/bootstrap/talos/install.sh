@@ -1,13 +1,14 @@
 # sudo cp scripts/talosctlwrapper.sh /usr/local/bin/talosctlwrapper 
 
-# Create and seal the secrets
-talosctl gen secrets -o cluster/bootstrap/talos/secrets.yaml.env
+# Create secrets
+talosctl gen secrets -o cluster/bootstrap/talos/secrets.yaml.env # adding .env to make git ignore it
 talosctl gen config \
   --with-secrets cluster/bootstrap/talos/secrets.yaml.env \
   --output-types talosconfig \
   --output talosconfig \
   talos-homelab https://192.168.1.133:6443
 mv talosconfig ~/.talos/config # can't use ~/ in talosconfig path
+kubeseal --cert ./.sealed-secrets.pub --format yaml 
 
 # DO NOT RUN until at least one node has been booted using apply-config below
 talosctl bootstrap \
@@ -22,6 +23,7 @@ talosctl gen config \
   --with-secrets cluster/bootstrap/talos/secrets.yaml.env \
   --output-types controlplane \
   --output /tmp/bigrig.yaml \
+  --force \
   talos-homelab https://192.168.1.170:6443
 talosctl apply-config \
   --insecure \
@@ -38,6 +40,7 @@ talosctl gen config \
   --with-secrets cluster/bootstrap/talos/secrets.yaml.env \
   --output-types controlplane \
   --output /tmp/tiffrig.yaml \
+  --force \
   talos-homelab https://192.168.1.155:6443
 talosctl apply-config \
   --insecure \
@@ -53,6 +56,7 @@ talosctl gen config \
   --with-secrets cluster/bootstrap/talos/secrets.yaml.env \
   --output-types controlplane \
   --output /tmp/oppenheimer.yaml \
+  --force \
   talos-homelab https://192.168.1.162:6443
 talosctl apply-config \
   --insecure \

@@ -23,16 +23,5 @@ machine:
     - device: /dev/sda
       partitions:
         - mountpoint: /var/mnt/disk0
-  certSANs:
-    - 192.168.1.186
-    - 192.168.1.162
-    - 192.168.1.170
-    - 192.168.1.133
 cluster:
-  apiServer:
-    certSANs:
-      - 192.168.1.186
-      - 192.168.1.162
-      - 192.168.1.170
-      - 192.168.1.133
   allowSchedulingOnControlPlanes: true
