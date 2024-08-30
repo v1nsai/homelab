@@ -1,4 +1,4 @@
-## allow running privileged containers in nvidia namespace
+# allow running privileged containers in nvidia namespace
 kubectl apply -f cluster/bootstrap/talos/extensions/nvidia/runtimeclass.yaml
 kubectl create ns nvidia-device-plugin
 kubectl label --overwrite namespace nvidia-device-plugin \
@@ -9,9 +9,13 @@ kubectl label --overwrite namespace nvidia-device-plugin \
     pod-security.kubernetes.io/audit=privileged \
     pod-security.kubernetes.io/audit-version=latest
 
-## label GPU nodes
+# label GPU nodes
 kubectl label nodes bigrig nvidia.com/gpu.present=true
 
+# Install nvidia runtimeclass
+kubectl apply -f cluster/bootstrap/talos/extensions/nvidia/runtimeclass.yaml
+
+# Install nvidia device plugin
 helm repo add nvdp https://nvidia.github.io/k8s-device-plugin
 helm repo update
 helm upgrade --install nvidia-device-plugin nvdp/nvidia-device-plugin \
