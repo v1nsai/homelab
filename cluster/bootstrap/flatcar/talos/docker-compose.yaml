@@ -1,0 +1,33 @@
+version: '3'
+services:
+  talos:
+    image: ghcr.io/siderolabs/talos:v1.7.6
+    container_name: talos
+    hostname: talos-cp
+    privileged: true
+    read_only: true
+    security_opt:
+      - seccomp=unconfined
+    environment:
+      - PLATFORM=container
+    volumes:
+      - type: tmpfs
+        target: /run
+      - type: tmpfs
+        target: /system
+      - type: tmpfs
+        target: /tmp
+      - type: volume
+        target: /system/state
+      - type: volume
+        target: /var
+      - type: volume
+        target: /etc/cni
+      - type: volume
+        target: /etc/kubernetes
+      - type: volume
+        target: /usr/libexec/kubernetes
+      - type: volume
+        target: /opt
+    tty: true
+    stdin_open: true
