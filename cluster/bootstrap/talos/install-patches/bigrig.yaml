@@ -2,6 +2,7 @@ machine:
   install:
     disk: /dev/nvme0n1
     wipe: true
+    # qemu-guest-agent iscsi-tools util-linux-tools nonfree-kmod-nvidia nvidia-container-toolkit included in image
     image: factory.talos.dev/installer/8f8a8d4be4bde03c257e0cac6274c567053a5ed8dfa0a00ce234abef61e5067d:v1.7.6
   network:
     hostname: bigrig

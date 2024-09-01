@@ -2,10 +2,10 @@ machine:
   install:
     disk: /dev/sda
     wipe: true
-    # iscsi-tools util-linux-tools nonfree-kmod-nvidia nvidia-container-toolkit included in image
-    image: factory.talos.dev/installer/613e1592b2da41ae5e265e8789429f22e121aab91cb4deb6bc3c0b6262961245:v1.7.6
+    # qemu-guest-agent iscsi-tools util-linux-tools included in image
+    image: factory.talos.dev/installer/88d1f7a5c4f1d3aba7df787c448c1d3d008ed29cfb34af53fa0df4336a56040b:v1.7.6
   network:
-    hostname: oppenheimer
+    hostname: oppenheimer-talos-0
     interfaces:
       - interface: eno1
         dhcp: true

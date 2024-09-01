@@ -12,11 +12,11 @@ kubeseal --cert ./.sealed-secrets.pub --format yaml
 
 # DO NOT RUN until at least one node has been booted using apply-config below
 talosctl bootstrap \
-  --nodes 192.168.1.155 \
-  --endpoints 192.168.1.155
+  --nodes 192.168.1.196 \
+  --endpoints 192.168.1.196
 talosctl kubeconfig \
-  --nodes 192.168.1.155 \
-  --endpoints 192.168.1.155 
+  --nodes 192.168.1.196 \
+  --endpoints 192.168.1.196 
 
 # bigrig
 talosctl gen config \
@@ -72,6 +72,7 @@ talosctl gen config \
   --with-secrets cluster/bootstrap/talos/secrets.yaml.env \
   --output-types controlplane \
   --output /tmp/ASUSan.yaml \
+  --force \
   talos-homelab https://192.168.1.186:6443
 talosctl apply-config \
   --nodes 192.168.1.186 \
@@ -80,3 +81,20 @@ talosctl apply-config \
   --config-patch @cluster/bootstrap/talos/extensions/longhorn/patch.yaml \
   --config-patch @cluster/bootstrap/talos/extensions/metrics-server/patch.yaml \
   --config-patch @cluster/bootstrap/talos/extensions/local-path-provisioner/patch.yaml
+
+# Proxmox VM
+talosctl gen config \
+  --with-secrets cluster/bootstrap/talos/secrets.yaml.env \
+  --output-types controlplane \
+  --output /tmp/proxmox.yaml \
+  --force \
+  talos-homelab https://192.168.1.195:6443
+talosctl apply-config \
+  --insecure \
+  --nodes 192.168.1.195 \
+  --file /tmp/proxmox.yaml \
+  --config-patch @cluster/bootstrap/talos/install-patches/proxmox.yaml \
+  --config-patch @cluster/bootstrap/talos/extensions/longhorn/patch.yaml \
+  --config-patch @cluster/bootstrap/talos/extensions/metrics-server/patch.yaml \
+  --config-patch @cluster/bootstrap/talos/extensions/local-path-provisioner/patch.yaml
+
