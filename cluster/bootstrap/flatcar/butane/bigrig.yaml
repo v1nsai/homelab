@@ -6,12 +6,6 @@ storage:
       mode: 0644
       contents:
         inline: bigrig
-    - path: /etc/environment
-      mode: 0644
-      overwrite: false
-      append:
-        - inline: |
-            HOSTNAME=bigrig
     - path: /etc/sudoers
       overwrite: false
       append:

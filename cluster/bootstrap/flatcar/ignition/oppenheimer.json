@@ -28,17 +28,6 @@
       },
       {
         "overwrite": false,
-        "path": "/etc/environment",
-        "append": [
-          {
-            "compression": "",
-            "source": "data:,HOSTNAME%3Doppenheimer%0A"
-          }
-        ],
-        "mode": 420
-      },
-      {
-        "overwrite": false,
         "path": "/etc/sudoers",
         "append": [
           {

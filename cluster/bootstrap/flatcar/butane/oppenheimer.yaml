@@ -6,12 +6,6 @@ storage:
       mode: 0644
       contents:
         inline: oppenheimer
-    - path: /etc/environment
-      mode: 0644
-      overwrite: false
-      append:
-        - inline: |
-            HOSTNAME=oppenheimer
     - path: /etc/sudoers
       overwrite: false
       append:
