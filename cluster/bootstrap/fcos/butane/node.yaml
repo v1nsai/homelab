@@ -8,7 +8,7 @@ storage:
         - inline: |
             doctor_ew        ALL=(ALL)       NOPASSWD: ALL
     # CRI-O DNF module
-    - path: /etc/dnf/modules.d/cri-o.module
+    - path: /etc/dnf/modules.d/versions.module
       mode: 0644
       overwrite: true
       contents:
@@ -18,20 +18,38 @@ storage:
           stream=1.30
           profiles=
           state=enabled
+
+          [kubeadm]
+          name=kubeadm
+          stream=1.30
+          profiles=
+          state=enabled
+
+          [kubectl]
+          name=kubectl
+          stream=1.30
+          profiles=
+          state=enabled
+
+          [kubelet]
+          name=kubeadm
+          stream=1.30
+          profiles=
+          state=enabled
     # YUM repository for kubeadm, kubelet and kubectl
-    # - path: /etc/yum.repos.d/kubernetes.repo
-    #   mode: 0644
-    #   overwrite: true
-    #   contents:
-    #     inline: |
-    #       [kubernetes]
-    #       name=Kubernetes
-    #       baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
-    #       enabled=1
-    #       gpgcheck=1
-    #       repo_gpgcheck=1
-    #       gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
-    #         https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+    - path: /etc/yum.repos.d/kubernetes.repo
+      mode: 0644
+      overwrite: true
+      contents:
+        inline: |
+          [kubernetes]
+          name=Kubernetes
+          baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+          enabled=1
+          gpgcheck=1
+          repo_gpgcheck=1
+          gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
+            https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
     # configuring automatic loading of br_netfilter on startup
     - path: /etc/modules-load.d/br_netfilter.conf
       mode: 0644

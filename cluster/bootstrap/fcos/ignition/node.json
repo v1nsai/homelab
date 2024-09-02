@@ -31,10 +31,19 @@
       },
       {
         "overwrite": true,
-        "path": "/etc/dnf/modules.d/cri-o.module",
+        "path": "/etc/dnf/modules.d/versions.module",
         "contents": {
-          "compression": "",
-          "source": "data:,%5Bcri-o%5D%0Aname%3Dcri-o%0Astream%3D1.30%0Aprofiles%3D%0Astate%3Denabled%0A"
+          "compression": "gzip",
+          "source": "data:;base64,H4sIAAAAAAAC/4pOLsrUzY/lykvMTbUFs7mKS4pSE3NtDfWMDbgKivLTMnNSi225iksSS1JtU/MSk3JSU7i4orNLk1ITU3KhOqE8EvQml+Qg6U0uySFBb05qCRn2AgIAAP//Fm0g5+sAAAA="
+        },
+        "mode": 420
+      },
+      {
+        "overwrite": true,
+        "path": "/etc/yum.repos.d/kubernetes.repo",
+        "contents": {
+          "compression": "gzip",
+          "source": "data:;base64,H4sIAAAAAAAC/4yNUQrDIBiD3z1FL6BSGN0YeIIdYYxibfgLav3RCvP2ozC6PfYpJORLnr5OyCs2lJdYbYR5HIGYbEHNwSzbxuWuNVvnLaEoF1KdFaVEAcqlqFuNOoNT0b89iXCV79swDheB1U4Bs+kFMbkFzpte7MD454nJo518m5PbVXo0RUyi685zmaP8tg7+EwAA//+EhlgnCQEAAA=="
         },
         "mode": 420
       },
