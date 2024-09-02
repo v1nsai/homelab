@@ -1,0 +1,6 @@
+variant: fcos
+version: 1.5.0
+ignition:
+  config:
+    replace:
+      source: https://raw.githubusercontent.com/v1nsai/homelab/develop/cluster/bootstrap/fcos/ignition/node.json

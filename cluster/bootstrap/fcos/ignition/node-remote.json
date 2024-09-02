@@ -1,0 +1,10 @@
+{
+  "ignition": {
+    "config": {
+      "replace": {
+        "source": "https://raw.githubusercontent.com/v1nsai/homelab/develop/cluster/bootstrap/fcos/ignition/node.json"
+      }
+    },
+    "version": "3.4.0"
+  }
+}
