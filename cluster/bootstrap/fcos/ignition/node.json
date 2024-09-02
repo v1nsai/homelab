@@ -65,14 +65,6 @@
           "source": "data:,net.bridge.bridge-nf-call-iptables%3D1%0Anet.ipv4.ip_forward%3D1%0A"
         },
         "mode": 420
-      },
-      {
-        "path": "/tmp/pre-install.sh",
-        "contents": {
-          "compression": "gzip",
-          "source": "data:;base64,H4sIAAAAAAAC/6TMMY6DMBAF0H5O8ZetwRgJkihS7oLR2J4C27GnSJHDR2kpaFI/6f3/GSfJuLVFosaKnonEQwpWvBEqF/RP2Ns02OU62MFexjs0ciKAt5jROQlVQocHDOtmYm6a1p2//hLFSF7Ox3k+jCre/1Yu06HMpXCKLDvX8/YTAAD//zuKUlsRAQAA"
-        },
-        "mode": 484
       }
     ],
     "links": [
