@@ -8,34 +8,16 @@ storage:
         - inline: |
             doctor_ew        ALL=(ALL)       NOPASSWD: ALL
     # CRI-O DNF module
-    - path: /etc/dnf/modules.d/versions.module
-      mode: 0644
-      overwrite: true
-      contents:
-        inline: |
-          [cri-o]
-          name=cri-o
-          stream=1.30
-          profiles=
-          state=enabled
-
-          [kubeadm]
-          name=kubeadm
-          stream=1.30
-          profiles=
-          state=enabled
-
-          [kubectl]
-          name=kubectl
-          stream=1.30
-          profiles=
-          state=enabled
-
-          [kubelet]
-          name=kubeadm
-          stream=1.30
-          profiles=
-          state=enabled
+    # - path: /etc/dnf/modules.d/versions.module
+    #   mode: 0644
+    #   overwrite: true
+    #   contents:
+    #     inline: |
+    #       [cri-o]
+    #       name=cri-o
+    #       stream=1.30
+    #       profiles=
+    #       state=enabled
     # YUM repository for kubeadm, kubelet and kubectl
     - path: /etc/yum.repos.d/kubernetes.repo
       mode: 0644
@@ -44,18 +26,18 @@ storage:
         inline: |
           [kubernetes]
           name=Kubernetes
-          baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+          baseurl=https://pkgs.k8s.io/core:/stable:/v1.30/rpm/
           enabled=1
           gpgcheck=1
-          repo_gpgcheck=1
-          gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
-            https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+          gpgkey=https://pkgs.k8s.io/core:/stable:/v1.30/rpm/repodata/repomd.xml.key
     # configuring automatic loading of br_netfilter on startup
     - path: /etc/modules-load.d/br_netfilter.conf
       mode: 0644
       overwrite: true
       contents:
-        inline: br_netfilter
+        inline: |
+          overlay
+          br_netfilter
     # setting kernel parameters required by kubelet
     - path: /etc/sysctl.d/kubernetes.conf
       mode: 0644
@@ -94,7 +76,7 @@ systemd:
         # We run before `zincati.service` to avoid conflicting rpm-ostree
         # transactions.
         Before=zincati.service
-        ConditionPathExists=!/var/lib/%N.stamp
+        ConditionPathExists=!/var/lib/install-has-run
 
         [Service]
         Type=oneshot
@@ -104,8 +86,9 @@ systemd:
         # added to the root image in a future Fedora CoreOS release as it will
         # prevent the service from failing.
         ExecStart=/usr/bin/rpm-ostree install -y --allow-inactive vim kubelet kubeadm kubectl cri-o
-        ExecStart=/bin/systemctl enable kubelet cri-o
-        ExecStart=/bin/touch /var/lib/%N.stamp
+        ExecStart=/bin/systemctl enable cri-o
+        ExecStart=/bin/systemctl enable kubelet
+        ExecStart=/bin/touch /var/lib/install-has-run
         ExecStart=/bin/systemctl --no-block reboot
 
         [Install]

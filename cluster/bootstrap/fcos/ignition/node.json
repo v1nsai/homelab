@@ -31,19 +31,10 @@
       },
       {
         "overwrite": true,
-        "path": "/etc/dnf/modules.d/versions.module",
-        "contents": {
-          "compression": "gzip",
-          "source": "data:;base64,H4sIAAAAAAAC/4pOLsrUzY/lykvMTbUFs7mKS4pSE3NtDfWMDbgKivLTMnNSi225iksSS1JtU/MSk3JSU7i4orNLk1ITU3KhOqE8EvQml+Qg6U0uySFBb05qCRn2AgIAAP//Fm0g5+sAAAA="
-        },
-        "mode": 420
-      },
-      {
-        "overwrite": true,
         "path": "/etc/yum.repos.d/kubernetes.repo",
         "contents": {
           "compression": "gzip",
-          "source": "data:;base64,H4sIAAAAAAAC/4yNUQrDIBiD3z1FL6BSGN0YeIIdYYxibfgLav3RCvP2ozC6PfYpJORLnr5OyCs2lJdYbYR5HIGYbEHNwSzbxuWuNVvnLaEoF1KdFaVEAcqlqFuNOoNT0b89iXCV79swDheB1U4Bs+kFMbkFzpte7MD454nJo518m5PbVXo0RUyi685zmaP8tg7+EwAA//+EhlgnCQEAAA=="
+          "source": "data:;base64,H4sIAAAAAAAC/5TMOwoCMRRG4T6LyXWwkUBW4BLEIo+fjNy8yM2Is3tRwX66w1ecG28eo2JC7qq6Anv9g/JOsI1s1zm7GKLOSTRfRD8ahTZgSKbzGYaeiz6faPRCCvVD0S4q9RRWBP4lYz80Gugtuum+UaJ+lawZu3oHAAD//xPfQCKyAAAA"
         },
         "mode": 420
       },
@@ -52,7 +43,7 @@
         "path": "/etc/modules-load.d/br_netfilter.conf",
         "contents": {
           "compression": "",
-          "source": "data:,br_netfilter"
+          "source": "data:,overlay%0Abr_netfilter%0A"
         },
         "mode": 420
       },
@@ -84,7 +75,7 @@
   "systemd": {
     "units": [
       {
-        "contents": "[Unit]\nDescription=Layer packages with rpm-ostree\nWants=network-online.target\nAfter=network-online.target\n# We run before `zincati.service` to avoid conflicting rpm-ostree\n# transactions.\nBefore=zincati.service\nConditionPathExists=!/var/lib/%N.stamp\n\n[Service]\nType=oneshot\nRemainAfterExit=yes\n# `--allow-inactive` ensures that rpm-ostree does not return an error\n# if the package is already installed. This is useful if the package is\n# added to the root image in a future Fedora CoreOS release as it will\n# prevent the service from failing.\nExecStart=/usr/bin/rpm-ostree install -y --allow-inactive vim kubelet kubeadm kubectl cri-o\nExecStart=/bin/systemctl enable kubelet cri-o\nExecStart=/bin/touch /var/lib/%N.stamp\nExecStart=/bin/systemctl --no-block reboot\n\n[Install]\nWantedBy=multi-user.target\n",
+        "contents": "[Unit]\nDescription=Layer packages with rpm-ostree\nWants=network-online.target\nAfter=network-online.target\n# We run before `zincati.service` to avoid conflicting rpm-ostree\n# transactions.\nBefore=zincati.service\nConditionPathExists=!/var/lib/install-has-run\n\n[Service]\nType=oneshot\nRemainAfterExit=yes\n# `--allow-inactive` ensures that rpm-ostree does not return an error\n# if the package is already installed. This is useful if the package is\n# added to the root image in a future Fedora CoreOS release as it will\n# prevent the service from failing.\nExecStart=/usr/bin/rpm-ostree install -y --allow-inactive vim kubelet kubeadm kubectl cri-o\nExecStart=/bin/systemctl enable cri-o\nExecStart=/bin/systemctl enable kubelet\nExecStart=/bin/touch /var/lib/install-has-run\nExecStart=/bin/systemctl --no-block reboot\n\n[Install]\nWantedBy=multi-user.target\n",
         "enabled": true,
         "name": "install-packages.service"
       }
