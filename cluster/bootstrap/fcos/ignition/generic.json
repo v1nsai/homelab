@@ -1,6 +1,6 @@
 {
   "ignition": {
-    "version": "3.3.0"
+    "version": "3.4.0"
   },
   "passwd": {
     "users": [
@@ -18,14 +18,6 @@
   },
   "storage": {
     "files": [
-      {
-        "path": "/etc/hostname",
-        "contents": {
-          "compression": "",
-          "source": "data:,tiffrig"
-        },
-        "mode": 420
-      },
       {
         "overwrite": false,
         "path": "/etc/sudoers",
