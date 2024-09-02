@@ -20,6 +20,16 @@
   "storage": {
     "files": [
       {
+        "path": "/etc/environment",
+        "append": [
+          {
+            "compression": "",
+            "source": "data:,KUBECONFIG%3D%2Fetc%2Fkubernetes%2Fadmin.conf%0A"
+          }
+        ],
+        "mode": 420
+      },
+      {
         "overwrite": false,
         "path": "/etc/sudoers",
         "append": [
@@ -57,12 +67,12 @@
         "mode": 420
       },
       {
-        "path": "/etc/kubeadm/clusterconfig.yaml",
+        "path": "/tmp/pre-install.sh",
         "contents": {
           "compression": "gzip",
-          "source": "data:;base64,H4sIAAAAAAAC/4yQT2vbQBDF7/spHu6h7UH/XFOKbsVQ6CEQEnDOa2kkD1rPit1ZSf72QXJIyC233ce8P/zsyCcKkb3UGNKZbHvNhz8xZ19M1ZnU/jIDS1vj6FJUCkcvHfcpWGUvZnUEIaX4HjJV+f6Ql6bxosE7R+HBiu0p1AagRYP9G/pY4xviSA13N1g8FS9oOVCjPtzQ+YB/jpaTd+lKET+aezVmL98Vsw8DZtaLTwq9cARNJFj//QUzIUXC4yn+NADQOVqyaUvKRpd6lqzlUGNXkDbFx/7t6UjfjmJx9xS0ULMzQrrWsvTr8NG3iOkspGipY+GNBVb9eZNrVGV+2OdlXhbVb5Nlmfky5//C+hnyawAAAP//vrwaKqMBAAA="
+          "source": "data:;base64,H4sIAAAAAAAC/6TMMY6DMBAF0H5O8ZetwRgJkihS7oLR2J4C27GnSJHDR2kpaFI/6f3/GSfJuLVFosaKnonEQwpWvBEqF/RP2Ns02OU62MFexjs0ciKAt5jROQlVQocHDOtmYm6a1p2//hLFSF7Ox3k+jCre/1Yu06HMpXCKLDvX8/YTAAD//zuKUlsRAQAA"
         },
-        "mode": 420
+        "mode": 484
       }
     ],
     "links": [

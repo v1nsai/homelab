@@ -2,23 +2,16 @@ variant: fcos
 version: 1.5.0
 storage:
   files:
+    - path: /etc/environment
+      mode: 0644
+      append:
+        - inline: |
+            KUBECONFIG=/etc/kubernetes/admin.conf
     - path: /etc/sudoers
       overwrite: false
       append:
         - inline: |
             doctor_ew        ALL=(ALL)       NOPASSWD: ALL
-    # CRI-O DNF module
-    # - path: /etc/dnf/modules.d/versions.module
-    #   mode: 0644
-    #   overwrite: true
-    #   contents:
-    #     inline: |
-    #       [cri-o]
-    #       name=cri-o
-    #       stream=1.30
-    #       profiles=
-    #       state=enabled
-    # YUM repository for kubeadm, kubelet and kubectl
     - path: /etc/yum.repos.d/kubernetes.repo
       mode: 0644
       overwrite: true
@@ -46,21 +39,26 @@ storage:
         inline: |
           net.bridge.bridge-nf-call-iptables=1
           net.ipv4.ip_forward=1
-    - path: /etc/kubeadm/clusterconfig.yaml
-      mode: 0644
+    - path: /tmp/pre-install.sh
+      mode: 0744
       contents:
         inline: |
-          apiVersion: kubeadm.k8s.io/v1beta3
-          kind: ClusterConfiguration
-          kubernetesVersion: v1.24.0
-          controllerManager:
-            extraArgs: # specify a R/W directory for FlexVolumes (cluster won't work without this even though we use PVs)
-              flex-volume-plugin-dir: "/etc/kubernetes/kubelet-plugins/volume/exec"
-          networking: # pod subnet definition
-            podSubnet: 10.42.0.0/16
-          ---
-          apiVersion: kubeadm.k8s.io/v1beta3
-          kind: InitConfiguration
+          #!/bin/bash
+
+          set -e
+
+          if ip a | grep -q 192.168.1.170; then
+            echo "bigrig" > /etc/hostname
+            exit 0
+          fi
+          if ip a | grep -q 192.168.1.155; then
+            echo "tiffrig" > /etc/hostname
+            exit 0
+          fi
+          if ip a | grep -q 192.168.1.162; then
+            echo "oppenheimer" > /etc/hostname
+            exit 0
+          fi
   links:
     - path: /etc/localtime
       target: /usr/share/zoneinfo/America/New_York
