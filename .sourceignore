@@ -12,3 +12,4 @@ rook-ceph/
 velero/
 localai/
 airflow/
+metallb/
