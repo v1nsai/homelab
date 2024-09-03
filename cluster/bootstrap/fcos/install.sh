@@ -15,39 +15,43 @@ for FILE in cluster/bootstrap/fcos/butane/*.yaml; do
 done
 
 # push changes to github
-# git add cluster/bootstrap/fcos
-# git commit -m "updating remote fcos ignition configs"
-# git push
+git add cluster/bootstrap/fcos/ignition
+git add cluster/bootstrap/fcos/butane
+git commit -m "updating remote fcos ignition configs" || true
+git push || true
 
 # Download Fedora CoreOS image
-# docker run \
-#   --security-opt label=disable \
-#   --pull=always \
-#   --rm \
-#   --volume ~/Downloads:/Downloads \
-#   --workdir /Downloads \
-#   quay.io/coreos/coreos-installer:release download -s stable -p metal -f iso -a x86_64
+rm -rf ~/Downloads/fedora-coreos-*.iso
+docker run \
+  --security-opt label=disable \
+  --pull=always \
+  --rm \
+  --volume ~/Downloads:/Downloads \
+  --workdir /Downloads \
+  quay.io/coreos/coreos-installer:release download -s stable -p metal -f iso -a x86_64
 
-IMAGE_NAME=$(ls ~/Downloads | grep fedora-coreos | grep -v \.sig)
+ISO_FILE=$(ls ~/Downloads | grep fedora-coreos | grep -v \.sig)
 
 # Create SSH only iso
-# rm -rf ~/Downloads/fcos-ssh-only.iso
-# docker run \
-#   --pull=always \
-#   --privileged \
-#   --rm \
-#   --volume /dev:/dev \
-#   --volume /run/udev:/run/udev \
-#   --volume ~/Downloads:/Downloads \
-#   --volume ./cluster/bootstrap/fcos:/data \
-#   --workdir /data \
-#   quay.io/coreos/coreos-installer:release \
-#   iso ignition embed \
-#     --ignition-file /data/ignition/node-remote.json \
-#     --output /Downloads/fcos-ssh-only.iso \
-#     /Downloads/${IMAGE_NAME}
+rm -rf ~/Downloads/fcos-ssh-only.iso
+docker run \
+  --pull=always \
+  --privileged \
+  --rm \
+  --volume /dev:/dev \
+  --volume /run/udev:/run/udev \
+  --volume ~/Downloads:/Downloads \
+  --volume ./cluster/bootstrap/fcos:/data \
+  --workdir /data \
+  quay.io/coreos/coreos-installer:release \
+  iso ignition embed \
+    --ignition-file /data/ignition/node-remote.json \
+    --output /Downloads/fcos-ssh-only.iso \
+    /Downloads/${ISO_FILE}
 
 # Create fully auto installer iso for all install devices
+cp -f cluster/bootstrap/fcos/pre-install.sh /tmp/pre-install.sh
+cp -f cluster/bootstrap/fcos/post-install.sh /tmp/post-install.sh
 BOOT_DEVICES=(/dev/sda /dev/nvme0n1)
 for BOOT_DEVICE in ${BOOT_DEVICES[@]}; do
   export BOOT_DEVICE
@@ -63,12 +67,9 @@ for BOOT_DEVICE in ${BOOT_DEVICES[@]}; do
     --volume /tmp:/tmp \
     quay.io/coreos/coreos-installer:release \
     iso customize \
+      --pre-install /tmp/pre-install.sh \
+      --post-install /tmp/post-install.sh \
       --installer-config /tmp/installer-config.yaml \
       --output /Downloads/"fcos-$(basename $BOOT_DEVICE)-auto-installer.iso" \
-      /Downloads/${IMAGE_NAME}
+      /Downloads/${ISO_FILE}
 done
-
-# SSH into node
-# coreos-installer install \
-#   --ignition-url https://raw.githubusercontent.com/v1nsai/homelab/develop/cluster/bootstrap/fcos/ignition/node.json \
-#   /dev/sda
