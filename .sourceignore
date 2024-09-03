@@ -12,3 +12,6 @@ rook-ceph/
 velero/
 localai/
 airflow/
+k3s/
+kubeadm/
+fcos/
