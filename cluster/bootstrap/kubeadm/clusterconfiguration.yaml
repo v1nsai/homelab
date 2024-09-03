@@ -1,0 +1,16 @@
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: ClusterConfiguration
+# controlPlaneEndpoint: 192.168.1.133:6443
+controllerManager:
+  extraArgs:
+    flex-volume-plugin-dir: "/etc/kubernetes/kubelet-plugins/volume/exec"
+networking:
+  podSubnet: 10.244.0.0/16
+apiServer:
+  certSANs:
+  - "10.96.0.1"
+  - "192.168.1.170"
+  - "192.168.1.133"
+---
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: InitConfiguration
