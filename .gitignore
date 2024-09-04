@@ -48,3 +48,6 @@ diagrams/diagrams_image.png
 
 # Ignore logs
 *.log
+
+# Vagrant
+.vagrant/

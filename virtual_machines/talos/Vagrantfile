@@ -1,10 +1,8 @@
 Vagrant.configure("2") do |config|
   config.vm.define "control-plane-node-1" do |vm|
-    vm.vm.network "private_network", ip: "192.168.121.145"
     vm.vm.provider :libvirt do |domain|
       domain.cpus = 2
-      domain.memory = 2048
-      domain.serial :type => "file", :source => {:path => "/tmp/control-plane-node-1.log"}
+      domain.memory = 4096
       domain.storage :file, :device => :cdrom, :path => "/tmp/metal-amd64.iso"
       domain.storage :file, :size => '4G', :type => 'raw'
       domain.boot 'hd'
@@ -13,11 +11,9 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "control-plane-node-2" do |vm|
-    vm.vm.network "private_network", ip: "192.168.121.243"
     vm.vm.provider :libvirt do |domain|
       domain.cpus = 2
-      domain.memory = 2048
-      domain.serial :type => "file", :source => {:path => "/tmp/control-plane-node-2.log"}
+      domain.memory = 4096
       domain.storage :file, :device => :cdrom, :path => "/tmp/metal-amd64.iso"
       domain.storage :file, :size => '4G', :type => 'raw'
       domain.boot 'hd'
@@ -26,22 +22,13 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "control-plane-node-3" do |vm|
-    vm.vm.network "private_network", ip: "192.168.121.196"
     vm.vm.provider :libvirt do |domain|
       domain.cpus = 2
-      domain.memory = 2048
-      domain.serial :type => "file", :source => {:path => "/tmp/control-plane-node-3.log"}
+      domain.memory = 4096
       domain.storage :file, :device => :cdrom, :path => "/tmp/metal-amd64.iso"
       domain.storage :file, :size => '4G', :type => 'raw'
       domain.boot 'hd'
       domain.boot 'cdrom'
     end
-  end
-
-  # Configure the libvirt provider for all VMs
-  config.vm.provider :libvirt do |libvirt|
-    libvirt.uri = 'qemu+ssh://username@host/system'
-    libvirt.host = 'your_server_ip'
-    libvirt.connect_via_ssh = true
   end
 end
