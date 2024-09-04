@@ -82,19 +82,18 @@ talosctl apply-config \
   --config-patch @cluster/bootstrap/talos/extensions/metrics-server/patch.yaml \
   --config-patch @cluster/bootstrap/talos/extensions/local-path-provisioner/patch.yaml
 
-# Proxmox VM
-talosctl gen config \
-  --with-secrets cluster/bootstrap/talos/secrets.yaml.env \
-  --output-types controlplane \
-  --output /tmp/proxmox.yaml \
-  --force \
-  talos-homelab https://192.168.1.195:6443
-talosctl apply-config \
-  --insecure \
-  --nodes 192.168.1.195 \
-  --file /tmp/proxmox.yaml \
-  --config-patch @cluster/bootstrap/talos/install-patches/proxmox.yaml \
-  --config-patch @cluster/bootstrap/talos/extensions/longhorn/patch.yaml \
-  --config-patch @cluster/bootstrap/talos/extensions/metrics-server/patch.yaml \
-  --config-patch @cluster/bootstrap/talos/extensions/local-path-provisioner/patch.yaml
-
+# vm VM
+VM_IPS=( 192.168.121.56 192.168.121.196 )
+for VM_IP in "${VM_IPS[@]}"; do
+  talosctl gen config \
+    --with-secrets cluster/bootstrap/talos/secrets.yaml.env \
+    --output-types controlplane \
+    --output /tmp/vm.yaml \
+    --force \
+    talos-homelab https://$VM_IP:6443
+  talosctl apply-config \
+    --insecure \
+    --nodes $VM_IP \
+    --file /tmp/vm.yaml \
+    --config-patch @cluster/bootstrap/talos/install-patches/vm.yaml
+done

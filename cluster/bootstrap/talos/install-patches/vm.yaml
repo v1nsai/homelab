@@ -11,18 +11,5 @@ machine:
         dhcp: true
         vip: 
           ip: 192.168.1.133
-  # kubelet:
-  #   extraMounts:
-  #     - destination: /var/mnt/disk0
-  #       type: bind
-  #       source: /var/mnt/disk0
-  #       options:
-  #         - bind
-  #         - rshared
-  #         - rw
-  # disks:
-  #   - device: /dev/sdb
-  #     partitions:
-  #       - mountpoint: /var/mnt/disk0
 cluster:
   allowSchedulingOnControlPlanes: true
