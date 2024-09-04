@@ -1,11 +1,12 @@
 machine:
   install:
-    disk: /dev/sda
+    disk: /dev/vda
     wipe: true
     # qemu-guest-agent iscsi-tools util-linux-tools included in image
-    image: factory.talos.dev/installer/88d1f7a5c4f1d3aba7df787c448c1d3d008ed29cfb34af53fa0df4336a56040b:v1.7.6
+    # image: factory.talos.dev/installer/88d1f7a5c4f1d3aba7df787c448c1d3d008ed29cfb34af53fa0df4336a56040b:v1.7.6
+    image: ghcr.io/siderolabs/installer:v1.7.6
   network:
-    hostname: oppenheimer-talos-0
+    hostname: ${HOSTNAME}
     interfaces:
       - interface: eno1
         dhcp: true

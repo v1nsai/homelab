@@ -11,12 +11,13 @@ mv talosconfig ~/.talos/config # can't use ~/ in talosconfig path
 kubeseal --cert ./.sealed-secrets.pub --format yaml 
 
 # DO NOT RUN until at least one node has been booted using apply-config below
+NODE="192.168.121.89"
 talosctl bootstrap \
-  --nodes 192.168.1.196 \
-  --endpoints 192.168.1.196
+  --nodes $NODE \
+  --endpoints $NODE
 talosctl kubeconfig \
-  --nodes 192.168.1.196 \
-  --endpoints 192.168.1.196 
+  --nodes $NODE \
+  --endpoints $NODE 
 
 # bigrig
 talosctl gen config \
@@ -83,8 +84,11 @@ talosctl apply-config \
   --config-patch @cluster/bootstrap/talos/extensions/local-path-provisioner/patch.yaml
 
 # vm VM
-VM_IPS=( 192.168.121.56 192.168.121.196 )
+# virsh list | awk '{print $2}' | xargs -t -L1 virsh domifaddr
+VM_IPS=( 192.168.121.89 192.168.121.84 )
 for VM_IP in "${VM_IPS[@]}"; do
+  export HOSTNAME=$(openssl rand -base64 8)
+  envsubst < cluster/bootstrap/talos/install-patches/vm.yaml > /tmp/vm-patch.yaml
   talosctl gen config \
     --with-secrets cluster/bootstrap/talos/secrets.yaml.env \
     --output-types controlplane \
@@ -95,5 +99,5 @@ for VM_IP in "${VM_IPS[@]}"; do
     --insecure \
     --nodes $VM_IP \
     --file /tmp/vm.yaml \
-    --config-patch @cluster/bootstrap/talos/install-patches/vm.yaml
+    --config-patch @/tmp/vm-patch.yaml
 done
