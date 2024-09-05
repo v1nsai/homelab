@@ -52,12 +52,6 @@ spec:
           volumeMounts:
             - name: sonarr-config
               mountPath: /config
-            - name: downloads
-              mountPath: /tv
-              subPath: tv
-            # - name: downloads
-            #   mountPath: /downloads
-            #   subPath: sonarr-downloads
 
       volumes:
         - name: prowlarr-config
