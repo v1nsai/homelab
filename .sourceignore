@@ -8,7 +8,6 @@ traefik/
 talos/
 nvidia-gpu-operator/
 rook-ceph/
-velero/
 localai/
 airflow/
 k3s/
