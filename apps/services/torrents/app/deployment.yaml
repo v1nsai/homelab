@@ -15,46 +15,6 @@ spec:
         velero.io/exclude-from-backup: "true"
     spec:
       containers:
-        - name: gluetun
-          image: qmcgaw/gluetun:latest
-          imagePullPolicy: Always
-          env:
-            - name: FIREWALL_OUTBOUND_SUBNETS
-              value: "192.168.1.0/24,10.0.0.0/8,172.16.0.0/12,10.152.183.0/24"
-            - name: VPN_PORT_FORWARDING
-              value: "on"
-            - name: VPN_PORT_FORWARDING_PROVIDER
-              value: "protonvpn"
-            - name: VPN_SERVICE_PROVIDER
-              value: "custom"
-            - name: VPN_TYPE
-              value: "wireguard"
-            - name: TZ
-              value: "America/New_York"
-            - name: FIREWALL_INPUT_PORTS
-              value: "9091,9696,8989,8191"
-          ports:
-            - containerPort: 51820
-          securityContext:
-            capabilities:
-              add: ["NET_ADMIN"]
-          volumeMounts:
-            - name: wg-config
-              mountPath: /gluetun/wireguard/
-
-        - name: qbittorrent
-          image: linuxserver/qbittorrent
-          env:
-            - name: WEBUI_PORT
-              value: "9091"
-          ports:
-            - containerPort: 9091
-          volumeMounts:
-            - name: downloads
-              mountPath: /downloads
-            - name: qbittorrent-config
-              mountPath: /config
-
         - name: prowlarr
           image: lscr.io/linuxserver/prowlarr
           env:
@@ -69,7 +29,15 @@ spec:
           volumeMounts:
             - name: prowlarr-config
               mountPath: /config
-        
+
+        - name: flaresolverr
+          image: ghcr.io/flaresolverr/flaresolverr:latest
+          env:
+            - name: TZ
+              value: "America/New_York"
+          ports:
+            - containerPort: 8191
+
         - name: sonarr
           image: lscr.io/linuxserver/sonarr
           env:
@@ -91,27 +59,7 @@ spec:
             #   mountPath: /downloads
             #   subPath: sonarr-downloads
 
-        - name: flaresolverr
-          image: ghcr.io/flaresolverr/flaresolverr:latest
-          env:
-            - name: TZ
-              value: "America/New_York"
-          ports:
-            - containerPort: 8191
-
       volumes:
-        - name: downloads
-          persistentVolumeClaim:
-            claimName: media-pvc
-        - name: wg-config
-          secret:
-            secretName: wireguard-config
-            items:
-              - key: wg0.conf
-                path: wg0.conf
-        - name: qbittorrent-config
-          persistentVolumeClaim:
-            claimName: qbittorrent-config
         - name: prowlarr-config
           persistentVolumeClaim:
             claimName: prowlarr-config
