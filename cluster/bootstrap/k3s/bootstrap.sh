@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 echo "Setting up primary server 1"
 k3sup install --host 192.168.1.170 \
 --user doctor_ew \
