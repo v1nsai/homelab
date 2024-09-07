@@ -8,7 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 # from secrets.password import verizon_password
 
-loadbalancer_ip = ["192", "168", "1", "20"]
+loadbalancer_ip = ["192", "168", "1", "23"]
 
 # read password from file into string
 with open('scripts/verizon/password.env', 'r') as file:
@@ -63,7 +63,7 @@ def update_dns_entries(driver):
             WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.CLASS_NAME, "ip-input"))
             )
-            sleep(2)
+            # sleep(2)
             # Update IP address
             ip_inputs = driver.find_elements(By.CLASS_NAME, "ip-input")
             for i, octet in enumerate(loadbalancer_ip):
