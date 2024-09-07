@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nfs-server
+  namespace: irma-nfs
   labels:
     app: nfs-server
 spec:
@@ -25,10 +26,10 @@ spec:
         volumeMounts:
           - name: nfsshare
             mountPath: /nfsshare
-  volumes:
-    - name: nfsshare
-      hostPath:
-        path: /var/mnt/irma
+      volumes:
+        - name: nfsshare
+          hostPath:
+            path: /var/mnt/irma
 ---
 apiVersion: v1
 kind: Service
