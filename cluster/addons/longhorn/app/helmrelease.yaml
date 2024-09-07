@@ -22,7 +22,7 @@ spec:
     persistence:
       defaultClass: true
       defaultDataLocality: best-effort
-      defaultClassReplicaCount: 2
+      defaultClassReplicaCount: 1
     defaultSettings:
       defaultDataLocality: best-effort
       backupTarget: nfs://192.168.1.170:/mnt/irma/longhorn
