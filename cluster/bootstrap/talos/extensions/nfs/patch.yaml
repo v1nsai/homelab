@@ -1,0 +1,14 @@
+machine:
+  kubelet:
+    extraMounts:
+      - destination: /var/mnt/irma
+        type: bind
+        source: /var/mnt/irma
+        options:
+          - bind
+          - rshared
+          - rw
+  disks:
+    - device: /dev/sda
+      partitions:
+        - mountpoint: /var/mnt/irma

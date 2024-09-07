@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nfs-server
+  labels:
+    app: nfs-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nfs-server
+  template:
+    metadata:
+      labels:
+        app: nfs-server
+    spec:
+      containers:
+      - name: nfs-server
+        image: itsthenetwork/nfs-server-alpine
+        securityContext:
+          capabilities:
+            add: ["SYS_ADMIN", "SETPCAP"]
+        ports:
+          - containerPort: 2049
+        volumeMounts:
+          - name: nfsshare
+            mountPath: /nfsshare
+  volumes:
+    - name: nfsshare
+      hostPath:
+        path: /var/mnt/irma
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  # type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: proxy
+  ports:
+    - name: nfs
+      protocol: TCP
+      port: 2049
+      targetPort: 2049
