@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nfs-server
-  namespace: irma-nfs
   labels:
     app: nfs-server
 spec:
@@ -15,14 +14,30 @@ spec:
       labels:
         app: nfs-server
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: bigrig
       containers:
+      # - name: nfs-server
+      #   image: itsthenetwork/nfs-server-alpine
+      #   securityContext:
+      #     privileged: true
+      #   ports:
+      #     - containerPort: 2049
+      #   env:
+      #     - name: SHARED_DIRECTORY
+      #       value: /nfsshare
+      #   volumeMounts:
+      #     - name: nfsshare
+      #       mountPath: /nfsshare
       - name: nfs-server
-        image: itsthenetwork/nfs-server-alpine
+        image: erichough/nfs-server
         securityContext:
-          capabilities:
-            add: ["SYS_ADMIN", "SETPCAP"]
+          privileged: true
         ports:
           - containerPort: 2049
+        env:
+          - name: NFS_EXPORT_0
+            value: /nfsshare *(rw,sync,no_root_squash,no_subtree_check)
         volumeMounts:
           - name: nfsshare
             mountPath: /nfsshare
@@ -44,3 +59,12 @@ spec:
       protocol: TCP
       port: 2049
       targetPort: 2049
+---
+# configmap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nfs-server-config
+data:
+  exports: |
+    /nfsshare *
