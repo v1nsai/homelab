@@ -17,30 +17,30 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: bigrig
       containers:
-      # - name: nfs-server
-      #   image: itsthenetwork/nfs-server-alpine
-      #   securityContext:
-      #     privileged: true
-      #   ports:
-      #     - containerPort: 2049
-      #   env:
-      #     - name: SHARED_DIRECTORY
-      #       value: /nfsshare
-      #   volumeMounts:
-      #     - name: nfsshare
-      #       mountPath: /nfsshare
       - name: nfs-server
-        image: erichough/nfs-server
+        image: itsthenetwork/nfs-server-alpine
         securityContext:
           privileged: true
         ports:
           - containerPort: 2049
         env:
-          - name: NFS_EXPORT_0
-            value: /nfsshare *(rw,sync,no_root_squash,no_subtree_check)
+          - name: SHARED_DIRECTORY
+            value: /nfsshare
         volumeMounts:
           - name: nfsshare
             mountPath: /nfsshare
+      # - name: nfs-server
+      #   image: erichough/nfs-server
+      #   securityContext:
+      #     privileged: true
+      #   ports:
+      #     - containerPort: 2049
+      #   env:
+      #     - name: NFS_EXPORT_0
+      #       value: /nfsshare *(rw,sync,no_root_squash,no_subtree_check)
+      #   volumeMounts:
+      #     - name: nfsshare
+      #       mountPath: /nfsshare
       volumes:
         - name: nfsshare
           hostPath:
