@@ -33,3 +33,10 @@ spec:
     #     value: "true"
     nodeSelector:
       kubernetes.io/hostname: "bigrig"
+    extraVolumeMounts:
+      - name: media
+        mountPath: /media
+    extraVolumes:
+      - name: media
+        hostPath:
+          path: /var/mnt/irma/media

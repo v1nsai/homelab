@@ -57,8 +57,10 @@ spec:
 
       volumes:
         - name: downloads
-          persistentVolumeClaim:
-            claimName: media-pvc
+          hostPath:
+            path: /var/mnt/irma/media
+          # persistentVolumeClaim:
+          #   claimName: media-pvc
         - name: wg-config
           secret:
             secretName: wireguard-config
