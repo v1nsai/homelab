@@ -1,8 +1,0 @@
-# Fedora CoreOS stream
-stream: stable
-# Embed an Ignition config from a URL
-ignition-url: https://raw.githubusercontent.com/v1nsai/homelab/develop/cluster/bootstrap/fcos/ignition/node.json
-# Target CPU architecture
-architecture: x86_64
-# Destination device
-dest-device: ${BOOT_DEVICE}
