@@ -20,10 +20,6 @@ spec:
       config:
         enabled: true
         # storageClass: microk8s-hostpath
-      media:
-        enabled: true
-        existingClaim: media-pvc
-        accessMode: ReadWriteMany
     # extraEnvVars:
     #   - name: NVIDIA_VISIBLE_DEVICES
     #     value: "all"
