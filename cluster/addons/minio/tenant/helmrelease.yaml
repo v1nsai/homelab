@@ -29,7 +29,7 @@ spec:
         hosts: minio-api.internal
         path: /
         pathType: Prefix
-        labels:
+        annotations:
           gethomepage.dev/description: Local S3 storage API
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Productivity
@@ -45,7 +45,7 @@ spec:
         hosts: minio-console.internal
         path: /
         pathType: Prefix
-        labels:
+        annotations:
           gethomepage.dev/description: Local S3 storage Console
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Productivity
