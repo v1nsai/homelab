@@ -81,7 +81,8 @@ kubectl create secret generic $BACKUPLOCATION_SECRET_NAME \
     --namespace velero \
     --from-file $BACKUPLOCATION_SECRET_KEY=cluster/addons/velero/s3-credentials.env \
     --dry-run=client \
-    --output yaml | kubeseal --cert ./.sealed-secrets.pub --format yaml > cluster/addons/velero/app/sealed-secrets.yaml
+    --output yaml | \
+kubeseal --cert ./.sealed-secrets.pub --format yaml > cluster/addons/velero/app/sealed-secrets.yaml
 
 # Install before restoring a cluster without fluxcd
 # helm repo add vmware-tanzu https://vmware-tanzu.github.io/helm-charts

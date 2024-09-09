@@ -84,7 +84,7 @@ spec:
           snapshotMoveData: true
           storageLocation: aws-s3
           volumeSnapshotLocations:
-          - aws-s3     
+          - aws-s3
     metrics:
       prometheusRule:
         autodetect: true
