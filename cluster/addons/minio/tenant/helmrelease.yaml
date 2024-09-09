@@ -23,3 +23,36 @@ spec:
       # configSecret: # TODO rm once https://github.com/minio/operator/pull/2284 is fixed
       #   name: user-config
       #   existingSecret: true
+    ingress:
+      api:
+        enabled: true
+        hosts: minio-api.internal
+        path: /
+        pathType: Prefix
+        labels:
+          gethomepage.dev/description: Local S3 storage API
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Productivity
+          gethomepage.dev/icon: minio.png
+          gethomepage.dev/name: MinIO API
+          cert-manager.io/cluster-issuer: homelab-issuer
+        tls: 
+          - hosts:
+              - minio-api.internal
+            secretName: homelab-minio-api-tls
+      console:
+        enabled: true
+        hosts: minio-console.internal
+        path: /
+        pathType: Prefix
+        labels:
+          gethomepage.dev/description: Local S3 storage Console
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Productivity
+          gethomepage.dev/icon: minio.png
+          gethomepage.dev/name: MinIO Console
+          cert-manager.io/cluster-issuer: homelab-issuer
+        tls: 
+          - hosts:
+              - minio-console.internal
+            secretName: homelab-minio-console-tls
