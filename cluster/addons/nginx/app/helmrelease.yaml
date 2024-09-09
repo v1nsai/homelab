@@ -16,4 +16,4 @@ spec:
     controller:
       kind: DaemonSet
       ingressClassResource:
-        default: true
+        default: false

@@ -14,14 +14,17 @@ spec:
         name: traefik
   interval: 1h0m0s
   values:
+    ingressClass:
+      enabled: true
+      isDefaultClass: true
     deployment:
       kind: DaemonSet
-    ingressRoute:
-      dashboard:
-        enabled: true
-        entryPoints:
-          - web
-          - websecure
+    # ingressRoute:
+      # dashboard:
+      #   enabled: true
+      #   entryPoints:
+      #     - web
+      #     - websecure
     certResolvers:
       letsencrypt:
         email: support@doctor-ew.com
