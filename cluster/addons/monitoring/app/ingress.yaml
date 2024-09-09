@@ -1,0 +1,83 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: alertmanager
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Manage Alerts
+    gethomepage.dev/group: Monitoring
+    gethomepage.dev/icon: alertmanager.png
+    gethomepage.dev/name: Alert Manager
+    cert-manager.io/cluster-issuer: homelab-issuer
+spec:
+  rules:
+    - host: alertmanager.internal
+      http:
+        paths:
+          - backend:
+              service:
+                name: kube-prometheus-stack-alertmanager
+                port:
+                  number: 9093
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - alertmanager.internal
+      secretName: homelab-tls-alertmanager
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Monitoring Dashboard
+    gethomepage.dev/group: Monitoring
+    gethomepage.dev/icon: grafana.png
+    gethomepage.dev/name: Grafana
+    cert-manager.io/cluster-issuer: homelab-issuer
+spec:
+  rules:
+    - host: grafana.internal
+      http:
+        paths:
+          - backend:
+              service:
+                name: kube-prometheus-stack-grafana
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - grafana.internal
+      secretName: homelab-tls-alertmanager
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prometheus
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Monitoring and Alerting Toolkit
+    gethomepage.dev/group: Monitoring
+    gethomepage.dev/icon: prometheus.png
+    gethomepage.dev/name: Prometheus
+    cert-manager.io/cluster-issuer: homelab-issuer
+spec:
+  rules:
+    - host: prometheus.internal
+      http:
+        paths:
+          - backend:
+              service:
+                name: kube-prometheus-stack-prometheus
+                port:
+                  number: 9090
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - prometheus.internal
+      secretName: homelab-tls-alertmanager
