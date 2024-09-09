@@ -26,7 +26,7 @@ spec:
     ingress:
       api:
         enabled: true
-        hosts: minio-api.internal
+        host: minio-api.internal
         path: /
         pathType: Prefix
         annotations:
@@ -42,7 +42,7 @@ spec:
             secretName: homelab-minio-api-tls
       console:
         enabled: true
-        hosts: minio-console.internal
+        host: minio-console.internal
         path: /
         pathType: Prefix
         annotations:
