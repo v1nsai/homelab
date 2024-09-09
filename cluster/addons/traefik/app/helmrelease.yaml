@@ -16,7 +16,7 @@ spec:
   values:
     ingressClass:
       enabled: true
-      isDefaultClass: true
+      isDefaultClass: false
     deployment:
       kind: DaemonSet
     # ingressRoute:
