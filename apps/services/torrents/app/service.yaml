@@ -17,7 +17,7 @@ kind: Service
 metadata:
   name: prowlarr
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - name: "9696"
       port: 9696
@@ -30,7 +30,7 @@ kind: Service
 metadata:
   name: sonarr
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - name: "8989"
       port: 8989
