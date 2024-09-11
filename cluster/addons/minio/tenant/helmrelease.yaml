@@ -18,6 +18,7 @@ spec:
       name: homelab
       configuration:
         name: homelab-env
+        existingSecret: true
       # configSecret:
       #   name: homelab-env-configsecret
       #   existingSecret: true

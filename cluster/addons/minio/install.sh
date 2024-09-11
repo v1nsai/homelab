@@ -23,6 +23,7 @@ kubectl create secret generic secret-values \
 kubeseal --cert ./.sealed-secrets.pub --format yaml > ./cluster/addons/minio/tenant/sealed-secrets.yaml
 
 # Minio config
+source ./cluster/addons/minio/secrets.env
 cat <<EOF > /tmp/config.env
 export MINIO_ROOT_USER="$MINIO_ROOT_USER"
 export MINIO_ROOT_PASSWORD="$MINIO_ROOT_PASSWORD"
