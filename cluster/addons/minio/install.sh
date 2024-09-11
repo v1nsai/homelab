@@ -27,7 +27,7 @@ cat <<EOF > /tmp/config.env
 export MINIO_ROOT_USER="$MINIO_ROOT_USER"
 export MINIO_ROOT_PASSWORD="$MINIO_ROOT_PASSWORD"
 EOF
-kubectl create secret generic minio-tenant-env \
+kubectl create secret generic homelab-env \
   --from-file=config.env=/tmp/config.env \
   --namespace minio-tenant \
   --dry-run=client \

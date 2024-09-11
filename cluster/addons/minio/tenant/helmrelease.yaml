@@ -15,6 +15,12 @@ spec:
   interval: 1m0s
   values:
     tenant:
+      name: homelab
+      configuration:
+        name: homelab-env
+      # configSecret:
+      #   name: homelab-env-configsecret
+      #   existingSecret: true
       exposeServices:
         minio: true
         console: true
