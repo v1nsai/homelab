@@ -18,7 +18,7 @@ spec:
       name: homelab-minio
       configSecret: # TODO rm once https://github.com/minio/operator/pull/2284 is fixed
         name: minio-tenant-env
-        existingSecret: false
+        existingSecret: true
       exposeServices:
         minio: true
         console: true
