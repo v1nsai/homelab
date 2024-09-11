@@ -9,6 +9,8 @@ metadata:
     gethomepage.dev/group: Productivity
     gethomepage.dev/icon: minio.png
     gethomepage.dev/name: MinIO
+    nginx.ingress.kubernetes.io/upstream-vhost: minio
+    nginx.ingress.kubernetes.io/backend-protocol: https
 spec:
   rules:
     - host: minio-console.internal
