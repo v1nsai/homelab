@@ -20,7 +20,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: homelab-minio-console
+                name: homelab-console
                 port:
                   number: 9443
   tls:
