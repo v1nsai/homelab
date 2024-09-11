@@ -13,10 +13,6 @@ spec:
         name: minio-operator
         namespace: minio-operator
   interval: 1m0s
-  valuesFrom:
-    - kind: Secret
-      name: secret-values
-      valuesKey: secret-values.yaml
   values:
     tenant:
       name: homelab-minio
