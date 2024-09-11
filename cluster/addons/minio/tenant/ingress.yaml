@@ -43,7 +43,7 @@ metadata:
     nginx.ingress.kubernetes.io/backend-protocol: https
 spec:
   rules:
-    - host: minio-console.internal
+    - host: minio-api.internal
       http:
         paths:
           - path: /
