@@ -27,3 +27,33 @@ spec:
     - hosts:
         - minio-console.internal
       secretName: homelab-minio-console-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: homelab-minio-api
+  annotations:
+    cert-manager.io/cluster-issuer: homelab-issuer
+    gethomepage.dev/description: Minio API Endpoint
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Productivity
+    gethomepage.dev/icon: minio.png
+    gethomepage.dev/name: MinIO API Endpoint
+    nginx.ingress.kubernetes.io/upstream-vhost: minio
+    nginx.ingress.kubernetes.io/backend-protocol: https
+spec:
+  rules:
+    - host: minio-console.internal
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: minio
+                port:
+                  number: 443
+  tls:
+    - hosts:
+        - minio-api.internal
+      secretName: homelab-minio-api-tls
