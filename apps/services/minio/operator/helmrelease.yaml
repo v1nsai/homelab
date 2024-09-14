@@ -12,3 +12,10 @@ spec:
         kind: HelmRepository
         name: minio-operator
   interval: 1m0s
+  values:
+    operator:
+      env:
+        - name: OPERATOR_STS_AUTO_TLS_ENABLED
+          value: "off"
+        - name: OPERATOR_STS_ENABLED
+          value: "on"

@@ -7,7 +7,7 @@ metadata:
 spec:
   targetNamespace: minio-operator
   interval: 1m0s
-  path: ./cluster/addons/minio/operator
+  path: ./apps/services/minio/operator
   prune: true
   sourceRef:
     kind: GitRepository
@@ -22,7 +22,7 @@ metadata:
 spec:
   targetNamespace: minio-tenant
   interval: 1m0s
-  path: ./cluster/addons/minio/tenant
+  path: ./apps/services/minio/tenant
   prune: true
   sourceRef:
     kind: GitRepository

@@ -25,3 +25,20 @@ spec:
       exposeServices:
         minio: true
         console: true
+      certificate:
+        requestAutoCert: false
+        externalCertSecret:
+
+    ingress:
+      api:
+        enabled: true
+        ingressClassName: ""
+        labels: { }
+        annotations: { }
+        tls:
+          - hosts:
+              - minio-api.internal
+            secretName: homelab-minio-api-tls
+        host: minio.local
+        path: /
+        pathType: Prefix
