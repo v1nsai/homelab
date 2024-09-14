@@ -13,4 +13,5 @@ spec:
     - '*.myminio.minio.minio-tenant.svc.cluster.local'
   secretName: tenant-certmanager-cert
   issuerRef:
-    name: minio-tenant-ca-issuer
+    name: homelab-issuer
+    kind: ClusterIssuer
