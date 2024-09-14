@@ -28,17 +28,36 @@ spec:
       certificate:
         requestAutoCert: false
         externalCertSecret:
-
     ingress:
       api:
         enabled: true
         ingressClassName: ""
         labels: { }
-        annotations: { }
+        annotations: {}
         tls:
           - hosts:
               - minio-api.internal
             secretName: homelab-minio-api-tls
-        host: minio.local
+        host: minio-api.internal
+        path: /
+        pathType: Prefix
+      console:
+        enabled: true
+        ingressClassName: ""
+        labels: { }
+        annotations:
+          cert-manager.io/cluster-issuer: homelab-issuer
+          gethomepage.dev/description: Local S3 storage
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Productivity
+          gethomepage.dev/icon: minio.png
+          gethomepage.dev/name: MinIO
+          nginx.ingress.kubernetes.io/upstream-vhost: minio
+          nginx.ingress.kubernetes.io/backend-protocol: https
+        tls:
+          - hosts:
+              - minio-console.internal
+            secretName: homelab-minio-console-tls
+        host: minio-console.internal
         path: /
         pathType: Prefix
