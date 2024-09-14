@@ -55,8 +55,8 @@ spec:
           gethomepage.dev/group: Productivity
           gethomepage.dev/icon: minio.png
           gethomepage.dev/name: MinIO
-          # nginx.ingress.kubernetes.io/upstream-vhost: minio
-          # nginx.ingress.kubernetes.io/backend-protocol: https
+          nginx.ingress.kubernetes.io/upstream-vhost: minio
+          nginx.ingress.kubernetes.io/backend-protocol: https
         tls:
           - hosts:
               - minio-console.internal
