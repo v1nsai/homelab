@@ -28,6 +28,8 @@ spec:
       certificate:
         requestAutoCert: false
         externalCertSecret:
+          - name: tenant-certmanager-cert
+            type: cert-manager.io/v1
     ingress:
       api:
         enabled: true
