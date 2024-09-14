@@ -33,7 +33,8 @@ spec:
         enabled: true
         ingressClassName: ""
         labels: { }
-        annotations: {}
+        annotations:
+          cert-manager.io/cluster-issuer: homelab-issuer
         tls:
           - hosts:
               - minio-api.internal
