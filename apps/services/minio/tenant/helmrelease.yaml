@@ -37,6 +37,8 @@ spec:
         labels: { }
         annotations:
           cert-manager.io/cluster-issuer: homelab-issuer
+          nginx.ingress.kubernetes.io/upstream-vhost: minio
+          nginx.ingress.kubernetes.io/backend-protocol: https
         tls:
           - hosts:
               - minio-api.internal
