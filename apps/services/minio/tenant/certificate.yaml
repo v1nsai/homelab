@@ -11,6 +11,7 @@ spec:
     - '*.minio.minio-tenant.svc.cluster.local'
     - '*.homelab-hl.minio-tenant.svc.cluster.local'
     - '*.homelab.minio.minio-tenant.svc.cluster.local'
+    - 'minio-api.internal'
   secretName: tenant-certmanager-cert
   issuerRef:
     name: homelab-issuer

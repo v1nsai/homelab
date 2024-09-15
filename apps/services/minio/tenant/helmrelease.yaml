@@ -31,21 +31,19 @@ spec:
           - name: tenant-certmanager-cert
             type: cert-manager.io/v1
     ingress:
-      api:
-        enabled: true
-        ingressClassName: ""
-        labels: { }
-        annotations:
-          cert-manager.io/cluster-issuer: homelab-issuer
-          nginx.ingress.kubernetes.io/upstream-vhost: minio
-          nginx.ingress.kubernetes.io/backend-protocol: https
-        tls:
-          - hosts:
-              - minio-api.internal
-            secretName: homelab-minio-api-tls
-        host: minio-api.internal
-        path: /
-        pathType: Prefix
+      # api:
+      #   enabled: true
+      #   ingressClassName: ""
+      #   labels: { }
+      #   annotations:
+      #     cert-manager.io/cluster-issuer: homelab-issuer
+      #   tls:
+      #     - hosts:
+      #         - minio-api.internal
+      #       secretName: homelab-minio-api-tls
+      #   host: minio-api.internal
+      #   path: /
+      #   pathType: Prefix
       console:
         enabled: true
         ingressClassName: ""
