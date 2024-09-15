@@ -1,0 +1,33 @@
+# sts-tls-certificate.yaml
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: sts-certmanager-cert
+  namespace: minio-operator
+spec:
+  dnsNames:
+    - sts
+    - sts.minio-operator.svc
+    - sts.minio-operator.svc.cluster.local
+  secretName: sts-tls
+  issuerRef:
+    name: homelab-issuer
+    kind: ClusterIssuer
+---
+# operator-ca-tls-secret.yaml
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: minio-operator-ca-certificate
+  namespace: minio-operator
+spec:
+  isCA: true
+  commonName: operator
+  secretName: operator-ca-tls
+  duration: 70128h # 8y
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  issuerRef:
+    name: homelab-issuer
+    kind: ClusterIssuer
