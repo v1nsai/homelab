@@ -13,6 +13,7 @@ spec:
         kind: HelmRepository
         name: vmware-tanzu
   interval: 1m0s
+  timeout: 20m
   values:
     configuration:
       backupStorageLocation:
