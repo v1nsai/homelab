@@ -13,6 +13,7 @@ spec:
         kind: HelmRepository
         name: prometheus-community
   interval: 1m0s
+  timeout: 20m
   values:
     commonLabels:
       velero.io/exclude-from-backup: "true"
