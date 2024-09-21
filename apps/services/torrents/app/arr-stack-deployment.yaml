@@ -52,6 +52,8 @@ spec:
           volumeMounts:
             - name: sonarr-config
               mountPath: /config
+            - name: irma
+              mountPath: /irma
 
       volumes:
         - name: prowlarr-config
@@ -60,3 +62,6 @@ spec:
         - name: sonarr-config
           persistentVolumeClaim:
             claimName: sonarr-config
+        - name: irma
+          hostPath:
+            path: /var/mnt/irma/media
