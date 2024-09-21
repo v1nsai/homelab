@@ -9,7 +9,6 @@ metadata:
     gethomepage.dev/icon: prowlarr.png
     gethomepage.dev/name: Prowlarr
     cert-manager.io/cluster-issuer: homelab-issuer
-    nginx.ingress.kubernetes.io/backend-protocol: https
 spec:
   rules:
     - host: prowlarr.internal
