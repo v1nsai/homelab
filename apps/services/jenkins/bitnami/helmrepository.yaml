@@ -2,8 +2,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: jenkins
-  namespace: flux-system
+  name: bitnami
 spec:
   interval: 1m0s
-  url: https://charts.jenkins.io
+  url: https://charts.bitnami.com/bitnami
