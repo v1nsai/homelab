@@ -46,5 +46,5 @@ data:
         memory: true
     - search:
         provider: google
-        target: _blank
+        target: _self
   docker.yaml: ""
