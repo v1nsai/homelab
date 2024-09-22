@@ -12,6 +12,7 @@ data:
     background: http://doctor-ew.com/wp-content/uploads/2024/08/background-small.png
     theme: dark
     color: cyan
+    target: _self
   custom.css: |
     .services-group, #widgets-wrap {
       background-color: rgba(0,0,0,0.75);
