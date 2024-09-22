@@ -49,11 +49,7 @@ spec:
           - hosts:
               - jenkins.doctor-ew.com
             secretName: jenkins-secondary-tls
-    additionalAgents:
-      docker:
-        podName: docker
-        customJenkinsLabels: docker
-        sideContainerName: jnlp-agent-dockercv 
-        image:
-          repository: jenkins/jnlp-agent-maven
-          tag: latest
+    agent:
+      enabled: true
+      image:
+        repository: jenkins/jnlp-agent-docker
