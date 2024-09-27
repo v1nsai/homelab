@@ -14,6 +14,6 @@ spec:
   interval: 1h0m0s
   values:
     controller:
-      kind: DaemonSet
+      # kind: DaemonSet
       ingressClassResource:
         default: true
