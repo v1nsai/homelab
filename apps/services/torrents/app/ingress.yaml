@@ -9,12 +9,6 @@ metadata:
     gethomepage.dev/icon: prowlarr.png
     gethomepage.dev/name: Prowlarr
     cert-manager.io/cluster-issuer: homelab-issuer
-    nginx.ingress.kubernetes.io/upstream-keepalive-timeout: "60"
-    nginx.ingress.kubernetes.io/upstream-keepalive-connections: "10"
-    nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
-    nginx.ingress.kubernetes.io/upstream-keepalive-requests: "1000"
 spec:
   rules:
     - host: prowlarr.internal
