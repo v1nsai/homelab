@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: qbittorrent
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - name: "9091"
       port: 9091
