@@ -46,9 +46,9 @@ spec:
               mountPath: /gluetun/wireguard/
 
         - name: qbittorrent
-          image: gists/qbittorrent:latest
+          image: lscr.io/linuxserver/qbittorrent:latest
           env:
-            - name: WEB_PORT
+            - name: WEBUI_PORT
               value: "9091"
           ports:
             - containerPort: 9091
