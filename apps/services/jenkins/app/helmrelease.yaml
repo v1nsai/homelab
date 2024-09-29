@@ -19,6 +19,18 @@ spec:
       valuesKey: secret-values.yaml
   values:
     controller:
+      installPlugins:
+        - kubernetes
+        - workflow-aggregator
+        - git
+        - configuration-as-code
+      additionalPlugins:
+        - github
+        - docker-workflow
+        - docker-commons
+        - docker-plugin
+        - harbor
+        - pipeline-github-lib
       ingress:
         enabled: true
         annotations:
