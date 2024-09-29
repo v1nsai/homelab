@@ -39,11 +39,6 @@ spec:
           - /github-webook
         annotations:
           cert-manager.io/cluster-issuer: homelab-issuer
-          gethomepage.dev/description: Continuous Integration pipelines
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Productivity
-          gethomepage.dev/icon: jenkins.png
-          gethomepage.dev/name: Jenkins
         hostName: jenkins.doctor-ew.com
         tls:
           - hosts:

@@ -13,6 +13,7 @@
 #     --output yaml | \
 # kubeseal --cert ./.sealed-secrets.pub --format yaml > ./apps/services/jenkins/app/sealed-secrets.yaml
 
+# official helm chart secrets
 cat <<EOF > /tmp/secret-values.yaml
 controller:
     admin:
