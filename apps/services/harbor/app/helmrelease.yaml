@@ -26,6 +26,7 @@ spec:
         annotations:
           # gethomepage annotations
           cert-manager.io/cluster-issuer: homelab-issuer
+          gethomepage.dev/href: https://core.harbor.internal
           gethomepage.dev/enabled: "true"
           gethomepage.dev/description: Container Image Repository
           gethomepage.dev/group: Productivity

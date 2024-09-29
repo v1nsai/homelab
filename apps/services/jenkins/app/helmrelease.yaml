@@ -23,6 +23,7 @@ spec:
         enabled: true
         annotations:
           cert-manager.io/cluster-issuer: homelab-issuer
+          gethomepage.dev/href: https://jenkins.internal/
           gethomepage.dev/description: Continuous Integration pipelines
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Productivity
