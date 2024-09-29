@@ -14,6 +14,9 @@ spec:
         backup.velero.io/backup-volumes-excludes: "media-pvc"
         velero.io/exclude-from-backup: "true"
     spec:
+      # only deploy on bigrig due to use of HostPath
+      nodeSelector:
+        kubernetes.io/hostname: bigrig
       containers:
         - name: gluetun
           image: qmcgaw/gluetun:latest
