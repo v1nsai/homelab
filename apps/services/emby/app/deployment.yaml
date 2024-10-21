@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: emby
+  name: emby
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: emby
+  template:
+    metadata:
+      labels:
+        io.kompose.service: emby
+    spec:
+      containers:
+        - env:
+            - name: PGID
+              value: "1000"
+            - name: PUID
+              value: "1000"
+            - name: TZ
+              value: Etc/UTC
+          image: lscr.io/linuxserver/emby:latest
+          name: emby
+          ports:
+            - containerPort: 8096
+              protocol: TCP
+            - containerPort: 8920
+              protocol: TCP
+          extraVolumeMounts:
+            - name: irma
+              mountPath: /irma
+          extraVolumes:
+            - name: irma
+              hostPath: 
+                path: /var/mnt/irma/media
+      restartPolicy: Always
