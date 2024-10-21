@@ -3,7 +3,7 @@
 set -e
 
 kubectl create secret generic wireguard-config \
-    --namespace jellyfin \
+    --namespace torrents \
     --from-file=apps/services/torrents/secrets/gluetun/wg0.conf \
     --dry-run=client \
     -o yaml | \
