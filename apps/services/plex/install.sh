@@ -33,3 +33,5 @@ helm upgrade --install plex plex/plex-media-server \
   --namespace plex \
   --set extraEnv.PLEX_CLAIM=$PLEX_CLAIM \
   --values apps/services/plex/values.yaml
+
+kubectl apply -f ./apps/services/plex/ingress.yaml
