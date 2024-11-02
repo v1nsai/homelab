@@ -11,6 +11,7 @@ extraEnv:
   PLEX_CLAIM: $PLEX_CLAIM
 EOF
 kubectl create secret generic secret-values \
+    --namespace=plex \
     --from-file=/tmp/secret-values.yaml \
     --dry-run=client \
     --output yaml | \
