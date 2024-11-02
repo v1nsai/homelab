@@ -10,8 +10,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: sealed-secrets
   path: ./apps/services/torrents/app
   prune: true
   sourceRef:

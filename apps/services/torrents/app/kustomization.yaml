@@ -10,3 +10,4 @@ resources:
   - service.yaml
   - wireguard-config-sealed.yaml
   - ingress.yaml
+  - namespace.yaml
