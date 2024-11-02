@@ -52,6 +52,7 @@ spec:
               value: "9091"
           ports:
             - containerPort: 9091
+            - containerPort: 6881
           volumeMounts:
             - name: downloads
               mountPath: /downloads
