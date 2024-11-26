@@ -25,6 +25,10 @@ spec:
               value: "1000"
             - name: TZ
               value: "America/New_York"
+            - name: PROWLARR__PORT
+              value: "9696"
+            - name: PROWLARR__BIND_ADDRESS
+              value: "*"
           ports:
             - containerPort: 9696
           volumeMounts:
