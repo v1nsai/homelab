@@ -17,6 +17,7 @@ spec:
       containers:
         - name: prowlarr
           image: ghcr.io/hotio/prowlarr
+          imagePullPolicy: Always
           env:
             - name: PUID
               value: "1000"
@@ -32,6 +33,7 @@ spec:
 
         - name: flaresolverr
           image: ghcr.io/flaresolverr/flaresolverr:latest
+          imagePullPolicy: Always
           env:
             - name: TZ
               value: "America/New_York"
@@ -40,6 +42,7 @@ spec:
 
         - name: sonarr
           image: lscr.io/linuxserver/sonarr
+          imagePullPolicy: Always
           env:
             - name: PUID
               value: "1000"
