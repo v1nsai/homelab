@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./app/services/penpot/app
+  path: ./apps/services/penpot/app
   prune: true
   sourceRef:
     kind: GitRepository
