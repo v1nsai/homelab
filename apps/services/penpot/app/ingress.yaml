@@ -20,9 +20,9 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: penpot
+                name: penpot-penpot
                 port:
-                  number: 6060
+                  number: 80
   tls:
     - hosts:
         - "penpot.internal"
