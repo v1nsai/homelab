@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: penpot
+  labels:
+    app.kubernetes.io/name: penpot
+  annotations:
+    gethomepage.dev/description: UX Design Platform
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Productivity
+    gethomepage.dev/icon: penpot.png
+    gethomepage.dev/name: Penpot
+    cert-manager.io/cluster-issuer: homelab-issuer
+spec:
+  rules:
+    - host: "penpot.internal"
+      http:
+        paths:
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: penpot
+                port:
+                  number: 6060
+  tls:
+    - hosts:
+        - "penpot.internal"
+      secretName: homelab-tls
