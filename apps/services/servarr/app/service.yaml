@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: prowlarr
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
     - name: "9696"
       port: 9696
