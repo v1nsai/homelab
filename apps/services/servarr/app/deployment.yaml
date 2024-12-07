@@ -35,6 +35,22 @@ spec:
             - name: prowlarr-config
               mountPath: /config
 
+        - name: lidarr
+          image: ghcr.io/linuxserver/lidarr:latest
+          imagePullPolicy: Always
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "America/New_York"
+          ports:
+            - containerPort: 8686
+          volumeMounts:
+            - name: lidarr-config
+              mountPath: /config
+
         - name: flaresolverr
           image: ghcr.io/flaresolverr/flaresolverr:latest
           imagePullPolicy: Always
@@ -69,6 +85,9 @@ spec:
         - name: sonarr-config
           persistentVolumeClaim:
             claimName: sonarr-config
+        - name: lidarr-config
+          persistentVolumeClaim:
+            claimName: lidarr-config
         - name: irma
           hostPath:
             path: /var/mnt/irma/media

@@ -24,7 +24,6 @@ spec:
       targetPort: 8989
   selector:
     app: servarr
-# pvcs commented out to persist between installations
 ---
 apiVersion: v1
 kind: Service
@@ -36,5 +35,18 @@ spec:
     - name: "8191"
       port: 8191
       targetPort: 8191
+  selector:
+    app: servarr
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lidarr
+spec:
+  type: LoadBalancer
+  ports:
+    - name: "8686"
+      port: 8686
+      targetPort: 8686
   selector:
     app: servarr

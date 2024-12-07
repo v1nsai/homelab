@@ -59,3 +59,31 @@ spec:
     - hosts:
         - sonarr.internal
       secretName: homelab-tls-sonarr
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lidarr
+  annotations:
+    gethomepage.dev/description: Find Music Automatically
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Torrents
+    gethomepage.dev/icon: lidarr.png
+    gethomepage.dev/name: Lidarr
+    cert-manager.io/cluster-issuer: homelab-issuer
+spec:
+  rules:
+    - host: lidarr.internal
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: lidarr
+                port:
+                  number: 8686
+  tls:
+    - hosts:
+        - lidarr.internal
+      secretName: homelab-tls-lidarr
