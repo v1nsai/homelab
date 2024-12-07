@@ -14,8 +14,8 @@ spec:
         name: ollama
   interval: 1m0s
   values:
-    # image: 
-    #   tag: latest
+    image: 
+      tag: latest
     ollama:
       gpu:
         enabled: true
