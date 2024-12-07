@@ -20,8 +20,6 @@ spec:
       gpu:
         enabled: true
         type: nvidia
-      models:
-        - tinyllama
       insecure: true
     runtimeClassName: nvidia
     service:
