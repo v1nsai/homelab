@@ -14,8 +14,10 @@ spec:
         name: prometheus-community
   install:
     disableWait: true
+    disableWaitForJobs: true
   upgrade:
     disableWait: true
+    disableWaitForJobs: true
   interval: 1m0s
   timeout: 20m
   values:
