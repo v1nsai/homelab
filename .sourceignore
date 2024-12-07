@@ -13,7 +13,6 @@ k3s/
 kubeadm/
 fcos/
 nfs/
-jellyfin/
 emby/
 traefik/
 nextcloud/
