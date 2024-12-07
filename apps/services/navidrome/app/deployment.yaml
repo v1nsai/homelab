@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: navidrome
+  name: navidrome
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: navidrome
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: navidrome
+    spec:
+      containers:
+        - env:
+            # - name: ND_BASEURL
+            - name: ND_LOGLEVEL
+              value: info
+            - name: ND_SCANSCHEDULE
+              value: 1h
+            - name: ND_SESSIONTIMEOUT
+              value: 24h
+            - name: ND_MUSICFOLDER
+              value: /music
+            - name: ND_DATAFOLDER
+              value: /data
+            - name: ND_PORT
+              value: "4533"
+          image: deluan/navidrome:latest
+          name: navidrome
+          ports:
+            - containerPort: 4533
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /data
+              name: navidrome-data
+            - mountPath: /music
+              name: irma
+      restartPolicy: Always
+      volumes:
+        - name: navidrome-data
+          persistentVolumeClaim:
+            claimName: navidrome-data
+        - name: irma
+          hostPath:
+            path: /var/mnt/irma/media
