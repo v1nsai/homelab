@@ -12,6 +12,10 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: prometheus-community
+  install:
+    disableWait: true
+  upgrade:
+    disableWait: true
   interval: 1m0s
   timeout: 20m
   values:
