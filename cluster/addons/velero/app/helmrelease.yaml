@@ -14,6 +14,12 @@ spec:
         name: vmware-tanzu
   interval: 1m0s
   timeout: 20m
+  install:
+    disableWait: true
+    disableWaitForJobs: true
+  upgrade:
+    disableWait: true
+    disableWaitForJobs: true
   values:
     configuration:
       backupStorageLocation:
@@ -57,35 +63,35 @@ spec:
       podSecurityContext:
         runAsUser: 0
         runAsGroup: 0
-    schedules:
-      nightly:
-        schedule: 0 3 * * *
-        template:
-          includedNamespaces:
-          - '*'
-          ttl: 168h0m0s
-          uploaderConfig:
-            parallelFilesUpload: 10
-          snapshotVolumes: true
-          defaultVolumesToFsBackup: false
-          snapshotMoveData: true
-          storageLocation: aws-s3
-          volumeSnapshotLocations:
-          - aws-s3
-      test:
-        schedule: 0 3 * * *
-        template:
-          includedNamespaces:
-          - 'jellyfin'
-          ttl: 168h0m0s
-          uploaderConfig:
-            parallelFilesUpload: 10
-          snapshotVolumes: true
-          defaultVolumesToFsBackup: false
-          snapshotMoveData: true
-          storageLocation: aws-s3
-          volumeSnapshotLocations:
-          - aws-s3
+    # schedules:
+    #   nightly:
+    #     schedule: 0 3 * * *
+    #     template:
+    #       includedNamespaces:
+    #       - '*'
+    #       ttl: 168h0m0s
+    #       uploaderConfig:
+    #         parallelFilesUpload: 10
+    #       snapshotVolumes: true
+    #       defaultVolumesToFsBackup: false
+    #       snapshotMoveData: true
+    #       storageLocation: aws-s3
+    #       volumeSnapshotLocations:
+    #       - aws-s3
+    #   test:
+    #     schedule: 0 3 * * *
+    #     template:
+    #       includedNamespaces:
+    #       - 'jellyfin'
+    #       ttl: 168h0m0s
+    #       uploaderConfig:
+    #         parallelFilesUpload: 10
+    #       snapshotVolumes: true
+    #       defaultVolumesToFsBackup: false
+    #       snapshotMoveData: true
+    #       storageLocation: aws-s3
+    #       volumeSnapshotLocations:
+    #       - aws-s3
     metrics:
       prometheusRule:
         autodetect: true
