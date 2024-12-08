@@ -22,10 +22,10 @@ spec:
         # image: docker:dind
         # securityContext:
         #   privileged: true
-        # lifecycle:
-        #   postStart:
-        #     exec:
-        #       command: ["/bin/bash", "-c", "/postinstall.sh"]
+        lifecycle:
+          postStart:
+            exec:
+              command: ["/bin/bash", "-c", "/postinstall.sh"]
         environment:
           - name: USERNAME
             valueFrom:
