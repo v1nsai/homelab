@@ -5,6 +5,7 @@ metadata:
     io.kompose.service: overseerr
   name: overseerr
 spec:
+  type: LoadBalancer
   ports:
     - name: "5055"
       port: 5055
