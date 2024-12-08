@@ -33,14 +33,14 @@ spec:
                 name: ssh-pubkey
                 key: username
         ports:
-        - containerPort: 22
-          command: ["/bin/bash"]
-          args: 
-            - -c
-            - |
-              set -x
-              bash /postinstall.sh || echo "Install failed: $?"
-              exec sleep infinity        
+          - containerPort: 22
+        command: ["/bin/bash"]
+        args: 
+          - -c
+          - |
+            set -x
+            bash /postinstall.sh || echo "Install failed: $?"
+            sleep infinity        
         volumeMounts:
         - mountPath: /home
           name: devbox-home
