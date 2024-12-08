@@ -22,10 +22,10 @@ spec:
         # image: docker:dind
         # securityContext:
         #   privileged: true
-        lifecycle:
-          postStart:
-            exec:
-              command: ["/bin/bash", "-c", "/postinstall.sh"]
+        # lifecycle:
+        #   postStart:
+        #     exec:
+        #       command: ["/bin/bash", "-c", "/postinstall.sh"]
         environment:
           - name: USERNAME
             valueFrom:
@@ -34,7 +34,13 @@ spec:
                 key: username
         ports:
         - containerPort: 22
-        command: ["/bin/sleep", "infinity"]
+          command: ["/bin/bash"]
+          args: 
+            - -c
+            - |
+              set -x
+              bash /postinstall.sh || echo "Install failed: $?"
+              sleep infinity        
         volumeMounts:
         - mountPath: /home
           name: devbox-home
