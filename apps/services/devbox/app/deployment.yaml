@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devbox
+  labels:
+    app: devbox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devbox
+  template:
+    metadata:
+      labels:
+        app: devbox
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: bigrig
+      containers:
+      - name: devbox
+        image: ubuntu:24.04
+        ports:
+        - containerPort: 22
+        volumeMounts:
+        - mountPath: /home/ubuntu
+          name: devbox-home
+      volumes:
+      - name: devbox-data
+        persistentVolumeClaim:
+          claimName: devbox-data
