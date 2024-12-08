@@ -1,0 +1,17 @@
+apiVersion: v1
+data:
+  postinstall.sh: "#!/bin/bash\n\nset -e\n\n# if the file /postinstall-has-run exists,
+    then the postinstall script has already run and exit gracefully\nif [ -f /postinstall-has-run
+    ]; then\n    exit 0\nfi\n\napt update\napt install -y openssh-server vim unminimize
+    sudo nnn git\nunminimize\n\n# ssh\necho \"PermitRootLogin no\" >> /etc/ssh/sshd_config\necho
+    \"PasswordAuthentication no\" >> /etc/ssh/sshd_config\nservice ssh restart\n\n#
+    user\nadduser --disabled-password --gecos \"\" $USERNAME\necho \"$USERNAME ALL=(ALL)
+    NOPASSWD:ALL\" >> /etc/sudoers\ncp /authorized_keys /home/$USERNAME/.ssh/authorized_keys\nchown
+    $USERNAME:$USERNAME /home/$USERNAME/.ssh/authorized_keys\nchmod 600 /home/$USERNAME/.ssh/authorized_keys\n\n#
+    node \n\n\n\n# If everything runs successfully, don't bother running next startup\ntouch
+    /postinstall-has-run"
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: postinstall
+  namespace: devbox
