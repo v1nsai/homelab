@@ -20,7 +20,7 @@ data:
     tee /etc/apt/sources.list.d/docker.list > /dev/null\nsudo apt-get update \nsudo
     apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin
     docker-compose-plugin\n\necho \"Installing Node...\"\ncurl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh
-    | bash\ncat <<EOF >> /home/$USERNAME/.bashrc\nexport NVM_DIR=\"$HOME/.nvm\"\n[
+    | bash\ncat <<EOF >> /home/$USERNAME/.bashrc\nexport NVM_DIR=\"/home/$USERNAME/.nvm\"\n[
     -s \"$NVM_DIR/nvm.sh\" ] && \\. \"$NVM_DIR/nvm.sh\"  # This loads nvm\n[ -s \"$NVM_DIR/bash_completion\"
     ] && \\. \"$NVM_DIR/bash_completion\"  # This loads nvm bash_completion\nEOF\nsource
     /home/$USERNAME/.bashrc\nnvm install 18\nnvm use 18\n\n# If everything runs successfully,
