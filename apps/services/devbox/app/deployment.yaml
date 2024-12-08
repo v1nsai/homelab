@@ -45,7 +45,7 @@ spec:
           - mountPath: /home
             name: home
           - mountPath: /root/.ssh/authorized_keys
-            name: authorized_keys
+            name: ssh-pubkey
             subPath: authorized_keys
             readOnly: true
           - mountPath: /usr/local/bin/postinstall.sh
@@ -57,7 +57,7 @@ spec:
       - name: home
         persistentVolumeClaim:
           claimName: devbox-home
-      - name: authorized_keys
+      - name: ssh-pubkey
         secret:
           secretName: ssh-pubkey
           items:
