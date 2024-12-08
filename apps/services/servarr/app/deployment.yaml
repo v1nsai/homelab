@@ -78,6 +78,24 @@ spec:
             - name: irma
               mountPath: /irma
 
+        - name: radarr
+          image: lscr.io/linuxserver/radarr
+          imagePullPolicy: Always
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "America/New_York"
+          ports:
+            - containerPort: 7878
+          volumeMounts:
+            - name: radarr-config
+              mountPath: /config
+            - name: irma
+              mountPath: /irma
+
       volumes:
         - name: prowlarr-config
           persistentVolumeClaim:
@@ -88,6 +106,9 @@ spec:
         - name: lidarr-config
           persistentVolumeClaim:
             claimName: lidarr-config
+        - name: radarr-config
+          persistentVolumeClaim:
+            claimName: radarr-config
         - name: irma
           hostPath:
             path: /var/mnt/irma/media
