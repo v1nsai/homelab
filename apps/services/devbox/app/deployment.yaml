@@ -42,14 +42,17 @@ spec:
             bash /postinstall.sh || echo "Install failed: $?"
             sleep infinity        
         volumeMounts:
-        - mountPath: /
-          name: home
-        - mountPath: /
-          name: authorized_keys
-          readOnly: true
-        - mountPath: /
-          name: postinstall
-          readOnly: true
+          - mountPath: /home
+            name: home
+          - mountPath: /root/.ssh/authorized_keys
+            name: authorized_keys
+            subPath: authorized_keys
+            readOnly: true
+          - mountPath: /usr/local/bin/postinstall.sh
+            name: postinstall
+            subPath: postinstall.sh
+            readOnly: true
+
       volumes:
       - name: home
         persistentVolumeClaim:
@@ -57,7 +60,9 @@ spec:
       - name: authorized_keys
         secret:
           secretName: ssh-pubkey
-          secretKey: authorized_keys
+          items:
+            - key: authorized_keys
+              path: authorized_keys
       - name: postinstall
         configMap:
           name: postinstall
