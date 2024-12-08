@@ -42,19 +42,19 @@ spec:
             bash /postinstall.sh || echo "Install failed: $?"
             sleep infinity        
         volumeMounts:
-        - mountPath: /home
-          name: devbox-home
-        - mountPath: /authorized_keys
-          name: ssh-pubkey
+        - mountPath: /
+          name: home
+        - mountPath: /
+          name: authorized_keys
           readOnly: true
-        - mountPath: /postinstall.sh
+        - mountPath: /
           name: postinstall
           readOnly: true
       volumes:
-      - name: devbox-home
+      - name: home
         persistentVolumeClaim:
           claimName: devbox-home
-      - name: ssh-pubkey
+      - name: authorized_keys
         secret:
           secretName: ssh-pubkey
           secretKey: authorized_keys
