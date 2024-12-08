@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: overseerr-ingress
+  namespace: plex
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Media Request Service
+    gethomepage.dev/group: Torrents
+    gethomepage.dev/icon: overseerr.png
+    gethomepage.dev/name: Overseerr
+    cert-manager.io/cluster-issuer: homelab-issuer
+
+spec:
+  rules:
+    - host: overseerr.internal
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: overseerr
+                port:
+                  number: 5055
+  tls:
+    - hosts:
+        - overseerr.internal
+      secretName: overseerr-tls
