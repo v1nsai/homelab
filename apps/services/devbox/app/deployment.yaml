@@ -40,7 +40,7 @@ spec:
             - |
               set -x
               bash /postinstall.sh || echo "Install failed: $?"
-              sleep infinity        
+              exec sleep infinity        
         volumeMounts:
         - mountPath: /home
           name: devbox-home
