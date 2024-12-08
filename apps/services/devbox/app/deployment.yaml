@@ -48,7 +48,7 @@ spec:
             name: ssh-pubkey
             subPath: authorized_keys
             readOnly: true
-          - mountPath: /usr/local/bin/postinstall.sh
+          - mountPath: /postinstall.sh
             name: postinstall
             subPath: postinstall.sh
             readOnly: true
