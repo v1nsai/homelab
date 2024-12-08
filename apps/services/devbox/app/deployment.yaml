@@ -25,6 +25,6 @@ spec:
         - mountPath: /home/ubuntu
           name: devbox-home
       volumes:
-      - name: devbox-data
+      - name: devbox-home
         persistentVolumeClaim:
-          claimName: devbox-data
+          claimName: devbox-home
