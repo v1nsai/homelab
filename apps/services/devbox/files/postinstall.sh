@@ -9,7 +9,7 @@ fi
 
 apt update
 apt install -y openssh-server vim unminimize sudo nnn git wget
-unminimize
+echo -e "y\n" | unminimize
 
 # ssh
 echo "PermitRootLogin no" >> /etc/ssh/sshd_config

@@ -26,7 +26,7 @@ spec:
         #   postStart:
         #     exec:
         #       command: ["/bin/bash", "-c", "/postinstall.sh"]
-        environment:
+        env:
           - name: USERNAME
             valueFrom:
               secretKeyRef:
