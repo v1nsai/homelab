@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+
+SSH_PUBKEY="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDJZxx2Ovjufzw5VeGtEuZMlnrZAmqE6Y7khqsBJffZHkKJTlLRTtviurRRZiVNwZDrWK5fKKZCrUuDAl4pHM/RHo4QKHi9JEI/PAKuNiPSO/vbrtk4Ab6CAV8M/R+ZYrh4mXlA9MLb9T2l/17DQ7VlFH2yAWZggKr1ud3plc265lyALxQuukyhkMnNSXNF3a0rE0e9FIhe5G0qrnP18kpocNGf/lW0b3O67yOZwG5FGUndyWsLHFDe7M9YauZo0zwdZhGOubWWQgt+BByVdizW9ZETzwpjXQcoiyqkS9ov3pj7buQ14hRd32CHQny3LsSRHQTeUJ5F/VfMxEf09i1LYK31tP5GjOEzjMGfBtXE0NRHEgkW3FKSF5hsqevgm8DzvOi8+GnyO2YDX7t8MK6uoVmQI7+FoU+dK0ZDgE0BLCckcOfXUfSKBuRDGwRWjpJJWG5VW4sf2tMPV5Ps17poHz9P7J7YTzFDPWdOZQgj6Yb7fk4dWT0sJPzJfDsPLGr7e9IBeJ9oSFBUdoELePMKIsS/GvWoSwO2f7FOGruPjVHpRBf14YfAqGpf64sYZ0W7u6Kc4vy9Cc7ROg3L3+fLVaHfGrYRtUB4H6UF+wC1cFh3IO2bsT2MSKkL9Wv5DausjPNuCtt9nHo8zKxVvp0sCai1MA1HZWOlRWa8dzPWZw=="
+
+kubectl create secret generic ssh-pubkey \
+    --from-literal=authorized_keys="$SSH_PUBKEY" \
+    --dry-run=client -o yaml | \
+kubeseal --format=yaml --cert=./sealed-secrets.pub > ./apps/services/devbox/app/sealed-secrets.yaml

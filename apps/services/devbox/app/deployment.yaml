@@ -25,7 +25,14 @@ spec:
         volumeMounts:
         - mountPath: /home/ubuntu
           name: devbox-home
+        - mountPath: /home/ubuntu/.ssh
+          name: ssh-pubkey
+          readOnly: true
       volumes:
       - name: devbox-home
         persistentVolumeClaim:
           claimName: devbox-home
+      - name: ssh-pubkey
+        secret:
+          secretName: ssh-pubkey
+          secretKey: authorized_keys
