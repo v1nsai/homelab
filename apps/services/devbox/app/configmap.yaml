@@ -20,7 +20,10 @@ data:
     tee /etc/apt/sources.list.d/docker.list > /dev/null\nsudo apt-get update \nsudo
     apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin
     docker-compose-plugin\n\necho \"Installing Node...\"\nsu - $USERNAME -c \"curl
-    -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash\"\n#
+    -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash\"\ncat
+    <<EOF >> /home/$USERNAME/.bashrc\nexport NVM_DIR=\"/home/$USERNAME/.nvm\"\n[ -s
+    \"$NVM_DIR/nvm.sh\" ] && \\. \"$NVM_DIR/nvm.sh\"  # This loads nvm\n[ -s \"$NVM_DIR/bash_completion\"
+    ] && \\. \"$NVM_DIR/bash_completion\"  # This loads nvm bash_completion\nEOF\n#
     source /home/$USERNAME/.bashrc\n# nvm install 18\n# nvm use 18\n\n# If everything
     runs successfully, don't bother running next startup\ntouch /postinstall-has-run"
 kind: ConfigMap
