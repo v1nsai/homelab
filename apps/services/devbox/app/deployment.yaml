@@ -18,10 +18,10 @@ spec:
         kubernetes.io/hostname: bigrig
       containers:
       - name: devbox
-        # image: ubuntu:24.04
-        image: docker:dind
-        securityContext:
-          privileged: true
+        image: ubuntu:24.04
+        # image: docker:dind
+        # securityContext:
+        #   privileged: true
         # lifecycle:
         #   postStart:
         #     exec:
