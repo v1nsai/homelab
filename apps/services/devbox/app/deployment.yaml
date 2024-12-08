@@ -20,12 +20,8 @@ spec:
       - name: devbox
         image: ubuntu:24.04
         # image: docker:dind
-        # securityContext:
-        #   privileged: true
-        # lifecycle:
-        #   postStart:
-        #     exec:
-        #       command: ["/bin/bash", "-c", "/postinstall.sh"]
+        securityContext:
+          privileged: true
         env:
           - name: USERNAME
             valueFrom:

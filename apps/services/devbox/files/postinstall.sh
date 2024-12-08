@@ -4,26 +4,29 @@ set -e
 
 # if the file /postinstall-has-run exists, then the postinstall script has already run and exit gracefully
 if [ -f /postinstall-has-run ]; then
+    echo "Postinstall script has already run, skipping..."
     exit 0
 fi
 
+echo "Installing packages..."
 apt update
 apt install -y openssh-server vim unminimize sudo nnn git wget
 echo -e "y\n" | unminimize
 
-# ssh
+echo "Configuring SSH..."
 echo "PermitRootLogin no" >> /etc/ssh/sshd_config
 echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
 service ssh restart
 
-# user
+echo "Configuring user..."
 adduser --disabled-password --gecos "" $USERNAME
 echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-cp /authorized_keys /home/$USERNAME/.ssh/authorized_keys
+mkdir -p /home/$USERNAME/.ssh
+cp /root/.ssh/authorized_keys /home/$USERNAME/.ssh/authorized_keys
 chown $USERNAME:$USERNAME /home/$USERNAME/.ssh/authorized_keys
 chmod 600 /home/$USERNAME/.ssh/authorized_keys
 
-# docker
+echo "Installing Docker..."
 # Add Docker's official GPG key:
 sudo apt-get update
 sudo apt-get install ca-certificates curl
@@ -37,9 +40,11 @@ echo \
   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update 
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-# Node
+echo "Installing Node..."
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+source ~/.bashrc
 nvm install 18
 nvm use 18
 
