@@ -18,15 +18,29 @@ spec:
         kubernetes.io/hostname: bigrig
       containers:
       - name: devbox
-        image: ubuntu:24.04
+        # image: ubuntu:24.04
+        image: docker:dind
+      lifecycle:
+        postStart:
+          exec:
+            command: ["/bin/bash", "-c", "/postinstall.sh"]
+        environment:
+          - name: USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: ssh-pubkey
+                key: username
         ports:
         - containerPort: 22
         command: ["/bin/sleep", "infinity"]
         volumeMounts:
-        - mountPath: /home/ubuntu
+        - mountPath: /home
           name: devbox-home
-        - mountPath: /home/ubuntu/.ssh
+        - mountPath: /authorized_keys
           name: ssh-pubkey
+          readOnly: true
+        - mountPath: /postinstall.sh
+          name: postinstall
           readOnly: true
       volumes:
       - name: devbox-home
@@ -36,3 +50,9 @@ spec:
         secret:
           secretName: ssh-pubkey
           secretKey: authorized_keys
+      - name: postinstall
+        configMap:
+          name: postinstall
+          items:
+            - key: postinstall.sh
+              path: postinstall.sh
