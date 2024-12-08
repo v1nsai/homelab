@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: navidrome
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Media Server
+    gethomepage.dev/group: Media
+    gethomepage.dev/icon: navidrome.png
+    gethomepage.dev/name: Navidrome
+    cert-manager.io/cluster-issuer: homelab-issuer
+spec:
+  rules:
+    - host: navidrome.internal
+      http:
+        paths:
+          - backend:
+              service:
+                name: navidrome
+                port:
+                  number: 4533
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - navidrome.internal
+      secretName: homelab-tls
