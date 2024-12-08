@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    io.kompose.service: overseerr
+  name: overseerr
+spec:
+  ports:
+    - name: "5055"
+      port: 5055
+      targetPort: 5055
+  selector:
+    io.kompose.service: overseerr
