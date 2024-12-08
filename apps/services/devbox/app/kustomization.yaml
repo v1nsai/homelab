@@ -9,3 +9,4 @@ resources:
   - namespace.yaml
   - service.yaml
   - sealed-secrets.yaml
+  - configmap.yaml
