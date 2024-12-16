@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: pod-restart-job
+spec:
+  schedule: "0 * * * *"  # Run every hour
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: kubectl
+            image: bitnami/kubectl
+            command:
+            - /bin/sh
+            - -c
+            - kubectl delete pod -n torrents -l app=torrents
+          restartPolicy: OnFailure
+          serviceAccountName: pod-restart-sa
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pod-restart-sa
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pod-restart-role
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pod-restart-rolebinding
+subjects:
+- kind: ServiceAccount
+  name: pod-restart-sa
+roleRef:
+  kind: Role
+  name: pod-restart-role
+  apiGroup: rbac.authorization.k8s.io
