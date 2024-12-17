@@ -6,6 +6,7 @@ spec:
   schedule: "0 * * * *"  # Run every hour
   jobTemplate:
     spec:
+      ttlSecondsAfterFinished: 3599 # Delete the job after 59 minutes
       template:
         spec:
           containers:
