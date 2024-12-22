@@ -4,7 +4,7 @@ metadata:
   name: navidrome
   annotations:
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/description: Media Server
+    gethomepage.dev/description: Music Server
     gethomepage.dev/group: Media
     gethomepage.dev/icon: navidrome.png
     gethomepage.dev/name: Navidrome
