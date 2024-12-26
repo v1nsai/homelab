@@ -31,7 +31,7 @@ source apps/services/plex/.env
 helm repo add plex https://raw.githubusercontent.com/plexinc/pms-docker/gh-pages
 helm upgrade --install plex plex/plex-media-server \
   --namespace plex \
-  --set extraEnv.PLEX_CLAIM=$PLEX_CLAIM \
-  --values apps/services/plex/values.yaml
+  --values apps/services/plex/values.yaml \
+  --set extraEnv.PLEX_CLAIM=$PLEX_CLAIM
 
 kubectl apply -f ./apps/services/plex/ingress.yaml

@@ -16,3 +16,5 @@ image:
   pullPolicy: Always
 service:
   type: LoadBalancer
+nodeSelector:
+  kubernetes.io/hostname: "bigrig"
