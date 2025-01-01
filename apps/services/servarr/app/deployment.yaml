@@ -96,6 +96,24 @@ spec:
             - name: irma
               mountPath: /irma
 
+        - name: bazarr
+          image: lscr.io/linuxserver/bazarr
+          imagePullPolicy: Always
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "America/New_York"
+          ports:
+            - containerPort: 7878
+          volumeMounts:
+            - name: bazarr-config
+              mountPath: /config
+            - name: irma
+              mountPath: /irma
+
       volumes:
         - name: prowlarr-config
           persistentVolumeClaim:
@@ -109,6 +127,9 @@ spec:
         - name: radarr-config
           persistentVolumeClaim:
             claimName: radarr-config
+        - name: bazarr-config
+          persistentVolumeClaim:
+            claimName: bazarr-config
         - name: irma
           hostPath:
             path: /var/mnt/irma/media

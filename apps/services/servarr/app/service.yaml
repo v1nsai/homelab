@@ -63,3 +63,16 @@ spec:
       targetPort: 7878
   selector:
     app: servarr
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bazarr
+spec:
+  type: LoadBalancer
+  ports:
+    - name: "6767"
+      port: 6767
+      targetPort: 6767
+  selector:
+    app: servarr
