@@ -19,7 +19,6 @@ spec:
       containers:
       - name: devbox
         image: ubuntu:24.04
-        # image: docker:dind
         securityContext:
           privileged: true
         env:
@@ -48,6 +47,9 @@ spec:
             name: postinstall
             subPath: postinstall.sh
             readOnly: true
+          - mountPath: /run/containerd/containerd.sock
+            name: containerd-socket
+            readOnly: false
 
       volumes:
       - name: home
@@ -65,3 +67,7 @@ spec:
           items:
             - key: postinstall.sh
               path: postinstall.sh
+      - name: containerd-socket
+        hostPath:
+          path: /run/containerd/containerd.sock
+          type: Socket
