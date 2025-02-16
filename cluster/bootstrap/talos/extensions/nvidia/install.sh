@@ -25,6 +25,6 @@ helm upgrade --install nvidia-device-plugin nvdp/nvidia-device-plugin \
 
 # Set nvidia default container runtime
 talosctl patch machineconfig \
-  --nodes 192.168.1.170 \
-  --endpoints 192.168.1.170 \
+  --nodes 192.168.1.154 \
+  --endpoints 192.168.1.154 \
   --patch-file cluster/bootstrap/talos/extensions/nvidia/set-default-runtime.yaml

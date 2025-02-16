@@ -12,7 +12,7 @@ mv talosconfig ~/.talos/config # can't use ~/ in talosconfig path
 kubeseal --cert ./.sealed-secrets.pub --format yaml 
 
 # DO NOT RUN until at least one node has been booted using apply-config below
-NODE="192.168.1.155"
+NODE="192.168.1.154"
 talosctl bootstrap \
   --nodes $NODE \
   --endpoints $NODE
@@ -29,7 +29,7 @@ talosctl gen config \
   talos-homelab https://$VIP_ADDRESS:6443
 talosctl apply-config \
   --insecure \
-  --nodes 192.168.1.170 \
+  --nodes 192.168.1.154 \
   --file /tmp/bigrig.yaml \
   --config-patch @cluster/bootstrap/talos/install-patches/bigrig.yaml \
   --config-patch @cluster/bootstrap/talos/extensions/longhorn/patch.yaml \
@@ -46,7 +46,7 @@ talosctl gen config \
   talos-homelab https://$VIP_ADDRESS:6443
 talosctl apply-config \
   --insecure \
-  --nodes 192.168.1.155 \
+  --nodes 192.168.1.161 \
   --file /tmp/tiffrig.yaml \
   --config-patch @cluster/bootstrap/talos/install-patches/tiffrig.yaml \
   --config-patch @cluster/bootstrap/talos/extensions/longhorn/patch.yaml \
