@@ -16,6 +16,4 @@ spec:
     crds:
       enabled: true
     speaker:
-      logLevel: all
-    controller:
-      logLevel: all
+      ignoreExcludeLB: true
