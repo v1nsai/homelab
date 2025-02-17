@@ -15,3 +15,7 @@ spec:
   values:
     crds:
       enabled: true
+    speaker:
+      logLevel: all
+    controller:
+      logLevel: all
