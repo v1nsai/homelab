@@ -48,6 +48,8 @@ spec:
           value: plndr-svcs-lock
         - name: svc_election
           value: "true"
+        - name: vip_leaderelection
+          value: "true"
         - name: lb_enable
           value: "true"
         - name: lb_port
