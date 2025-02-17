@@ -46,19 +46,19 @@ spec:
           value: "true"
         - name: svc_leasename
           value: plndr-svcs-lock
-        - name: vip_leaderelection
+        - name: svc_election
           value: "true"
-        - name: vip_leasename
-          value: plndr-cp-lock
-        - name: vip_leaseduration
-          value: "5"
-        - name: vip_renewdeadline
-          value: "3"
-        - name: vip_retryperiod
-          value: "1"
+        - name: lb_enable
+          value: "true"
+        - name: lb_port
+          value: "6443"
+        - name: lb_fwdmethod
+          value: local
         - name: vip_address
         - name: prometheus_server
           value: :2112
+        - name: egress_servicecidr
+          value: 192.168.1.20/24,192.168.1.99/24
         image: ghcr.io/kube-vip/kube-vip:v0.8.9
         imagePullPolicy: IfNotPresent
         name: kube-vip
@@ -76,4 +76,3 @@ spec:
       - effect: NoExecute
         operator: Exists
   updateStrategy: {}
-

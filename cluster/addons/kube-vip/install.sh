@@ -15,4 +15,7 @@ kube-vip manifest daemonset \
     --taint \
     --services \
     --arp \
-    --leaderElection
+    --servicesElection \
+    --enableLoadBalancer 
+
+    # --leaderElection \
