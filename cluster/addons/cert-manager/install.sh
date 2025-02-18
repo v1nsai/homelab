@@ -8,7 +8,7 @@ openssl req -x509 -new -nodes -key ca.key -sha256 -days 1825 -out ca.crt
 
 # Trust the CA
 ## macos
-sudo security add-trusted-cert -d -r trustRoot -k "/Library/Keychains/System.keychain" ca.crt 
+sudo security add-trusted-cert -d -r trustRoot -k "/Library/Keychains/System.keychain" cluster/addons/cert-manager/ca.crt
 
 ## linux
 sudo apt-get install -y ca-certificates
