@@ -37,9 +37,12 @@ terraform.rc
 .venv/
 all-in-one
 
-# Ignore config files
+# Ignore secrets
 secrets/
 *.env
+*.crt 
+*.key
+*.pem
 *.default.yaml
 
 # Ignore images
@@ -51,3 +54,4 @@ diagrams/diagrams_image.png
 
 # Vagrant
 .vagrant/
+
