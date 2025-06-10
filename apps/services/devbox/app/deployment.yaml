@@ -35,7 +35,7 @@ spec:
           - -c
           - |
             set -x
-            bash /postinstall.sh || echo "Install failed: $?"
+            bash /postinstall.sh > /var/log/postinstall.log 2>&1 || echo "Install failed: $?"
             sleep infinity        
         volumeMounts:
           - mountPath: /home
