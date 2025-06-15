@@ -4,8 +4,8 @@ data:
     then the postinstall script has already run and exit gracefully\nif [ -f /postinstall-has-run
     ]; then\n    echo \"Postinstall script has already run, skipping...\"\n    exit
     0\nfi\n\necho \"Installing packages...\"\napt update\napt install -y openssh-server
-    build-essential vim unminimize sudo nnn git wget jq curl\necho -e \"y\\n\" | unminimize\n\necho
-    \"Configuring SSH...\"\necho \"PermitRootLogin no\" >> /etc/ssh/sshd_config\necho
+    build-essential vim unminimize sudo nnn git wget jq curl net-tools\necho -e \"y\\n\"
+    | unminimize\n\necho \"Configuring SSH...\"\necho \"PermitRootLogin no\" >> /etc/ssh/sshd_config\necho
     \"PasswordAuthentication no\" >> /etc/ssh/sshd_config\nservice ssh restart\n\necho
     \"Configuring user...\"\nadduser --disabled-password --gecos \"\" $USERNAME\necho
     \"$USERNAME ALL=(ALL) NOPASSWD:ALL\" >> /etc/sudoers\nmkdir -p /home/$USERNAME/.ssh\ncp
@@ -19,9 +19,10 @@ data:
     https://download.docker.com/linux/ubuntu \\\n  $(. /etc/os-release && echo \"$VERSION_CODENAME\")
     stable\" | \\\n  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null\nsudo
     apt-get update \nsudo apt-get install -y docker-ce docker-ce-cli containerd.io
-    docker-buildx-plugin docker-compose-plugin\nusermod -aG docker $USERNAME\n\necho
-    \"Installing Node...\"\nsu - $USERNAME -c \"curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh
-    | bash\"\n# cat <<EOF >> /home/$USERNAME/.bashrc\n# export NVM_DIR=\"/home/$USERNAME/.nvm\"\n#
+    docker-buildx-plugin docker-compose-plugin\nusermod -aG docker $USERNAME\nsudo
+    service docker restart\n\necho \"Installing Node...\"\nsu - $USERNAME -c \"curl
+    -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash\"\n#
+    cat <<EOF >> /home/$USERNAME/.bashrc\n# export NVM_DIR=\"/home/$USERNAME/.nvm\"\n#
     [ -s \"$NVM_DIR/nvm.sh\" ] && \\. \"$NVM_DIR/nvm.sh\"  # This loads nvm\n# [ -s
     \"$NVM_DIR/bash_completion\" ] && \\. \"$NVM_DIR/bash_completion\"  # This loads
     nvm bash_completion\n# EOF\n# source /home/$USERNAME/.bashrc\n# nvm install 18\n#

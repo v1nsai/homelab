@@ -10,7 +10,7 @@ fi
 
 echo "Installing packages..."
 apt update
-apt install -y openssh-server build-essential vim unminimize sudo nnn git wget jq curl
+apt install -y openssh-server build-essential vim unminimize sudo nnn git wget jq curl net-tools
 echo -e "y\n" | unminimize
 
 echo "Configuring SSH..."
@@ -42,6 +42,7 @@ echo \
 sudo apt-get update 
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 usermod -aG docker $USERNAME
+sudo service docker restart
 
 echo "Installing Node..."
 su - $USERNAME -c "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash"

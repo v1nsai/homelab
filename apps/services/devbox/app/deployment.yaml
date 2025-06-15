@@ -14,7 +14,7 @@ spec:
       labels:
         app: devbox
     spec:
-      hostNetwork: true
+      hostNetwork: false
       nodeSelector:
         kubernetes.io/hostname: bigrig
       containers:
