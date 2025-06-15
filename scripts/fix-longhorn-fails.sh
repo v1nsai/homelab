@@ -9,30 +9,30 @@ scaleDown() {
     kubectl scale deployment "$deploy" -n "$namespace" --replicas=0
   done
 
-  # Scale down standalone ReplicaSets (not owned by Deployments)
+  echo "Scaling down standalone ReplicaSets (not owned by Deployments)..."
   for replicaset in $(kubectl get replicaset -n "$namespace" -o json | jq -r '.items[] | select(.metadata.ownerReferences == null) | .metadata.name'); do
     kubectl scale replicaset "$replicaset" -n "$namespace" --replicas=0
   done
 
-  # Scale down statefulsets
+  echo "Scaling down statefulsets..."
   for sts in $(kubectl get statefulsets -n "$ns" -o jsonpath='{.items[*].metadata.name}'); do
     kubectl scale statefulset "$sts" -n "$ns" --replicas=0
   done
 }
 
 scaleUp() {
-  echo "Scaling up all deployments, replicasets, and statefulsets in the namespace..."
-  # Scale all deployments in this namespace back up to 1
+  echo "Scaling up all deployments, replicasets, and statefulsets in the namespace $namespace..."
+  echo "Scaling all deployments in namespace $namespace back up to 1..."
   for deploy in $(kubectl get deploy -n "$namespace" -o jsonpath='{.items[*].metadata.name}'); do
     kubectl scale deployment "$deploy" -n "$namespace" --replicas=1
   done
 
-  # Scale up standalone replicasets not owned by deployments
+  echo "Scaling up standalone replicasets not owned by deployments in $namespace..."
   for replicaset in $(kubectl get replicaset -n "$namespace" -o json | jq -r '.items[] | select(.metadata.ownerReferences == null) | .metadata.name'); do
     kubectl scale replicaset "$replicaset" -n "$namespace" --replicas=1
   done
 
-  # Scale up statefulsets
+  echo "Scaling up statefulsets in namespace $ns..."
   for sts in $(kubectl get statefulsets -n "$ns" -o jsonpath='{.items[*].metadata.name}'); do
     kubectl scale statefulset "$sts" -n "$ns" --replicas=1
   done
