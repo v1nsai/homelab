@@ -48,9 +48,11 @@ spec:
             name: postinstall
             subPath: postinstall.sh
             readOnly: true
-          - mountPath: /run/containerd/containerd.sock
-            name: containerd-socket
-            readOnly: false
+          - mountPath: /var/lib/docker
+            name: var-lib-docker
+          # - mountPath: /run/containerd/containerd.sock
+          #   name: containerd-socket
+          #   readOnly: false
           # - mountPath: /tmp
           #   name: host-tmp
 
@@ -70,11 +72,15 @@ spec:
           items:
             - key: postinstall.sh
               path: postinstall.sh
-      - name: containerd-socket
+      - name: var-lib-docker
         hostPath:
-          path: /run/containerd/containerd.sock
-          type: Socket
+          path: /var/lib/docker
+          type: DirectoryOrCreate
+      # - name: containerd-socket
+      #   hostPath:
+      #     path: /run/containerd/containerd.sock
+      #     type: Socket
       # - name: host-tmp
       #   hostPath:
       #     path: /tmp
-      #     type: Directory
+      #     type: DirectoryOrCreate
