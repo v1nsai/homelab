@@ -16,6 +16,5 @@ nfs/
 emby/
 traefik/
 nextcloud/
-jellyfin/
 kube-vip/
 penpot/

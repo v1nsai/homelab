@@ -1,11 +1,9 @@
 ---
 apiVersion: source.toolkit.fluxcd.io/v1
-kind: GitRepository
+kind: HelmRepository
 metadata:
   name: jellyfin
   namespace: jellyfin
 spec:
   interval: 1m0s
-  ref:
-    branch: master
-  url: https://github.com/v1nsai/jellyfin-helm
+  url: https://jellyfin.github.io/jellyfin-helm

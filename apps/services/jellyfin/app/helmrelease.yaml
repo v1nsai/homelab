@@ -7,11 +7,11 @@ metadata:
 spec:
   chart:
     spec:
-      chart: ./charts/jellyfin
+      chart: jellyfin
+      reconcileStrategy: ChartVersion
       sourceRef:
-        kind: GitRepository
+        kind: HelmRepository
         name: jellyfin
-        namespace: jellyfin
   interval: 1m0s
   values:
     service:
