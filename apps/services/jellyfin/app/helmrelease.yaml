@@ -15,7 +15,7 @@ spec:
   interval: 1m0s
   values:
     service:
-      type: ClusterIP
+      type: LoadBalancer
     persistence:
       config:
         enabled: true
