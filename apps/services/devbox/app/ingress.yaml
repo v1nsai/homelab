@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: juiceshop
+  labels:
+    app.kubernetes.io/name: juiceshop
+  annotations:
+    gethomepage.dev/description: A vulnerable web application for security training
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Vulnerable Apps
+    gethomepage.dev/icon: https://raw.githubusercontent.com/juice-shop/juice-shop/develop/frontend/src/assets/public/images/JuiceShop_Logo_100px.png
+    gethomepage.dev/name: OWASP Juice Shop
+    cert-manager.io/cluster-issuer: homelab-issuer
+spec:
+  rules:
+    - host: "juiceshop.internal"
+      http:
+        paths:
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: devbox
+                port:
+                  number: 3000
+  tls:
+    - hosts:
+        - "juiceshop.internal"
+      secretName: homelab-tls
