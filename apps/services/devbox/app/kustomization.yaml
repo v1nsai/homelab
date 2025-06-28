@@ -10,3 +10,4 @@ resources:
   - service.yaml
   - sealed-secrets.yaml
   - configmap.yaml
+  - ingress.yaml
