@@ -18,3 +18,9 @@ traefik/
 nextcloud/
 kube-vip/
 penpot/
+harbor/
+jenkins/
+minio/
+navidrome/
+nextcloud/
+pihole/
