@@ -50,6 +50,8 @@ spec:
             readOnly: true
           - mountPath: /var/lib/docker
             name: var-lib-docker
+          - mountPath: /var
+            name: host-var
           # - mountPath: /run/containerd/containerd.sock
           #   name: containerd-socket
           #   readOnly: false
@@ -76,11 +78,7 @@ spec:
         hostPath:
           path: /var/lib/docker
           type: DirectoryOrCreate
-      # - name: containerd-socket
-      #   hostPath:
-      #     path: /run/containerd/containerd.sock
-      #     type: Socket
-      # - name: host-tmp
-      #   hostPath:
-      #     path: /tmp
-      #     type: DirectoryOrCreate
+      - name: host-var
+        hostPath:
+          path: /var/
+          type: DirectoryOrCreate
