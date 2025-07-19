@@ -34,13 +34,13 @@ spec:
                 key: username
         ports:
           - containerPort: 22
-        # command: ["/bin/bash"]
-        # args: 
+        command: ["/bin/bash"]
+        args: 
         #   - -c
         #   - |
         #     set -x
         #     bash /postinstall.sh > /var/log/postinstall.log 2>&1 & sleep 5 && tail -f /var/log/postinstall.log || echo "Install failed: $?"
-        #     sleep infinity
+          - sleep infinity
         volumeMounts:
           - mountPath: /home
             name: home
