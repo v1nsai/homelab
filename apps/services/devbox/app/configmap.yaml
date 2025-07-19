@@ -10,19 +10,19 @@ data:
     ssh restart\n\necho \"Configuring user...\"\nadduser --disabled-password --gecos
     \"\" $USERNAME\necho \"$USERNAME ALL=(ALL) NOPASSWD:ALL\" >> /etc/sudoers\nmkdir
     -p /home/$USERNAME/.ssh\ncp /root/.ssh/authorized_keys /home/$USERNAME/.ssh/authorized_keys\nchown
-    $USERNAME:$USERNAME /home/$USERNAME/.ssh/authorized_keys\nchmod 600 /home/$USERNAME/.ssh/authorized_keys\n\n#
-    echo \"Installing Docker...\"\n# Add Docker's official GPG key:\n# sudo apt-get
-    update\n# sudo apt-get install ca-certificates curl\n# sudo install -m 0755 -d
-    /etc/apt/keyrings\n# sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg
-    -o /etc/apt/keyrings/docker.asc\n# sudo chmod a+r /etc/apt/keyrings/docker.asc\n\n#
-    # Add the repository to Apt sources:\n# echo \\\n#   \"deb [arch=$(dpkg --print-architecture)
-    signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu
-    \\\n#   $(. /etc/os-release && echo \"$VERSION_CODENAME\") stable\" | \\\n#   sudo
-    tee /etc/apt/sources.list.d/docker.list > /dev/null\n# sudo apt-get update \n#
-    sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin
-    docker-compose-plugin\n# usermod -aG docker $USERNAME\n# sudo service docker restart\n\necho
-    \"Installing Node...\"\nsu - $USERNAME -c \"curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh
-    | bash\"\n# cat <<EOF >> /home/$USERNAME/.bashrc\n# export NVM_DIR=\"/home/$USERNAME/.nvm\"\n#
+    $USERNAME:$USERNAME /home/$USERNAME/.ssh/authorized_keys\nchmod 600 /home/$USERNAME/.ssh/authorized_keys\n\necho
+    \"Installing Docker...\"\n# Add Docker's official GPG key:\nsudo apt-get update\nsudo
+    apt-get install ca-certificates curl\nsudo install -m 0755 -d /etc/apt/keyrings\nsudo
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc\nsudo
+    chmod a+r /etc/apt/keyrings/docker.asc\n\n# Add the repository to Apt sources:\necho
+    \\\n  \"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc]
+    https://download.docker.com/linux/ubuntu \\\n  $(. /etc/os-release && echo \"$VERSION_CODENAME\")
+    stable\" | \\\n  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null\nsudo
+    apt-get update \nsudo apt-get install -y docker-ce docker-ce-cli containerd.io
+    docker-buildx-plugin docker-compose-plugin\nusermod -aG docker $USERNAME\nsudo
+    service docker restart\n\necho \"Installing Node...\"\nsu - $USERNAME -c \"curl
+    -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash\"\n#
+    cat <<EOF >> /home/$USERNAME/.bashrc\n# export NVM_DIR=\"/home/$USERNAME/.nvm\"\n#
     [ -s \"$NVM_DIR/nvm.sh\" ] && \\. \"$NVM_DIR/nvm.sh\"  # This loads nvm\n# [ -s
     \"$NVM_DIR/bash_completion\" ] && \\. \"$NVM_DIR/bash_completion\"  # This loads
     nvm bash_completion\n# EOF\n# source /home/$USERNAME/.bashrc\n# nvm install 18\n#
