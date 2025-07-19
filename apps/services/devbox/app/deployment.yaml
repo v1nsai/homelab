@@ -82,7 +82,7 @@ spec:
         hostPath:
           path: /var/lib/docker
           type: DirectoryOrCreate
-      - name: host-root
+      - name: host-var
         hostPath:
           path: /var
           type: DirectoryOrCreate
