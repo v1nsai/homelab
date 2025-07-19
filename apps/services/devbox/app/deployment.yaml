@@ -37,10 +37,10 @@ spec:
         command: ["/bin/bash"]
         args: 
           - -c
-        #   - |
-        #     set -x
-        #     bash /postinstall.sh > /var/log/postinstall.log 2>&1 & sleep 5 && tail -f /var/log/postinstall.log || echo "Install failed: $?"
-          - sleep infinity
+          - |
+            set -x
+            bash /postinstall.sh > /var/log/postinstall.log 2>&1 & sleep 5 && tail -f /var/log/postinstall.log || echo "Install failed: $?"
+            sleep infinity
         volumeMounts:
           - mountPath: /home
             name: home
@@ -54,8 +54,6 @@ spec:
             readOnly: true
           - mountPath: /var/lib/docker
             name: var-lib-docker
-          - mountPath: /var
-            name: host-var
           # - mountPath: /run/containerd/containerd.sock
           #   name: containerd-socket
           #   readOnly: false
@@ -81,8 +79,4 @@ spec:
       - name: var-lib-docker
         hostPath:
           path: /var/lib/docker
-          type: DirectoryOrCreate
-      - name: host-var
-        hostPath:
-          path: /var/
           type: DirectoryOrCreate
