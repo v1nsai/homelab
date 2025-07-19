@@ -36,7 +36,7 @@ spec:
           - containerPort: 22
         command: ["/bin/bash"]
         args: 
-        #   - -c
+          - -c
         #   - |
         #     set -x
         #     bash /postinstall.sh > /var/log/postinstall.log 2>&1 & sleep 5 && tail -f /var/log/postinstall.log || echo "Install failed: $?"
