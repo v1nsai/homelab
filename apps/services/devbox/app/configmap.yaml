@@ -4,13 +4,13 @@ data:
     then the postinstall script has already run and exit gracefully\nif [ -f /postinstall-has-run
     ]; then\n    echo \"Postinstall script has already run, skipping...\"\n    exit
     0\nfi\n\necho \"Installing packages...\"\napt update\napt install -y openssh-server
-    build-essential vim unminimize sudo nnn git wget jq curl net-tools docker \necho
-    -e \"y\\n\" | unminimize\n\necho \"Configuring SSH...\"\necho \"PermitRootLogin
-    no\" >> /etc/ssh/sshd_config\necho \"PasswordAuthentication no\" >> /etc/ssh/sshd_config\nservice
-    ssh restart\n\necho \"Configuring user...\"\nadduser --disabled-password --gecos
-    \"\" $USERNAME\necho \"$USERNAME ALL=(ALL) NOPASSWD:ALL\" >> /etc/sudoers\nmkdir
-    -p /home/$USERNAME/.ssh\ncp /root/.ssh/authorized_keys /home/$USERNAME/.ssh/authorized_keys\nchown
-    $USERNAME:$USERNAME /home/$USERNAME/.ssh/authorized_keys\nchmod 600 /home/$USERNAME/.ssh/authorized_keys\n\necho
+    build-essential vim unminimize sudo nnn git wget jq curl net-tools \necho -e \"y\\n\"
+    | unminimize\n\necho \"Configuring SSH...\"\necho \"PermitRootLogin no\" >> /etc/ssh/sshd_config\necho
+    \"PasswordAuthentication no\" >> /etc/ssh/sshd_config\nservice ssh restart\n\necho
+    \"Configuring user...\"\nadduser --disabled-password --gecos \"\" $USERNAME\necho
+    \"$USERNAME ALL=(ALL) NOPASSWD:ALL\" >> /etc/sudoers\nmkdir -p /home/$USERNAME/.ssh\ncp
+    /root/.ssh/authorized_keys /home/$USERNAME/.ssh/authorized_keys\nchown $USERNAME:$USERNAME
+    /home/$USERNAME/.ssh/authorized_keys\nchmod 600 /home/$USERNAME/.ssh/authorized_keys\n\necho
     \"Installing Docker...\"\n# Add Docker's official GPG key:\nsudo apt-get update\nsudo
     apt-get install ca-certificates curl\nsudo install -m 0755 -d /etc/apt/keyrings\nsudo
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc\nsudo
