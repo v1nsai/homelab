@@ -14,10 +14,10 @@ spec:
       labels:
         app: devbox
     spec:
-      tolerations:
-        - key: "node.kubernetes.io/disk-pressure"
-          operator: "Exists"
-          effect: "NoSchedule"
+      # tolerations:
+      #   - key: "node.kubernetes.io/disk-pressure"
+      #     operator: "Exists"
+      #     effect: "NoSchedule"
       hostNetwork: false
       nodeSelector:
         kubernetes.io/hostname: bigrig
