@@ -12,7 +12,6 @@ airflow/
 k3s/
 kubeadm/
 fcos/
-nfs/
 emby/
 traefik/
 nextcloud/

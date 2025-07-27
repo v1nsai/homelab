@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: irma-nfs
+  name: blueberry-nfs
 spec:
   chart:
     spec:
@@ -12,7 +12,7 @@ spec:
         kind: HelmRepository
         name: csi-driver-nfs
   interval: 1h0m0s
-  targetNamespace: irma-nfs
+  targetNamespace: blueberry-nfs
   values:
     # kubeletDir: /var/snap/microk8s/common/var/lib/kubelet
     controller:
@@ -22,12 +22,12 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
     storageClass:
       create: true
-      name: irma-nfs
+      name: blueberry-nfs
       annotations:
-        storageclass.kubernetes.io/is-default-class: "false"
+        storageclass.kubernetes.io/is-default-class: "true"
       parameters:
-        server: 192.168.1.170
-        share: /mnt/irma/kubernetes/
+        server: 192.168.1.182
+        share: /mnt/cronenberg/nfs
         mountPermissions: "0"
       reclaimPolicy: Delete
       volumeBindingMode: Immediate
