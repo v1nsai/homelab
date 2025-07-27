@@ -115,6 +115,8 @@ spec:
               mountPath: /config
             - name: irma
               mountPath: /irma
+            - name: cronenberg
+              mountPath: /cronenberg
 
       volumes:
         - name: prowlarr-config
@@ -135,3 +137,7 @@ spec:
         - name: irma
           hostPath:
             path: /var/mnt/irma/media
+        - name: cronenberg
+          nfs:
+            server: 192.168.1.182
+            path: /mnt/cronenberg
