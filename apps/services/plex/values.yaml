@@ -3,12 +3,13 @@
 #     limits:
 #       nvidia.com/gpu: 1
 extraVolumeMounts:
-  - name: irma
-    mountPath: /irma
+  - name: cronenberg
+    mountPath: /cronenberg
 extraVolumes:
-  - name: irma
-    hostPath:
-      path: /var/mnt/irma/media
+  - name: cronenberg
+    nfs:
+      server: 192.168.1.182
+      path: /mnt/cronenberg
 extraEnv:
   NVIDIA_VISIBLE_DEVICES: "all"
   NVIDIA_DRIVER_CAPABILITIES: "all"
@@ -16,5 +17,3 @@ image:
   pullPolicy: Always
 service:
   type: LoadBalancer
-nodeSelector:
-  kubernetes.io/hostname: "bigrig"

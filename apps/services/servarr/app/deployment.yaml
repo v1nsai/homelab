@@ -77,8 +77,8 @@ spec:
           volumeMounts:
             - name: sonarr-config
               mountPath: /config
-            - name: irma
-              mountPath: /irma
+            - name: cronenberg
+              mountPath: /cronenberg
 
         - name: radarr
           image: lscr.io/linuxserver/radarr
@@ -95,8 +95,8 @@ spec:
           volumeMounts:
             - name: radarr-config
               mountPath: /config
-            - name: irma
-              mountPath: /irma
+            - name: cronenberg
+              mountPath: /cronenberg
 
         - name: bazarr
           image: lscr.io/linuxserver/bazarr
@@ -113,8 +113,6 @@ spec:
           volumeMounts:
             - name: bazarr-config
               mountPath: /config
-            - name: irma
-              mountPath: /irma
             - name: cronenberg
               mountPath: /cronenberg
 
@@ -134,9 +132,6 @@ spec:
         - name: bazarr-config
           persistentVolumeClaim:
             claimName: bazarr-config
-        - name: irma
-          hostPath:
-            path: /var/mnt/irma/media
         - name: cronenberg
           nfs:
             server: 192.168.1.182

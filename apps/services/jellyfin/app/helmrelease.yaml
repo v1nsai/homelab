@@ -27,12 +27,12 @@ spec:
     #     value: "all"
     #   - name: DOTNET_SYSTEM_IO_DISABLEFILELOCKING
     #     value: "true"
-    nodeSelector:
-      kubernetes.io/hostname: "bigrig"
+    # nodeSelector:
+    #   kubernetes.io/hostname: "bigrig"
     volumeMounts:
-      - name: irma
-        mountPath: /irma
+      - name: cronenberg
+        mountPath: /cronenberg
     volumes:
-      - name: irma
+      - name: cronenberg
         hostPath:
-          path: /var/mnt/irma/media
+          path: /mnt/cronenberg
