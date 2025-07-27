@@ -58,8 +58,6 @@ spec:
               mountPath: /downloads
             - name: qbittorrent-config
               mountPath: /config
-            - name: downloads
-              mountPath: /downloads
       volumes:
         - name: wg-config
           secret:
