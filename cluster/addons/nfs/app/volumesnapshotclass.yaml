@@ -1,6 +1,6 @@
 apiVersion: snapshot.storage.k8s.io/v1
 kind: VolumeSnapshotClass
 metadata:
-  name: irma-nfs
+  name: blueberry-nfs
 driver: nfs.csi.k8s.io
 deletionPolicy: Delete
