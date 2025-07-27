@@ -4,16 +4,20 @@
 #       nvidia.com/gpu: 1
 extraVolumeMounts:
   - name: cronenberg
-    mountPath: /cronenberg
+    mountPath: /downloads
 extraVolumes:
   - name: cronenberg
     nfs:
       server: 192.168.1.182
       path: /mnt/cronenberg
-extraEnv:
-  NVIDIA_VISIBLE_DEVICES: "all"
-  NVIDIA_DRIVER_CAPABILITIES: "all"
+# extraEnv:
+#   NVIDIA_VISIBLE_DEVICES: "all"
+#   NVIDIA_DRIVER_CAPABILITIES: "all"
 image:
   pullPolicy: Always
 service:
   type: LoadBalancer
+pms:
+  gpu:
+    nvidia:
+      enabled: true
