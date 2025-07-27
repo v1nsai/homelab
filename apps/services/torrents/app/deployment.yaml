@@ -58,7 +58,8 @@ spec:
               mountPath: /downloads
             - name: qbittorrent-config
               mountPath: /config
-
+            - name: cronenberg
+              mountPath: /cronenberg
       volumes:
         - name: downloads
           hostPath:
@@ -74,4 +75,7 @@ spec:
         - name: qbittorrent-config
           persistentVolumeClaim:
             claimName: qbittorrent-config
-
+        - name: cronenberg
+          nfs:
+            server: 192.168.1.182
+            path: /mnt/cronenberg
