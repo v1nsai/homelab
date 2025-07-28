@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: plex
 resources:
   - daemonset.yaml
+  - daemonset-nvidia.yaml
   - ingress.yaml
   - service.yaml
   - pvc.yaml

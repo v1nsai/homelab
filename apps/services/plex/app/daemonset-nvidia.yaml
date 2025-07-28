@@ -21,7 +21,7 @@ spec:
         plex-gpu: "true"
     spec:
       nodeSelector:
-        hardware.nvidia.com/gpu: "true"
+        nvidia.com/gpu.present: "true"
       containers:
       - name: plex-plex-media-server-pms
         image: index.docker.io/plexinc/pms-docker:latest
