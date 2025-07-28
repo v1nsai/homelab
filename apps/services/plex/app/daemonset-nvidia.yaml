@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: plex-plex-media-server-non-gpu
+  name: plex-plex-media-server-gpu
   namespace: plex
   labels:
     app: plex-media-server
@@ -12,21 +12,25 @@ spec:
     matchLabels:
       app.kubernetes.io/instance: plex
       app.kubernetes.io/name: plex-media-server
-      plex-gpu: "false"
+      plex-gpu: "true"
   template:
     metadata:
       labels:
         app.kubernetes.io/instance: plex
         app.kubernetes.io/name: plex-media-server
-        plex-gpu: "false"
+        plex-gpu: "true"
     spec:
       nodeSelector:
-        hardware.nvidia.com/gpu: "false"
+        hardware.nvidia.com/gpu: "true"
       containers:
       - name: plex-plex-media-server-pms
         image: index.docker.io/plexinc/pms-docker:latest
         imagePullPolicy: Always
         env:
+        - name: NVIDIA_VISIBLE_DEVICES
+          value: all
+        - name: NVIDIA_DRIVER_CAPABILITIES
+          value: compute,video,utility
         - name: PLEX_CLAIM
           valueFrom:
             secretKeyRef:
@@ -36,7 +40,9 @@ spec:
         - containerPort: 32400
           name: pms
           protocol: TCP
-        resources: {}
+        resources:
+          limits:
+            nvidia.com/gpu: 1
         volumeMounts:
         - mountPath: /config
           name: pms-config
