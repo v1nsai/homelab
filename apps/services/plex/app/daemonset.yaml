@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: plex-media-server
+    app.kubernetes.io/instance: plex
+    app.kubernetes.io/name: plex-media-server
+    name: plex-plex-media-server
+  name: plex-plex-media-server
+  namespace: plex
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: plex
+      app.kubernetes.io/name: plex-media-server
+  template:
+    metadata:
+      labels:
+        app: plex-media-server
+        app.kubernetes.io/instance: plex
+        app.kubernetes.io/name: plex-media-server
+    spec:
+      containers:
+      - env:
+        - name: NVIDIA_VISIBLE_DEVICES
+          value: all
+        - name: NVIDIA_DRIVER_CAPABILITIES
+          value: compute,video,utility
+        # Get plex claim from kubernetes secret
+        - name: PLEX_CLAIM
+          valueFrom:
+            secretKeyRef:
+              key: plex-claim
+              name: plex-claim
+        image: index.docker.io/plexinc/pms-docker:latest
+        imagePullPolicy: Always
+        name: plex-plex-media-server-pms
+        ports:
+        - containerPort: 32400
+          name: pms
+          protocol: TCP
+        resources: {}
+        volumeMounts:
+        - mountPath: /config
+          name: pms-config
+        - mountPath: /transcode
+          name: pms-transcode
+        - mountPath: /downloads
+          name: cronenberg
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 120
+      volumes:
+      - emptyDir: {}
+        name: pms-transcode
+      - name: cronenberg
+        nfs:
+          path: /mnt/cronenberg
+          server: 192.168.1.182
+      - name: pms-config
+        persistentVolumeClaim:
+          claimName: pms-config

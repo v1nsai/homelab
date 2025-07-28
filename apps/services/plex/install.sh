@@ -26,3 +26,8 @@ helm upgrade --install plex plex/plex-media-server \
   --set extraEnv.PLEX_CLAIM=$PLEX_CLAIM
 
 kubectl apply -f ./apps/services/plex/ingress.yaml
+
+# generate the plex claim secret
+kubectl create secret generic plex-claim \
+  --from-literal=plex-claim=$PLEX_CLAIM \
+  --namespace plex

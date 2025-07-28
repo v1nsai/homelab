@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: plex-media-server
+    app.kubernetes.io/instance: plex
+    app.kubernetes.io/name: plex-media-server
+  name: plex-plex-media-server
+  namespace: plex
+spec:
+  ports:
+  - name: pms
+    port: 32400
+    protocol: TCP
+    targetPort: pms
+  selector:
+    app.kubernetes.io/instance: plex
+    app.kubernetes.io/name: plex-media-server
+  type: LoadBalancer
