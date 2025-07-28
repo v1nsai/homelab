@@ -9,6 +9,7 @@ echo "Using Plex Claim token: $PLEX_CLAIM"
 export PLEX_CLAIM
 
 # generate the plex claim secret
+kubectl delete secret plex-claim --namespace plex || true
 kubectl create secret generic plex-claim \
   --from-literal=plex-claim=$PLEX_CLAIM \
   --namespace plex
