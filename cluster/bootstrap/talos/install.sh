@@ -62,7 +62,7 @@ talosctl gen config \
   talos-homelab https://$VIP_ADDRESS:6443
 talosctl apply-config \
   --insecure \
-  --nodes 192.168.1.162 \
+  --nodes 192.168.1.152 \
   --file /tmp/oppenheimer.yaml \
   --config-patch @cluster/bootstrap/talos/install-patches/oppenheimer.yaml \
   --config-patch @cluster/bootstrap/talos/extensions/longhorn/patch.yaml \
