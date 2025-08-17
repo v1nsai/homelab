@@ -22,16 +22,16 @@ spec:
           secretName: homelab-tls
       ingress:
         hosts: 
-          core: core.harbor.internal
+          core: harbor.internal
         annotations:
           # gethomepage annotations
           cert-manager.io/cluster-issuer: homelab-issuer
-          gethomepage.dev/href: https://core.harbor.internal
+          gethomepage.dev/href: https://harbor.internal
           gethomepage.dev/enabled: "true"
           gethomepage.dev/description: Container Image Repository
           gethomepage.dev/group: Productivity
           gethomepage.dev/icon: harbor.png
           gethomepage.dev/name: Harbor
-    externalURL: https://core.harbor.internal
+    externalURL: https://harbor.internal
     existingSecretAdminPassword: harbor-admin-password
     existingSecretAdminPasswordKey: HARBOR_ADMIN_PASSWORD
