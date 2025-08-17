@@ -33,6 +33,9 @@ spec:
         - docker-plugin
         - harbor
         - pipeline-github-lib
+        - pipeline-stage-view
+        - pipeline-graph-view
+        - ansicolor
       ingress:
         enabled: true
         annotations:
