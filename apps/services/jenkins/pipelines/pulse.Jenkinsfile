@@ -41,6 +41,7 @@ spec:
     NAMESPACE  = "pulse"
     // If your Harbor uses a self-signed cert, keep these; otherwise drop them.
     KANIKO_TLS = "--insecure --skip-tls-verify"
+    BRANCH_NAME = "master"
   }
 
   triggers {
