@@ -19,6 +19,8 @@ spec:
       valuesKey: secret-values.yaml
   values:
     controller:
+      javaOpts: >
+        -Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true
       installPlugins:
         - kubernetes
         - workflow-aggregator
