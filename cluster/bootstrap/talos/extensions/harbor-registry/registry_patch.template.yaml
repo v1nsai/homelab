@@ -1,0 +1,13 @@
+machine:
+  registries:
+    mirrors:
+      harbor.internal:
+        endpoints:
+          - ${HARBOR_SERVER}
+    config:
+      harbor.internal:
+        tls:
+          insecureSkipVerify: true
+        auth:
+          username: ${HARBOR_USERNAME}
+          password: ${HARBOR_PASSWORD}

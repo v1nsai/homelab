@@ -6,4 +6,3 @@ resources:
   - helmrepository.yaml
   - helmrelease.yaml
   - sealed-secrets.yaml
-  - serviceaccount.yaml
