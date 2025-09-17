@@ -11,7 +11,7 @@ spec:
         spec:
           containers:
           - name: kubectl
-            image: bitnami/kubectl
+            image: rancher/kubectl
             command:
             - /bin/sh
             - -c
