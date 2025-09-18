@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/name: plex-media-server
 spec:
   serviceName: plex-plex-media-server-headless
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/instance: plex
