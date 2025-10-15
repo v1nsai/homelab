@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metube
+  labels:
+    app: metube
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metube
+  template:
+    metadata:
+      labels:
+        app: metube
+    spec:
+      containers:
+        - name: metube
+          image: ghcr.io/alexta69/metube:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8081
+          volumes:
+            - name: metube-data
+              persistentVolumeClaim:
+                claimName: metube-pvc
+      volumes:
+        - name: metube-data
+          persistentVolumeClaim:
+            claimName: metube-pvc

@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: metube
+  labels:
+    app.kubernetes.io/name: metube
+  annotations:
+    gethomepage.dev/description: Youtube Video Downloader
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Media
+    gethomepage.dev/icon: metube.png
+    gethomepage.dev/name: MeTube
+    cert-manager.io/cluster-issuer: homelab-issuer
+spec:
+  rules:
+    - host: "metube.internal"
+      http:
+        paths:
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: metube-svc
+                port:
+                  number: 8081
+  tls:
+    - hosts:
+        - "metube.internal"
+      secretName: homelab-tls
