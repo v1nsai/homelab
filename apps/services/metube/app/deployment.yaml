@@ -20,16 +20,10 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8081
-          volumes:
-            - name: metube-data
-              persistentVolumeClaim:
-                claimName: metube-data
+          volumeMounts:
             - name: downloads
               mountPath: /downloads
       volumes:
-        - name: metube-data
-          persistentVolumeClaim:
-            claimName: metube-data
         - name: downloads
           nfs:
             server: 192.168.1.182

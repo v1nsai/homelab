@@ -4,6 +4,5 @@ namespace: metube
 resources:
   - deployment.yaml
   - ingress.yaml
-  - pvc.yaml
   - service.yaml
   - namespace.yaml
