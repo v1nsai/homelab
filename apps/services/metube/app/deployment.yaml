@@ -23,8 +23,8 @@ spec:
           volumes:
             - name: metube-data
               persistentVolumeClaim:
-                claimName: metube-pvc
+                claimName: metube-data
       volumes:
         - name: metube-data
           persistentVolumeClaim:
-            claimName: metube-pvc
+            claimName: metube-data
