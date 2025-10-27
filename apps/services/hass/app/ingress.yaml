@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: &app home-assistant
+  labels:
+    app.kubernetes.io/name: *app
+  annotations:
+    gethomepage.dev/description: Dynamically Detected Homepage
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Cluster Management
+    gethomepage.dev/icon: homepage.png
+    gethomepage.dev/name: Homepage
+    cert-manager.io/cluster-issuer: homelab-issuer
+spec:
+  rules:
+    - host: &host home-assistant.internal
+      http:
+        paths:
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: *app
+                port:
+                  number: 8123
+  tls:
+    - hosts:
+        - *host
+      secretName: homelab-tls

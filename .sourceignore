@@ -14,10 +14,9 @@ kubeadm/
 fcos/
 emby/
 traefik/
-nextcloud/
 kube-vip/
 navidrome/
-nextcloud/
 pihole/
 jellyfin/
 minio/
+hass/
