@@ -9,7 +9,6 @@ metadata:
 spec:
   ports:
   - name: http
-    nodePort: 32147
     port: 8096
     protocol: TCP
     targetPort: http
