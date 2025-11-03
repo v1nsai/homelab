@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
+  name: jellyfin
   annotations:
     deployment.kubernetes.io/desired-replicas: "1"
     deployment.kubernetes.io/max-replicas: "2"
