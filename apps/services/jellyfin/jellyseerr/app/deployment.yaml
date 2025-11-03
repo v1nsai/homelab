@@ -35,7 +35,6 @@ spec:
           name: jellyseerr
           ports:
             - containerPort: 5055
-              hostPort: 5055
               protocol: TCP
           volumeMounts:
             - mountPath: /app/config
