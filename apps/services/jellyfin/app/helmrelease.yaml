@@ -30,7 +30,7 @@ spec:
     #   kubernetes.io/hostname: "bigrig"
     volumeMounts:
       - name: cronenberg
-        mountPath: /media
+        mountPath: /cronenberg
     volumes:
       - name: cronenberg
         nfs:
