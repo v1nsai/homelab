@@ -19,6 +19,8 @@ spec:
     persistence:
       config:
         enabled: true
+      media:
+        enabled: false
     extraEnvVars:
       - name: NVIDIA_VISIBLE_DEVICES
         value: "all"
@@ -30,7 +32,7 @@ spec:
     #   kubernetes.io/hostname: "bigrig"
     volumeMounts:
       - name: cronenberg
-        mountPath: /cronenberg
+        mountPath: /media
     volumes:
       - name: cronenberg
         nfs:

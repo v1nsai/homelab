@@ -4,7 +4,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: jellyfin
 resources:
-  - helmrelease.yaml
-  - helmrepository.yaml
   - namespace.yaml
   - ingress.yaml
+  - pvc.yaml
+  - replicaset.yaml
+  - service.yaml
