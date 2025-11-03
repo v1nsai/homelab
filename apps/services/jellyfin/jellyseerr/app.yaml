@@ -7,7 +7,7 @@ metadata:
 spec:
   targetNamespace: jellyfin
   interval: 1m0s
-  path: ./apps/services/jellyseerr/app
+  path: ./apps/services/jellyfin/jellyseerr/app
   prune: true
   sourceRef:
     kind: GitRepository
