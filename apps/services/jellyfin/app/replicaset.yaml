@@ -33,6 +33,13 @@ spec:
           tcpSocket:
             port: http
           timeoutSeconds: 1
+        env:
+        - name: NVIDIA_VISIBLE_DEVICES
+          value: "all"
+        - name: NVIDIA_DRIVER_CAPABILITIES
+          value: "all"
+        - name: DOTNET_SYSTEM_IO_DISABLEFILELOCKING
+          value: "true"
         name: jellyfin
         ports:
         - containerPort: 8096
