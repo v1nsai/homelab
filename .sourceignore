@@ -17,6 +17,5 @@ traefik/
 kube-vip/
 navidrome/
 pihole/
-jellyfin/
 minio/
 hass/

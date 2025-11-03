@@ -19,20 +19,20 @@ spec:
     persistence:
       config:
         enabled: true
-        # storageClass: microk8s-hostpath
-    # extraEnvVars:
-    #   - name: NVIDIA_VISIBLE_DEVICES
-    #     value: "all"
-    #   - name: NVIDIA_DRIVER_CAPABILITIES
-    #     value: "all"
+    extraEnvVars:
+      - name: NVIDIA_VISIBLE_DEVICES
+        value: "all"
+      - name: NVIDIA_DRIVER_CAPABILITIES
+        value: "all"
     #   - name: DOTNET_SYSTEM_IO_DISABLEFILELOCKING
     #     value: "true"
     # nodeSelector:
     #   kubernetes.io/hostname: "bigrig"
     volumeMounts:
       - name: cronenberg
-        mountPath: /cronenberg
+        mountPath: /media
     volumes:
       - name: cronenberg
-        hostPath:
+        nfs:
+          server: 192.168.1.182
           path: /mnt/cronenberg
