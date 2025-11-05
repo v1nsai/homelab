@@ -12,8 +12,7 @@ spec:
           containers:
           - name: kubectl
             image: rancher/kubectl:v1.32.2
-            command:
-            - delete pod -n torrents -l app=torrents
+          command: ["kubectl", "delete", "pod", "-n", "torrents", "-l", "app=torrents"]
           restartPolicy: OnFailure
           serviceAccountName: pod-restart-sa
 ---
