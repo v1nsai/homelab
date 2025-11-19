@@ -15,6 +15,9 @@ spec:
   interval: 1m0s
   releaseName: open-webui
   values:
+    image: 
+      tag: latest
+      pullPolicy: Always
     ollama:
       enabled: false
     service:

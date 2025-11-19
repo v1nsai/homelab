@@ -16,6 +16,7 @@ spec:
   values:
     image: 
       tag: latest
+      pullPolicy: Always
     ollama:
       gpu:
         enabled: true
