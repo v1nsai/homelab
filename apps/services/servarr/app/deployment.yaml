@@ -78,7 +78,7 @@ spec:
             - name: sonarr-config
               mountPath: /config
             - name: cronenberg
-              mountPath: /cronenberg
+              mountPath: /downloads
 
         - name: radarr
           image: lscr.io/linuxserver/radarr:latest
@@ -96,7 +96,7 @@ spec:
             - name: radarr-config
               mountPath: /config
             - name: cronenberg
-              mountPath: /cronenberg
+              mountPath: /downloads
 
         - name: bazarr
           image: lscr.io/linuxserver/bazarr:latest
@@ -114,7 +114,7 @@ spec:
             - name: bazarr-config
               mountPath: /config
             - name: cronenberg
-              mountPath: /cronenberg
+              mountPath: /downloads
 
       volumes:
         - name: prowlarr-config
