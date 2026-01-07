@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: opensearch-dashboards
+  labels:
+    app.kubernetes.io/name: opensearch-dashboards
+  annotations:
+    gethomepage.dev/description: View and edit OpenSearch data
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Productivity
+    gethomepage.dev/icon: opensearch.png
+    gethomepage.dev/name: OpenSearch Dashboards
+    cert-manager.io/cluster-issuer: homelab-issuer
+spec:
+  rules:
+    - host: "opensearch-dashboards.internal"
+      http:
+        paths:
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: opensearch-dashboards
+                port:
+                  number: 5601
+  tls:
+    - hosts:
+        - "opensearch-dashboards.internal"
+      secretName: homelab-tls
