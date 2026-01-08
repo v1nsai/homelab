@@ -8,7 +8,12 @@ machine:
     hostname: tiffrig
     interfaces:
       - interface: enp10s0
-        dhcp: true
+        dhcp: false
+        addresses:
+          - 192.168.1.161/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.1.1
         vip: 
           ip: 192.168.1.133
   kubelet:

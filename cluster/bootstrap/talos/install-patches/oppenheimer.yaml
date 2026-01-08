@@ -10,7 +10,12 @@ machine:
     hostname: oppenheimer
     interfaces:
       - interface: eno1
-        dhcp: true
+        dhcp: false
+        addresses:
+          - 192.168.1.152/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.1.1
         vip: 
           ip: 192.168.1.133
   kubelet:
