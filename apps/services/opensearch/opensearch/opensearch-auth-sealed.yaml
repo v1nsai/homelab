@@ -11,3 +11,16 @@ spec:
     metadata:
       name: opensearch-auth
       namespace: opensearch
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: opensearch-auth
+  namespace: opensearch
+spec:
+  encryptedData:
+    data: AgANLiVfDRWOpJHJgDAnbTWEPEocHODWrcbaQc7QHix6VwkHLrSFZkGoTfWDjEGm9GPWte33eUxZ9JJNFURFQ53XD/mEJko4vpCTDXSmxdd0BlXwBTnNI4UDAkRhOPlMH/DpThTsbtCvfIZ5PEDU8nhc8KmIdKvziYeMSsit/ZU2EVgdRa/Uv1VC1+RDXXLw7Xmo9/VHXfVCHYkgfrJnaOV1cAlnjXgHNCr/eFPc9VQZMyDZolpuVyEEMwT7HCCPok3s9gXLMYp/b0uxOGFH6Ddj+W4x35KY6UV8lizCikN7kaw/su48L8DYfdom0BP96rTuzkZo1hXnm0YO3VCyVXGsJ7cBI6sS8IdGYfavEEmqd/60WMaXsHkjrp5RKxCM696OprHCO89/NUbxNQSFXRHioeI75EBVPYQ5yh2XkrGx9zBG+D9lG/UUwFg/jeA9dJVZerDDldKhRTlPPgVpnrKGVrqC2HKXRqM4PDlTkgB+zf2XLER95kOTkjOKCpM3k+TriXnBtjqn9vZ/Crf2r0FpYr4pdYt2JmaccnKaWNftsWdD4yrNyYExV7fKsiwi6tJfFQUSyt3CLQeoz07cII93My+wdtHTKy2P+lilorJUMzLkxff777c5Dz9UjndIigheBbcIY5GR3YZsJn+qRp0lYJDZMST3HQHWD6I+9P+JSP7bYaEbrQGv39ZPaRcl8WM9wS7XYjR3zXqiVjVVrahLR6o8hdvrZCabhqBWKtuMsRndliD1MlFtygOGNXmHzgsY61i7BP2ReFFiOQ==
+  template:
+    metadata:
+      name: opensearch-auth
+      namespace: opensearch
