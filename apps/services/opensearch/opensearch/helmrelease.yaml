@@ -21,3 +21,9 @@ spec:
     basicAuth:
       enabled: true
       existingSecret: opensearch-auth
+    extraEnvs:
+      - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: opensearch-auth
+            key: password
