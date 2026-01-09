@@ -17,6 +17,6 @@ spec:
     clusterName: "opensearch-homelab-cluster"
     service:
       type: LoadBalancer
-    secretMounts:
+    envFrom:
       - secretRef:
           name: opensearch-auth
