@@ -8,7 +8,6 @@ talos/
 nvidia-gpu-operator/
 rook-ceph/
 localai/
-airflow/
 k3s/
 kubeadm/
 fcos/
@@ -17,7 +16,6 @@ traefik/
 kube-vip/
 navidrome/
 pihole/
-minio/
 hass/
 personal-site/
 nextcloud/
