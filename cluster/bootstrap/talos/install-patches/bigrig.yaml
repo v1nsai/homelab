@@ -29,5 +29,7 @@ machine:
     - device: /dev/sdb
       partitions:
         - mountpoint: /var/mnt/disk0
+  sysctls:
+    vm.max_map_count: 262144
 cluster:
   allowSchedulingOnControlPlanes: true
