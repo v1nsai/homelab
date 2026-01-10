@@ -7,7 +7,7 @@ metadata:
   namespace: opensearch
 spec:
   interval: 10m0s
-  path: ./apps/services/opensearch/opensearch
+  path: ./apps/data-science/opensearch/opensearch
   prune: true
   sourceRef:
     kind: GitRepository
@@ -22,7 +22,7 @@ metadata:
   namespace: opensearch
 spec:
   interval: 10m0s
-  path: ./apps/services/opensearch/opensearch-dashboards
+  path: ./apps/data-science/opensearch/opensearch-dashboards
   prune: true
   sourceRef:
     kind: GitRepository
