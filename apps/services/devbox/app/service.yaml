@@ -21,5 +21,8 @@ spec:
     - name: "http-alt"
       port: 8080
       targetPort: 8080
+    - name: hytale-server
+      port: 5520
+      targetPort: 5520
   selector:
     app: devbox
