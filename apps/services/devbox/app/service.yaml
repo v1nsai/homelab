@@ -18,8 +18,13 @@ spec:
     - name: "node"
       port: 3000
       targetPort: 3000
-    - name: "http-alt"
+    - name: "misc-tcp"
       port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: "misc-udp"
+      port: 8080
+      protocol: UDP
       targetPort: 8080
   selector:
     app: devbox
