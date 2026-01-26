@@ -22,3 +22,5 @@ spec:
       applyCustomEnv: false
     postgresql:
       enabled: false
+    data:
+      metadataSecretName: airflow-database

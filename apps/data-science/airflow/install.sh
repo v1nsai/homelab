@@ -2,13 +2,29 @@
 
 set -e
 
-WEBSERVER_SECRET=$(openssl rand -base64 32)
-kubectl create secret generic webserver-secret \
-    --from-literal=webserver-secret-key=${WEBSERVER_SECRET} \
+# WEBSERVER_SECRET=$(openssl rand -base64 32)
+# kubectl create secret generic webserver-secret \
+#     --from-literal=webserver-secret-key=${WEBSERVER_SECRET} \
+#     --namespace=airflow \
+#     --dry-run=client \
+#     --output yaml | \
+# kubeseal --format=yaml --cert=./.sealed-secrets.pub > apps/data-science/airflow/app/sealed-secrets.yaml
+
+POSTGRES_PASSWORD=$(openssl rand -base64 32)
+kubectl create secret generic postgres-password \
+    --from-literal=POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
+    --from-literal=POSTGRES_USER=airflow \
+    --from-literal=POSTGRES_DB=airflow \
     --namespace=airflow \
     --dry-run=client \
     --output yaml | \
-kubeseal --format=yaml --cert=./.sealed-secrets.pub > apps/data-science/airflow/app/sealed-secrets.yaml
+kubeseal --format=yaml --cert=./.sealed-secrets.pub >> apps/data-science/airflow/app/sealed-secrets.yaml
 
-# if db migrations won't start, run this command in one of the wait-for-migrations containers
-# airflow db migrate
+CONNECTION_STRING="postgresql://airflow:${POSTGRES_PASSWORD}@postgres.airflow.svc.cluster.local:5432/airflow"
+ENCODED_CONNECTION_STRING=$(echo -n ${CONNECTION_STRING} | base64)
+kubectl create secret generic airflow-database \
+    --from-literal=connection="${ENCODED_CONNECTION_STRING}" \
+    --namespace=airflow \
+    --dry-run=client \
+    --output yaml | \
+kubeseal --format=yaml --cert=./.sealed-secrets.pub >> apps/data-science/airflow/app/sealed-secrets.yaml
