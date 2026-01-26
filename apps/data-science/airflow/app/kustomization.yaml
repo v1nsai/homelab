@@ -7,3 +7,4 @@ resources:
   - namespace.yaml
   - ingress.yaml
   - sealed-secrets.yaml
+  - database.yaml
