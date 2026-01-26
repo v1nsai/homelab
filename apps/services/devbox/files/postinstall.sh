@@ -10,7 +10,7 @@ fi
 
 echo "Installing packages..."
 apt update
-apt install -y openssh-server build-essential vim unminimize sudo nnn git wget jq curl net-tools 
+apt install -y openssh-server build-essential vim unminimize sudo nnn git wget jq curl net-tools unzip zip 
 echo -e "y\n" | unminimize
 
 echo "Configuring SSH..."
