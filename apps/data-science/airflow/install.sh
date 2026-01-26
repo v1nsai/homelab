@@ -21,9 +21,8 @@ kubectl create secret generic postgres-password \
 kubeseal --format=yaml --cert=./.sealed-secrets.pub >> apps/data-science/airflow/app/sealed-secrets.yaml
 
 CONNECTION_STRING="postgresql://airflow:${POSTGRES_PASSWORD}@postgres.airflow.svc.cluster.local:5432/airflow"
-ENCODED_CONNECTION_STRING=$(echo -n ${CONNECTION_STRING} | base64)
 kubectl create secret generic airflow-database \
-    --from-literal=connection="${ENCODED_CONNECTION_STRING}" \
+    --from-literal=connection="${CONNECTION_STRING}" \
     --namespace=airflow \
     --dry-run=client \
     --output yaml | \
