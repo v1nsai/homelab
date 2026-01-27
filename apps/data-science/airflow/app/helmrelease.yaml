@@ -24,5 +24,3 @@ spec:
       enabled: false
     data:
       metadataSecretName: airflow-database
-    webserver:
-      enabled: true
