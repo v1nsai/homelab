@@ -24,3 +24,6 @@ spec:
       enabled: false
     data:
       metadataSecretName: airflow-database
+    apiServer:
+      service:
+        type: LoadBalancer
