@@ -1,0 +1,40 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: dind-server
+spec:
+  secretName: dind-server-tls
+  duration: 8760h # 365 days
+  renewBefore: 360h # 15 days
+  subject:
+    organizations:
+      - cluster-dev
+  commonName: dind-server
+  isCA: false
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 4096
+  usages:
+    - server auth
+  dnsNames:
+    - dind.internal
+    - dind-svc.dind.svc.cluster.local
+  issuerRef:
+    name: homelab-issuer
+    kind: ClusterIssuer
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: dind-client
+spec:
+  secretName: dind-client-tls
+  duration: 8760h # 365 days
+  renewBefore: 360h # 15 days
+  commonName: dind-client
+  usages:
+    - client auth
+  issuerRef:
+    name: homelab-issuer
+    kind: ClusterIssuer
