@@ -58,6 +58,22 @@ spec:
               mountPath: /downloads
             - name: qbittorrent-config
               mountPath: /config
+
+        - name: stremio
+          image: stremio/server:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 11470
+              name: http
+            - containerPort: 12470
+              name: https
+          env:
+            - name: APP_PATH
+              value: /stremio/config
+          volumeMounts:
+            - name: stremio-config
+              mountPath: /stremio/config
+
       volumes:
         - name: wg-config
           secret:
@@ -72,3 +88,6 @@ spec:
           nfs:
             server: 192.168.1.182
             path: /mnt/cronenberg
+        - name: stremio-config
+          persistentVolumeClaim:
+            claimName: stremio-config-pvc
