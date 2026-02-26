@@ -18,7 +18,7 @@ metadata:
   namespace: default
 spec:
   selector:
-    app: stremio
+    app: torrents
   ports:
     - name: http
       port: 11470
