@@ -44,6 +44,7 @@ secrets/
 *.key
 *.pem
 *.default.yaml
+*.secrets?.yaml
 
 # Ignore images
 diagrams/custom_icons
