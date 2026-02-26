@@ -19,7 +19,12 @@ kubectl get secret dind-client-tls \
 # create docker context
 docker context create talos-homelab \
   --description "Remote docker daemon on Talos homelab" \
-  --docker "host=tcp://dind.internal:2376,\
-            ca=$HOME/.docker/talos-homelab/ca.pem,\
-            cert=$HOME/.docker/talos-homelab/cert.pem,\
-            key=$HOME/.docker/talos-homelab/key.pem"
+  --docker "host=tcp://dind.internal:2376,ca=$HOME/.docker/talos-homelab/ca.pem,cert=$HOME/.docker/talos-homelab/cert.pem,key=$HOME/.docker/talos-homelab/key.pem"
+
+# force docker to resolve dind.internal properly on MacOS
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  if ! grep -q "dind.internal" /etc/hosts; then
+    SERVICE_IP=$(kubectl get svc dind-service --namespace dind -o jsonpath='{.spec.clusterIP}')
+    echo "$SERVICE_IP dind.internal" | sudo tee -a /etc/hosts
+  fi
+fi
