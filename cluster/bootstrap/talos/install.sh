@@ -2,9 +2,9 @@
 
 # Create secrets
 VIP_ADDRESS="192.168.1.133"
-talosctl gen secrets -o cluster/bootstrap/talos/secrets.yaml.env # adding .env to make git ignore it
+talosctl gen secrets -o cluster/bootstrap/talos/secrets.yaml
 talosctl gen config \
-  --with-secrets cluster/bootstrap/talos/secrets.yaml.env \
+  --with-secrets cluster/bootstrap/talos/secrets.yaml \
   --output-types talosconfig \
   --output talosconfig \
   talos-homelab https://$VIP_ADDRESS:6443
@@ -22,7 +22,7 @@ talosctl kubeconfig \
 
 # bigrig
 talosctl gen config \
-  --with-secrets cluster/bootstrap/talos/secrets.yaml.env \
+  --with-secrets cluster/bootstrap/talos/secrets.yaml \
   --output-types controlplane \
   --output /tmp/bigrig.yaml \
   --force \
@@ -39,7 +39,7 @@ talosctl apply-config \
 
 # tiffrig
 talosctl gen config \
-  --with-secrets cluster/bootstrap/talos/secrets.yaml.env \
+  --with-secrets cluster/bootstrap/talos/secrets.yaml \
   --output-types controlplane \
   --output /tmp/tiffrig.yaml \
   --force \
@@ -55,7 +55,7 @@ talosctl apply-config \
 
 # oppenheimer
 talosctl gen config \
-  --with-secrets cluster/bootstrap/talos/secrets.yaml.env \
+  --with-secrets cluster/bootstrap/talos/secrets.yaml \
   --output-types controlplane \
   --output /tmp/oppenheimer.yaml \
   --force \
@@ -71,7 +71,7 @@ talosctl apply-config \
 
 # ASUSan
 talosctl gen config \
-  --with-secrets cluster/bootstrap/talos/secrets.yaml.env \
+  --with-secrets cluster/bootstrap/talos/secrets.yaml \
   --output-types controlplane \
   --output /tmp/ASUSan.yaml \
   --force \
