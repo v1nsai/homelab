@@ -17,3 +17,5 @@ spec:
       # kind: DaemonSet
       ingressClassResource:
         default: true
+      image:
+        pullPolicy: Always
