@@ -70,6 +70,8 @@ spec:
           env:
             - name: APP_PATH
               value: /stremio/config
+            - name: NO_CORS
+              value: "1"
           volumeMounts:
             - name: stremio-config
               mountPath: /stremio/config
