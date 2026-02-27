@@ -72,6 +72,8 @@ spec:
               value: /stremio/config
             - name: NO_CORS
               value: "1"
+            - name: AUTO_SERVER_URL
+              value: "0"
           volumeMounts:
             - name: stremio-config
               mountPath: /stremio/config
