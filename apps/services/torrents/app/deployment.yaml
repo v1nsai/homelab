@@ -62,6 +62,8 @@ spec:
         - name: stremio
           image: stremio/server:latest
           imagePullPolicy: Always
+          command: ["node", "server.js"]
+          args: ["--address", "0.0.0.0"]
           ports:
             - containerPort: 11470
               name: http
