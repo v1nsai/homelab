@@ -59,6 +59,27 @@ spec:
             - name: qbittorrent-config
               mountPath: /config
 
+        - name: stremio
+          image: stremio/server:latest
+          imagePullPolicy: Always
+          command: ["node", "server.js"]
+          args: ["--address", "0.0.0.0"]
+          ports:
+            - containerPort: 11470
+              name: http
+            - containerPort: 12470
+              name: https
+          env:
+            - name: APP_PATH
+              value: /stremio/config
+            - name: NO_CORS
+              value: "1"
+            - name: AUTO_SERVER_URL
+              value: "0"
+          volumeMounts:
+            - name: stremio-config
+              mountPath: /stremio/config
+
       volumes:
         - name: wg-config
           secret:

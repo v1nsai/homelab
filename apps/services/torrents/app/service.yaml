@@ -10,3 +10,18 @@ spec:
       targetPort: 9091
   selector:
     app: torrents
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stremio-service
+  namespace: default
+spec:
+  selector:
+    app: torrents
+  ports:
+    - name: http
+      port: 11470
+    - name: https
+      port: 12470
+  type: ClusterIP
