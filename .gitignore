@@ -45,6 +45,7 @@ secrets/
 *.pem
 *.default.yaml
 secrets.yaml
+*.htpasswd
 
 # Ignore images
 diagrams/custom_icons
