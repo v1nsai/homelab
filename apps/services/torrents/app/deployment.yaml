@@ -70,6 +70,8 @@ spec:
           env:
             - name: APP_PATH
               value: /stremio/config
+            - name: NO_CORS
+              value: "1"
             - name: CASTING_DISABLED
               value: "1"
             - name: AUTO_SERVER_URL
