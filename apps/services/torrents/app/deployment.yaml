@@ -75,6 +75,9 @@ spec:
           volumeMounts:
             - name: stremio-config
               mountPath: /stremio/config
+            - name: htpasswd
+              mountPath: /etc/nginx/.htpasswd
+              subPath: htpasswd
 
       volumes:
         - name: wg-config
@@ -93,3 +96,6 @@ spec:
         - name: stremio-config
           persistentVolumeClaim:
             claimName: stremio-config-pvc
+        - name: htpasswd
+          secret:
+            secretName: stremio-htpasswd

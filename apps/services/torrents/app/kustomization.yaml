@@ -11,3 +11,5 @@ resources:
   - ingress.yaml
   - namespace.yaml
   - restart-job.yaml
+  - stremio-htpasswd-sealed.yaml
+  - htpasswd-configmap.yaml
