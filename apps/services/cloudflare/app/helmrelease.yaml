@@ -16,3 +16,6 @@ spec:
     - kind: Secret
       name: secret-values
       valuesKey: secret-values.yaml
+  values:
+    image:
+      pullPolicy: Always
