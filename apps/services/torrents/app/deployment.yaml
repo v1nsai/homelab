@@ -78,9 +78,9 @@ spec:
             - name: htpasswd
               mountPath: /etc/nginx/.htpasswd
               subPath: htpasswd
-            - name: auth-config
-              mountPath: /etc/nginx/auth.conf
-              subPath: auth.conf
+            # - name: auth-config
+            #   mountPath: /etc/nginx/auth.conf
+            #   subPath: auth.conf
 
       volumes:
         - name: wg-config
