@@ -35,7 +35,7 @@ spec:
             - name: TZ
               value: "America/New_York"
             - name: FIREWALL_INPUT_PORTS
-              value: "9091,9696,8989,8191,80,443,11470,12470"
+              value: "9091,9696,8989,8191,80,443,11470,12470,8080"
           ports:
             - containerPort: 51820
           securityContext:
@@ -64,6 +64,8 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
+              name: ui
+            - containerPort: 11470
               name: http
           env:
             - name: APP_PATH

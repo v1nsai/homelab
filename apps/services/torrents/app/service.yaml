@@ -20,6 +20,8 @@ spec:
   selector:
     app: torrents
   ports:
-    - name: http
+    - name: ui
       port: 8080
+    - name: http
+      port: 11470
   type: ClusterIP
