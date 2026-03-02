@@ -72,8 +72,10 @@ spec:
           env:
             - name: APP_PATH
               value: /stremio/config
-            - name: AUTO_SERVER_URL
+            - name: CASTING_DISABLED
               value: "1"
+            - name: SERVER_URL
+              value: https://stremio.doctor-ew.com
           volumeMounts:
             - name: stremio-config
               mountPath: /stremio/config
