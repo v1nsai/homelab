@@ -60,7 +60,7 @@ spec:
               mountPath: /config
 
         - name: stremio
-          image: stremio/server:latest
+          image: tsaridas/stremio-docker:latest
           imagePullPolicy: Always
           command: ["node", "server.js"]
           args: ["--address", "0.0.0.0"]
@@ -72,10 +72,8 @@ spec:
           env:
             - name: APP_PATH
               value: /stremio/config
-            - name: NO_CORS
-              value: "1"
             - name: AUTO_SERVER_URL
-              value: "0"
+              value: "1"
           volumeMounts:
             - name: stremio-config
               mountPath: /stremio/config
