@@ -47,7 +47,7 @@ spec:
               service:
                 name: stremio-service
                 port:
-                  number: 11470
+                  number: 8080
             path: /
             pathType: Prefix
   tls:

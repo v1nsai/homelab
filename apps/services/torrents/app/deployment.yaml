@@ -62,13 +62,9 @@ spec:
         - name: stremio
           image: tsaridas/stremio-docker:latest
           imagePullPolicy: Always
-          command: ["node", "server.js"]
-          args: ["--address", "0.0.0.0"]
           ports:
-            - containerPort: 11470
+            - containerPort: 8080
               name: http
-            - containerPort: 12470
-              name: https
           env:
             - name: APP_PATH
               value: /stremio/config
