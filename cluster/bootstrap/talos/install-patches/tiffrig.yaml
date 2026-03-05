@@ -25,10 +25,10 @@ machine:
           - bind
           - rshared
           - rw
-  disks:
-    - device: /dev/sda
-      partitions:
-        - mountpoint: /var/mnt/disk0
+  # disks:
+  #   - device: /dev/sda
+  #     partitions:
+  #       - mountpoint: /var/mnt/disk0
   sysctls:
     vm.max_map_count: 262144
 cluster:
