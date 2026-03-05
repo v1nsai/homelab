@@ -14,9 +14,6 @@ spec:
         backup.velero.io/backup-volumes-excludes: "media-pvc"
         velero.io/exclude-from-backup: "true"
     spec:
-      # only deploy on bigrig due to use of HostPath
-      nodeSelector:
-        kubernetes.io/hostname: bigrig
       containers:
         - name: gluetun
           image: qmcgaw/gluetun:latest
@@ -47,6 +44,7 @@ spec:
 
         - name: qbittorrent
           image: lscr.io/linuxserver/qbittorrent:latest
+          imagePullPolicy: Always
           env:
             - name: WEBUI_PORT
               value: "9091"
