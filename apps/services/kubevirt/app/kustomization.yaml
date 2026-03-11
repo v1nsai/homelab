@@ -6,4 +6,4 @@ resources:
   - namespace.yaml
   - kubevirt.yaml
   # VMs
-  - openclaw.yaml
+  # - openclaw.yaml
