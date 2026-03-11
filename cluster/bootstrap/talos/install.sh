@@ -32,7 +32,6 @@ talosctl apply-config \
   --nodes 192.168.1.154 \
   --file /tmp/bigrig.yaml \
   --config-patch @cluster/bootstrap/talos/install-patches/bigrig.yaml \
-  --config-patch @cluster/bootstrap/talos/extensions/longhorn/patch.yaml \
   --config-patch @cluster/bootstrap/talos/extensions/metrics-server/patch.yaml \
   --config-patch @cluster/bootstrap/talos/extensions/nvidia/patch.yaml \
   --config-patch @cluster/bootstrap/talos/extensions/local-path-provisioner/patch.yaml
@@ -49,7 +48,6 @@ talosctl apply-config \
   --nodes 192.168.1.161 \
   --file /tmp/tiffrig.yaml \
   --config-patch @cluster/bootstrap/talos/install-patches/tiffrig.yaml \
-  --config-patch @cluster/bootstrap/talos/extensions/longhorn/patch.yaml \
   --config-patch @cluster/bootstrap/talos/extensions/metrics-server/patch.yaml \
   --config-patch @cluster/bootstrap/talos/extensions/local-path-provisioner/patch.yaml
 
@@ -65,7 +63,6 @@ talosctl apply-config \
   --nodes 192.168.1.152 \
   --file /tmp/oppenheimer.yaml \
   --config-patch @cluster/bootstrap/talos/install-patches/oppenheimer.yaml \
-  --config-patch @cluster/bootstrap/talos/extensions/longhorn/patch.yaml \
   --config-patch @cluster/bootstrap/talos/extensions/metrics-server/patch.yaml \
   --config-patch @cluster/bootstrap/talos/extensions/local-path-provisioner/patch.yaml
 
