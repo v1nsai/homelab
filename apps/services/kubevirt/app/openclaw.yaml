@@ -9,8 +9,8 @@ spec:
     metadata:
       labels:
         kubevirt.io/vm: openclaw-vm
-      annotations:
-        # kubevirt.io/allow-pod-bridge-network-live-migration: "true" # requires bridge networking to be enabled
+      # annotations:
+      #   kubevirt.io/allow-pod-bridge-network-live-migration: "true" # requires bridge networking to be enabled
 
     spec:
       evictionStrategy: BestEffort # set to LiveMigrate when bridge enabled
