@@ -13,7 +13,7 @@ spec:
       #   kubevirt.io/allow-pod-bridge-network-live-migration: "true" # requires bridge networking to be enabled
 
     spec:
-      evictionStrategy: BestEffort # set to LiveMigrate when bridge enabled
+      evictionStrategy: None # set to LiveMigrate when bridge enabled
       domain:
         cpu:
           cores: 2
