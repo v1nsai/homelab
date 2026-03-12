@@ -6,5 +6,6 @@ resources:
   - namespace.yaml
   - kubevirt.yaml
   - cdi.yaml
+  - storageclass.yaml
   # VMs
   - openclaw.yaml
