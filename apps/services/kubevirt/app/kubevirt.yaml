@@ -6,16 +6,16 @@ metadata:
   namespace: kubevirt
 spec:
   configuration:
-    developerConfiguration:
-      featureGates:
-        - LiveMigration
-        # - NetworkBindingPlugins # enable for bridge networking and local network access
+    # developerConfiguration:
+    #   featureGates:
+    #     - LiveMigration
+    #     - NetworkBindingPlugins # enable for bridge networking and local network access
     smbios:
       sku: "TalosCloud"
       version: "v0.1.0"
       manufacturer: "Talos Virtualization"
       product: "talosvm"
       family: "ccio"
-  workloadUpdateStrategy:
-    workloadUpdateMethods:
-    - LiveMigrate
+  # workloadUpdateStrategy:
+  #   workloadUpdateMethods:
+  #   - LiveMigrate
