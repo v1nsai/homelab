@@ -52,11 +52,12 @@ spec:
       nodeSelector:
         'kubernetes.io/os': linux
 ---
+  
 kind: Secret
 apiVersion: v1
 metadata:
   name: headlamp-admin
-  namespace: kube-system
+  namespace: headlamp
   annotations:
     kubernetes.io/service-account.name: "headlamp-admin"
 type: kubernetes.io/service-account-token
