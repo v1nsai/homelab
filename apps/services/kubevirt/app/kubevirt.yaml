@@ -7,10 +7,10 @@ metadata:
 spec:
   configuration:
     developerConfiguration:
-    featureGates:
-        - EFI # Vital for modern Ubuntu installers
-        - LiveMigration
-        - NetworkBindingPlugins
+      featureGates:
+          - EFI
+          - LiveMigration
+          - NetworkBindingPlugins
     smbios:
       sku: "TalosCloud"
       version: "v0.1.0"
