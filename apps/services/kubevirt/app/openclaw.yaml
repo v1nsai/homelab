@@ -75,7 +75,7 @@ spec:
             storage: 50Gi
         accessModes:
           - ReadWriteMany
-        storageClassName: blueberry-nfs
+        storageClassName: blueberry-nfs-kubevirt
       source:
         http:
           url: https://mirror.pnl.gov/releases/noble/ubuntu-24.04.4-desktop-amd64.iso
