@@ -15,6 +15,12 @@ spec:
     spec:
       evictionStrategy: None # set to LiveMigrate when bridge enabled
       domain:
+        features:
+          smm:
+            enabled: true
+        firmware:
+          bootloader:
+            efi: {}
         cpu:
           cores: 2
         resources:
