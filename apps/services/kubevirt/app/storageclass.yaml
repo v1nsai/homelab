@@ -8,7 +8,7 @@ provisioner: nfs.csi.k8s.io
 parameters:
   server: 192.168.1.182
   share: /mnt/cronenberg/nfs/kubevirt
-  mountPermissions: "0"
+  mountPermissions: "0777"
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
 allowVolumeExpansion: true
