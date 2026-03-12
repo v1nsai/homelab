@@ -28,11 +28,11 @@ spec:
       parameters:
         server: 192.168.1.182
         share: /mnt/cronenberg/nfs
-        mountPermissions: "0"
+        mountPermissions: "0777"
       reclaimPolicy: Delete
       volumeBindingMode: Immediate
-      # mountOptions:
-      #   - nfsvers=4.1
+      mountOptions:
+        - nfsvers=4.2
     # externalSnapshotter:
     #   enabled: false
     #   name: snapshot-controller
