@@ -49,6 +49,7 @@ spec:
               users:
                 - name: admin
                   groups: [sudo, docker, wheel]
+                  passwd: $6$rOWRZyv7ZwVgqMAv$2qXVeqCIjQF9ks7xpMsuwxm2s9qEhdyua3QoLybByveNJKmEx7DDS330mMF0tMdvZsCOkRRaHAshWcmzGhLnP0
                   shell: /bin/bash
                   sudo: ALL=(ALL) NOPASSWD:ALL
                   ssh_authorized_keys:
