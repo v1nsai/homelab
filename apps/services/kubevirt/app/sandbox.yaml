@@ -32,6 +32,7 @@ spec:
           cloudInitNoCloud:
             userData: |
               #cloud-config
+              ssh_pwauth: true
               network:
                 version: 2
                 ethernets:
@@ -46,8 +47,10 @@ spec:
                 - git
                 - tmux
                 - vim
+                - xfce4
               users:
                 - name: doctor_ew
+                  lock_passwd: false
                   groups: [sudo, docker, wheel]
                   passwd: $6$Y76t8nz2SnXzS3Eg$rPUYrqu2qQOgiO5Qo5HjqiDMQPgxISrXWIMj8tjatweqmK0eYGlZuT8ieayQBVM1hbs5Slsu.K.ESfBzHqE54.
                   shell: /bin/bash
