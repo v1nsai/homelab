@@ -6,7 +6,6 @@ metadata:
   namespace: kubevirt
 spec:
   configuration:
-    qemuGuestAgent: {}
     developerConfiguration:
       featureGates:
           - EFI
