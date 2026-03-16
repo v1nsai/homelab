@@ -10,10 +10,6 @@ spec:
         memory:
           guest: 4Gi
         devices:
-          # This enables the virtio serial port for enabling TRIM
-          watchdog:
-            name: itco
-            iTCO: {}
           disks:
             - name: rootdisk
               disk: { bus: scsi } # allows TRIM
