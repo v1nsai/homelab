@@ -13,7 +13,6 @@ spec:
         memory:
           guest: 4Gi
         devices:
-          # maybe remove, trying to fix no mouse when using vnc over virtctl
           inputs:
             - name: tablet
               type: tablet
@@ -44,9 +43,13 @@ spec:
               network:
                 version: 2
                 ethernets:
-                  enp10s0:
+                  eth0:
+                    match:
+                      name: "en*"
                     dhcp4: true
                     mtu: 1450
+                    nameservers:
+                      addresses: [ "1.1.1.1", "8.8.8.8" ]
               write_files:
                 - path: /etc/ssh/sshd_config
                   content: |
@@ -58,7 +61,7 @@ spec:
                   content: |
                     [Service]
                     ExecStart=
-                    ExecStart=/lib/systemd/systemd-networkd-wait-online --interface=enp10s0 --any
+                    ExecStart=/lib/systemd/systemd-networkd-wait-online --any
               packages:
                 - qemu-guest-agent
                 - docker.io
