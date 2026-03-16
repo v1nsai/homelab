@@ -9,3 +9,4 @@ resources:
   - storageclass.yaml
   # VMs
   - openclaw.yaml
+  - sandbox.yaml

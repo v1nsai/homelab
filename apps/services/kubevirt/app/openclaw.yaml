@@ -21,10 +21,9 @@ spec:
         firmware:
           bootloader:
             efi: {}
-        cpu:
-          cores: 2
         resources:
           requests:
+            cpu: 2
             memory: 4G
         devices:
           disks:
