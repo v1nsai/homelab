@@ -8,5 +8,5 @@ resources:
   - cdi.yaml
   - storageclass.yaml
   # VMs
-  - openclaw.yaml
+  # - openclaw.yaml
   - sandbox.yaml
