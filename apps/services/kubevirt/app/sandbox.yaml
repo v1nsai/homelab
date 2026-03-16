@@ -10,6 +10,10 @@ spec:
         memory:
           guest: 4Gi
         devices:
+          inputs:
+            - name: tablet
+              type: tablet
+              bus: usb
           disks:
             - name: rootdisk
               disk: { bus: scsi } # allows TRIM
@@ -30,7 +34,7 @@ spec:
             name: sandbox-rootdisk
         - name: cloudinit
           cloudInitNoCloud:
-            userData: |
+            userData: |-
               #cloud-config
               ssh_pwauth: true
               network:
@@ -39,6 +43,12 @@ spec:
                   enp10s0:
                     dhcp4: true
                     mtu: 1450
+              write_files:
+                - path: /etc/ssh/sshd_config
+                  content: |
+                    PermitRootLogin no
+                    PubkeyAuthentication yes
+                    PasswordAuthentication yes
               packages:
                 - qemu-guest-agent
                 - docker.io
@@ -48,6 +58,7 @@ spec:
                 - tmux
                 - vim
                 - xfce4
+                - lightdm
               users:
                 - name: doctor_ew
                   lock_passwd: false
@@ -61,6 +72,8 @@ spec:
                 - systemctl enable --now qemu-guest-agent
                 - systemctl enable --now docker
                 - systemctl enable --now fstrim.timer
+                - systemctl set-default graphical.target
+                - systemctl enable --now lightdm
   dataVolumeTemplates:
     - metadata:
         name: sandbox-rootdisk
