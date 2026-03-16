@@ -47,9 +47,9 @@ spec:
                 - tmux
                 - vim
               users:
-                - name: admin
+                - name: doctor_ew
                   groups: [sudo, docker, wheel]
-                  passwd: $6$rOWRZyv7ZwVgqMAv$2qXVeqCIjQF9ks7xpMsuwxm2s9qEhdyua3QoLybByveNJKmEx7DDS330mMF0tMdvZsCOkRRaHAshWcmzGhLnP0
+                  passwd: $6$Y76t8nz2SnXzS3Eg$rPUYrqu2qQOgiO5Qo5HjqiDMQPgxISrXWIMj8tjatweqmK0eYGlZuT8ieayQBVM1hbs5Slsu.K.ESfBzHqE54.
                   shell: /bin/bash
                   sudo: ALL=(ALL) NOPASSWD:ALL
                   ssh_authorized_keys:
