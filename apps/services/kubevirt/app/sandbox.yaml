@@ -5,11 +5,15 @@ metadata:
 spec:
   running: true
   template:
+    metadata:
+      labels:
+        kubevirt.io/vm: sandbox
     spec:
       domain:
         memory:
           guest: 4Gi
         devices:
+          # maybe remove, trying to fix no mouse when using vnc over virtctl
           inputs:
             - name: tablet
               type: tablet
@@ -49,6 +53,12 @@ spec:
                     PermitRootLogin no
                     PubkeyAuthentication yes
                     PasswordAuthentication yes
+                # Skip 2 minute timeout waiting for all interfaces to be up when booting
+                - path: /etc/systemd/system/systemd-networkd-wait-online.service.d/override.conf
+                  content: |
+                    [Service]
+                    ExecStart=
+                    ExecStart=/lib/systemd/systemd-networkd-wait-online --interface=enp10s0 --any
               packages:
                 - qemu-guest-agent
                 - docker.io
