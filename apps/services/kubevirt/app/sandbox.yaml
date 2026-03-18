@@ -3,20 +3,18 @@ kind: VirtualMachine
 metadata:
   name: sandbox
 spec:
-  running: true
+  runStrategy: Manual
   template:
     metadata:
       labels:
         kubevirt.io/vm: sandbox
     spec:
       domain:
+        cpu:
+          cores: 4
         memory:
           guest: 4Gi
         devices:
-          inputs:
-            - name: tablet
-              type: tablet
-              bus: usb
           disks:
             - name: rootdisk
               disk: { bus: scsi } # allows TRIM
@@ -37,56 +35,8 @@ spec:
             name: sandbox-rootdisk
         - name: cloudinit
           cloudInitNoCloud:
-            userData: |-
-              #cloud-config
-              ssh_pwauth: true
-              network:
-                version: 2
-                ethernets:
-                  eth0:
-                    match:
-                      name: "en*"
-                    dhcp4: true
-                    mtu: 1450
-                    nameservers:
-                      addresses: [ "1.1.1.1", "8.8.8.8" ]
-              write_files:
-                - path: /etc/ssh/sshd_config
-                  content: |
-                    PermitRootLogin no
-                    PubkeyAuthentication yes
-                    PasswordAuthentication yes
-                # Skip 2 minute timeout waiting for all interfaces to be up when booting
-                - path: /etc/systemd/system/systemd-networkd-wait-online.service.d/override.conf
-                  content: |
-                    [Service]
-                    ExecStart=
-                    ExecStart=/lib/systemd/systemd-networkd-wait-online --any
-              packages:
-                - qemu-guest-agent
-                - docker.io
-                - docker-compose
-                - curl
-                - git
-                - tmux
-                - vim
-                - xfce4
-                - lightdm
-              users:
-                - name: doctor_ew
-                  lock_passwd: false
-                  groups: [sudo, docker, wheel]
-                  passwd: $6$Y76t8nz2SnXzS3Eg$rPUYrqu2qQOgiO5Qo5HjqiDMQPgxISrXWIMj8tjatweqmK0eYGlZuT8ieayQBVM1hbs5Slsu.K.ESfBzHqE54.
-                  shell: /bin/bash
-                  sudo: ALL=(ALL) NOPASSWD:ALL
-                  ssh_authorized_keys:
-                    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDJZxx2Ovjufzw5VeGtEuZMlnrZAmqE6Y7khqsBJffZHkKJTlLRTtviurRRZiVNwZDrWK5fKKZCrUuDAl4pHM/RHo4QKHi9JEI/PAKuNiPSO/vbrtk4Ab6CAV8M/R+ZYrh4mXlA9MLb9T2l/17DQ7VlFH2yAWZggKr1ud3plc265lyALxQuukyhkMnNSXNF3a0rE0e9FIhe5G0qrnP18kpocNGf/lW0b3O67yOZwG5FGUndyWsLHFDe7M9YauZo0zwdZhGOubWWQgt+BByVdizW9ZETzwpjXQcoiyqkS9ov3pj7buQ14hRd32CHQny3LsSRHQTeUJ5F/VfMxEf09i1LYK31tP5GjOEzjMGfBtXE0NRHEgkW3FKSF5hsqevgm8DzvOi8+GnyO2YDX7t8MK6uoVmQI7+FoU+dK0ZDgE0BLCckcOfXUfSKBuRDGwRWjpJJWG5VW4sf2tMPV5Ps17poHz9P7J7YTzFDPWdOZQgj6Yb7fk4dWT0sJPzJfDsPLGr7e9IBeJ9oSFBUdoELePMKIsS/GvWoSwO2f7FOGruPjVHpRBf14YfAqGpf64sYZ0W7u6Kc4vy9Cc7ROg3L3+fLVaHfGrYRtUB4H6UF+wC1cFh3IO2bsT2MSKkL9Wv5DausjPNuCtt9nHo8zKxVvp0sCai1MA1HZWOlRWa8dzPWZw==
-              runcmd:
-                - systemctl enable --now qemu-guest-agent
-                - systemctl enable --now docker
-                - systemctl enable --now fstrim.timer
-                - systemctl set-default graphical.target
-                - systemctl enable --now lightdm
+            secretRef:
+              name: sandbox-cloudinit
   dataVolumeTemplates:
     - metadata:
         name: sandbox-rootdisk
@@ -98,4 +48,120 @@ spec:
           storageClassName: blueberry-nfs-kubevirt
         source:
           http:
-            url: https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2
+            url: https://cloud.debian.org/images/cloud/sid/daily/latest/debian-sid-generic-amd64-daily.qcow2
+            # url: https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-generic-amd64.qcow2
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    kubevirt.io/vm: sandbox
+  name: sandbox-svc
+spec:
+  externalTrafficPolicy: Local
+  ports:
+  - name: ssh
+    port: 22
+    protocol: TCP
+  - name: vnc
+    port: 5901
+    protocol: TCP
+  - name: openclaw-ui-http
+    port: 18789
+    protocol: TCP
+  selector:
+    kubevirt.io/vm: sandbox
+  type: LoadBalancer
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: openclaw
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Autonomous AI Agent
+    gethomepage.dev/group: Productivity
+    gethomepage.dev/icon: openclaw.png
+    gethomepage.dev/name: OpenClaw
+    cert-manager.io/cluster-issuer: homelab-issuer
+spec:
+  rules:
+    - host: openclaw.internal
+      http:
+        paths:
+          - backend:
+              service:
+                name: sandbox-svc
+                port:
+                  number: 18789
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - openclaw.internal
+      secretName: homelab-tls
+---
+# kubernetes secret
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sandbox-cloudinit
+  namespace: kubevirt
+type: Opaque
+stringData:
+  networkdata: |-
+    version: 2
+    ethernets:
+      eth0:
+        match:
+          name: "en*"
+        dhcp4: true
+        mtu: 1450
+        nameservers:
+          addresses: [ "1.1.1.1", "8.8.8.8" ]
+  userdata: |-
+    #cloud-config
+    ssh_pwauth: true
+    write_files:
+      - path: /etc/ssh/sshd_config
+        append: true
+        content: |
+          PermitRootLogin no
+          PubkeyAuthentication yes
+          PasswordAuthentication yes
+      # Enable automatic restarts for services after they've been upgraded
+      - path: /etc/needrestart/needrestart.conf
+        append: true
+        content: |
+          $nrconf{restart} = 'a';
+    packages:
+      - qemu-guest-agent
+      - docker.io
+      - docker-compose
+      - curl
+      - git
+      - tmux
+      - vim
+      - xfce4
+      - xfce4-goodies
+      - tigervnc-standalone-server
+    users:
+      - name: doctor_ew
+        lock_passwd: false
+        groups: [sudo, docker, wheel]
+        passwd: $6$Y76t8nz2SnXzS3Eg$rPUYrqu2qQOgiO5Qo5HjqiDMQPgxISrXWIMj8tjatweqmK0eYGlZuT8ieayQBVM1hbs5Slsu.K.ESfBzHqE54.
+        shell: /bin/bash
+        sudo: ALL=(ALL) NOPASSWD:ALL
+        ssh_authorized_keys:
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDJZxx2Ovjufzw5VeGtEuZMlnrZAmqE6Y7khqsBJffZHkKJTlLRTtviurRRZiVNwZDrWK5fKKZCrUuDAl4pHM/RHo4QKHi9JEI/PAKuNiPSO/vbrtk4Ab6CAV8M/R+ZYrh4mXlA9MLb9T2l/17DQ7VlFH2yAWZggKr1ud3plc265lyALxQuukyhkMnNSXNF3a0rE0e9FIhe5G0qrnP18kpocNGf/lW0b3O67yOZwG5FGUndyWsLHFDe7M9YauZo0zwdZhGOubWWQgt+BByVdizW9ZETzwpjXQcoiyqkS9ov3pj7buQ14hRd32CHQny3LsSRHQTeUJ5F/VfMxEf09i1LYK31tP5GjOEzjMGfBtXE0NRHEgkW3FKSF5hsqevgm8DzvOi8+GnyO2YDX7t8MK6uoVmQI7+FoU+dK0ZDgE0BLCckcOfXUfSKBuRDGwRWjpJJWG5VW4sf2tMPV5Ps17poHz9P7J7YTzFDPWdOZQgj6Yb7fk4dWT0sJPzJfDsPLGr7e9IBeJ9oSFBUdoELePMKIsS/GvWoSwO2f7FOGruPjVHpRBf14YfAqGpf64sYZ0W7u6Kc4vy9Cc7ROg3L3+fLVaHfGrYRtUB4H6UF+wC1cFh3IO2bsT2MSKkL9Wv5DausjPNuCtt9nHo8zKxVvp0sCai1MA1HZWOlRWa8dzPWZw==
+    runcmd:
+      - systemctl enable --now qemu-guest-agent
+      - systemctl enable --now docker
+      - systemctl enable --now fstrim.timer
+      # Setup VNC password for doctor_ew
+      - mkdir -p /home/doctor_ew/.vnc
+      - echo "$(openssl rand -base64 20)" | tee -a /home/doctor_ew/.vnc/passwd_clear -f > /home/doctor_ew/.vnc/passwd
+      - chown doctor_ew:doctor_ew -R /home/doctor_ew/.vnc
+      - chmod 600 /home/doctor_ew/.vnc/passwd
+    bootcmd:
+      - vncserver :1 -localhost no -geometry 2880x1800 -depth 24
