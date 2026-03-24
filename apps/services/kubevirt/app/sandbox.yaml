@@ -158,6 +158,8 @@ stringData:
       - systemctl enable --now qemu-guest-agent
       - systemctl enable --now docker
       - systemctl enable --now fstrim.timer
+      # Install Brave browser
+      - curl -fsS https://dl.brave.com/install.sh | sh
       # Setup VNC password for doctor_ew
       - mkdir -p /home/doctor_ew/.vnc
       - echo "$(openssl rand -base64 20)" | tee -a /home/doctor_ew/.vnc/passwd_clear -f > /home/doctor_ew/.vnc/passwd
