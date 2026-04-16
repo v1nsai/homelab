@@ -14,8 +14,6 @@ spec:
         backup.velero.io/backup-volumes-excludes: "media-pvc"
         velero.io/exclude-from-backup: "true"
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: bigrig
       containers:
         - name: prowlarr
           image: ghcr.io/hotio/prowlarr:latest
