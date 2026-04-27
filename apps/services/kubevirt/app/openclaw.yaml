@@ -1,13 +1,13 @@
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
-  name: sandbox
+  name: openclaw
 spec:
   runStrategy: Manual
   template:
     metadata:
       labels:
-        kubevirt.io/vm: sandbox
+        kubevirt.io/vm: openclaw
     spec:
       domain:
         cpu:
@@ -32,14 +32,14 @@ spec:
       volumes:
         - name: rootdisk
           dataVolume:
-            name: sandbox-rootdisk
+            name: openclaw-rootdisk
         - name: cloudinit
           cloudInitNoCloud:
             secretRef:
-              name: sandbox-cloudinit
+              name: openclaw-cloudinit
   dataVolumeTemplates:
     - metadata:
-        name: sandbox-rootdisk
+        name: openclaw-rootdisk
       spec:
         storage:
           resources:
@@ -54,8 +54,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    kubevirt.io/vm: sandbox
-  name: sandbox-svc
+    kubevirt.io/vm: openclaw
+  name: openclaw-svc
 spec:
   externalTrafficPolicy: Local
   ports:
@@ -65,15 +65,45 @@ spec:
   - name: vnc
     port: 5901
     protocol: TCP
+  - name: openclaw-ui-http
+    port: 18789
+    protocol: TCP
   selector:
-    kubevirt.io/vm: sandbox
-  type: LoadBalancer
+    kubevirt.io/vm: openclaw
+  type: ClusterIP
 ---
-# kubernetes secret
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: openclaw
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Autonomous AI Agent
+    gethomepage.dev/group: Productivity
+    gethomepage.dev/icon: openclaw.png
+    gethomepage.dev/name: OpenClaw
+    cert-manager.io/cluster-issuer: homelab-issuer
+spec:
+  rules:
+    - host: openclaw.internal
+      http:
+        paths:
+          - backend:
+              service:
+                name: openclaw-svc
+                port:
+                  number: 18789
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - openclaw.internal
+      secretName: homelab-tls
+---
 apiVersion: v1
 kind: Secret
 metadata:
-  name: sandbox-cloudinit
+  name: openclaw-cloudinit
   namespace: kubevirt
 type: Opaque
 stringData:
