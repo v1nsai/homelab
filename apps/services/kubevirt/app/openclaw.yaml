@@ -142,7 +142,6 @@ stringData:
       - vim
       - xfce4
       - xfce4-goodies
-      - tigervnc-standalone-server
     users:
       - name: doctor_ew
         lock_passwd: false
@@ -163,5 +162,3 @@ stringData:
       - echo "$(openssl rand -base64 20)" | tee -a /home/doctor_ew/.vnc/passwd_clear -f > /home/doctor_ew/.vnc/passwd
       - chown doctor_ew:doctor_ew -R /home/doctor_ew/.vnc
       - chmod 600 /home/doctor_ew/.vnc/passwd
-    bootcmd:
-      - vncserver :1 -localhost no -geometry 2880x1800 -depth 24

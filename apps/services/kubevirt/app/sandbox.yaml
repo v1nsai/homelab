@@ -69,7 +69,6 @@ spec:
     kubevirt.io/vm: sandbox
   type: LoadBalancer
 ---
-# kubernetes secret
 apiVersion: v1
 kind: Secret
 metadata:
