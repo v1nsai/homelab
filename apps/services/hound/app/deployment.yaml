@@ -24,7 +24,7 @@ spec:
                   key: hound_secret
                   name: hound-server-secret
             - name: POSTGRES_DB
-              value: hound-postgres.hound.svc.cluster.local:5432
+              value: hound_db
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -67,7 +67,7 @@ spec:
       containers:
         - env:
             - name: POSTGRES_DB
-              value: hound-postgres.hound.svc.cluster.local:5432
+              value: hound_db
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -75,6 +75,10 @@ spec:
                   name: hound-server-secret
             - name: POSTGRES_USER
               value: hound
+            - name: POSTGRES_HOST
+              value: hound-postgres.hound.svc.cluster.local
+            - name: POSTGRES_PORT
+              value: "5432"
           image: postgres:18
           livenessProbe:
             exec:
