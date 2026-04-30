@@ -8,3 +8,4 @@ resources:
   - pvc.yaml
   - service.yaml
   - sealed-secrets.yaml
+  - ingress.yaml
