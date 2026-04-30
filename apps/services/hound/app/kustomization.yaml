@@ -1,0 +1,10 @@
+# kustomization that includes all resources in the same folder as this file
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: hound
+resources:
+  - namespace.yaml
+  - deployment.yaml
+  - pvc.yaml
+  - service.yaml
+  - sealed-secrets.yaml

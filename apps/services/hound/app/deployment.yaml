@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: hound-server
+  name: hound-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: hound-server
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: hound-server
+    spec:
+      containers:
+        - env:
+            - name: HOUND_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: hound_secret
+                  name: hound-server-secret
+            - name: POSTGRES_DB
+              value: hound-postgres.hound.svc.cluster.local:5432
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: postgres_password
+                  name: hound-server-secret
+            - name: POSTGRES_USER
+              value: hound
+          image: houndmediaserver/hound:latest
+          name: hound-server
+          ports:
+            - containerPort: 2323
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /app/Hound Data
+              name: hound-server-pvc
+      restartPolicy: Always
+      volumes:
+        - name: hound-server-pvc
+          persistentVolumeClaim:
+            claimName: hound-server-pvc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: hound-postgres
+  name: hound-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: hound-postgres
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: hound-postgres
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_DB
+              value: hound-postgres.hound.svc.cluster.local:5432
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: postgres_password
+                  name: hound-server-secret
+            - name: POSTGRES_USER
+              value: hound
+          image: postgres:18
+          livenessProbe:
+            exec:
+              command:
+                - pg_isready -U hound -d hound_db
+            failureThreshold: 5
+            periodSeconds: 5
+            timeoutSeconds: 5
+          name: hound-postgres
+          volumeMounts:
+            - mountPath: /var/lib/postgresql
+              name: hound-postgres-pvc
+      restartPolicy: Always
+      volumes:
+        - name: hound-postgres-pvc
+          persistentVolumeClaim:
+            claimName: hound-postgres-pvc
