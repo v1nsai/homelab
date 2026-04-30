@@ -30,3 +30,5 @@ devbox/
 airflow/
 ollama/
 jenkins/
+plex/
+monitoring/
