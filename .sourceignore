@@ -25,3 +25,8 @@ dind/
 stremio/
 minio/
 devbox/
+
+# disabled until all nodes are back online
+airflow/
+ollama/
+jenkins/
