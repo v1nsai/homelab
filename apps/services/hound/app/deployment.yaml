@@ -33,6 +33,7 @@ spec:
             - name: POSTGRES_USER
               value: hound
           image: houndmediaserver/hound:latest
+          imagePullPolicy: Always
           name: hound-server
           ports:
             - containerPort: 2323
@@ -40,11 +41,23 @@ spec:
           volumeMounts:
             - mountPath: /app/Hound Data
               name: hound-server-pvc
+            - mountPath: /app/External Library/Movies
+              name: hound-movies
+            - mountPath: /app/External Library/TV
+              name: hound-tv
       restartPolicy: Always
       volumes:
         - name: hound-server-pvc
           persistentVolumeClaim:
             claimName: hound-server-pvc
+        - name: hound-movies
+          nfs:
+            path: /mnt/cronenberg/movies
+            server: 192.168.1.182
+        - name: hound-tv
+          nfs:
+            path: /mnt/cronenberg/tv
+            server: 192.168.1.182
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -76,7 +89,7 @@ spec:
             - name: POSTGRES_USER
               value: hound
             - name: POSTGRES_HOST
-              value: hound-postgres.hound.svc.cluster.local
+              value: "hound-postgres.hound.svc.cluster.local"
             - name: POSTGRES_PORT
               value: "5432"
           image: postgres:18
