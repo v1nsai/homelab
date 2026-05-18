@@ -43,7 +43,7 @@ spec:
               mountPath: /gluetun/wireguard/
 
         - name: qbittorrent
-          image: lscr.io/linuxserver/qbittorrent:5.1.4
+          image: lscr.io/linuxserver/qbittorrent:latest
           imagePullPolicy: Always
           env:
             - name: WEBUI_PORT
