@@ -33,3 +33,5 @@ jenkins/
 plex/
 monitoring/
 opensearch/
+jellyseerr/
+kubevirt/
