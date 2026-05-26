@@ -35,30 +35,30 @@ spec:
             - name: prowlarr-config
               mountPath: /config
 
-        - name: lidarr
-          image: ghcr.io/linuxserver/lidarr:latest
-          imagePullPolicy: Always
-          env:
-            - name: PUID
-              value: "1000"
-            - name: PGID
-              value: "1000"
-            - name: TZ
-              value: "America/New_York"
-          ports:
-            - containerPort: 8686
-          volumeMounts:
-            - name: lidarr-config
-              mountPath: /config
+        # - name: lidarr
+        #   image: ghcr.io/linuxserver/lidarr:latest
+        #   imagePullPolicy: Always
+        #   env:
+        #     - name: PUID
+        #       value: "1000"
+        #     - name: PGID
+        #       value: "1000"
+        #     - name: TZ
+        #       value: "America/New_York"
+        #   ports:
+        #     - containerPort: 8686
+        #   volumeMounts:
+        #     - name: lidarr-config
+        #       mountPath: /config
 
-        - name: flaresolverr
-          image: ghcr.io/flaresolverr/flaresolverr:latest
-          imagePullPolicy: Always
-          env:
-            - name: TZ
-              value: "America/New_York"
-          ports:
-            - containerPort: 8191
+        # - name: flaresolverr
+        #   image: ghcr.io/flaresolverr/flaresolverr:latest
+        #   imagePullPolicy: Always
+        #   env:
+        #     - name: TZ
+        #       value: "America/New_York"
+        #   ports:
+        #     - containerPort: 8191
 
         - name: sonarr
           image: lscr.io/linuxserver/sonarr:latest
@@ -96,23 +96,23 @@ spec:
             - name: cronenberg
               mountPath: /downloads
 
-        - name: bazarr
-          image: lscr.io/linuxserver/bazarr:latest
-          imagePullPolicy: Always
-          env:
-            - name: PUID
-              value: "1000"
-            - name: PGID
-              value: "1000"
-            - name: TZ
-              value: "America/New_York"
-          ports:
-            - containerPort: 7878
-          volumeMounts:
-            - name: bazarr-config
-              mountPath: /config
-            - name: cronenberg
-              mountPath: /downloads
+        # - name: bazarr
+        #   image: lscr.io/linuxserver/bazarr:latest
+        #   imagePullPolicy: Always
+        #   env:
+        #     - name: PUID
+        #       value: "1000"
+        #     - name: PGID
+        #       value: "1000"
+        #     - name: TZ
+        #       value: "America/New_York"
+        #   ports:
+        #     - containerPort: 7878
+        #   volumeMounts:
+        #     - name: bazarr-config
+        #       mountPath: /config
+        #     - name: cronenberg
+        #       mountPath: /downloads
 
       volumes:
         - name: prowlarr-config
@@ -121,15 +121,15 @@ spec:
         - name: sonarr-config
           persistentVolumeClaim:
             claimName: sonarr-config
-        - name: lidarr-config
-          persistentVolumeClaim:
-            claimName: lidarr-config
+        # - name: lidarr-config
+        #   persistentVolumeClaim:
+        #     claimName: lidarr-config
         - name: radarr-config
           persistentVolumeClaim:
             claimName: radarr-config
-        - name: bazarr-config
-          persistentVolumeClaim:
-            claimName: bazarr-config
+        # - name: bazarr-config
+        #   persistentVolumeClaim:
+        #     claimName: bazarr-config
         - name: cronenberg
           nfs:
             server: 192.168.1.182
