@@ -51,14 +51,11 @@ spec:
         #     - name: lidarr-config
         #       mountPath: /config
 
-        # - name: flaresolverr
-        #   image: ghcr.io/flaresolverr/flaresolverr:latest
-        #   imagePullPolicy: Always
-        #   env:
-        #     - name: TZ
-        #       value: "America/New_York"
-        #   ports:
-        #     - containerPort: 8191
+        - name: byparr
+          image: ghcr.io/thephaseless/byparr:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8191
 
         - name: sonarr
           image: lscr.io/linuxserver/sonarr:latest
