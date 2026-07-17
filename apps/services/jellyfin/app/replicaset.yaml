@@ -33,13 +33,9 @@ spec:
           tcpSocket:
             port: http
           timeoutSeconds: 1
-        env:
-        - name: NVIDIA_VISIBLE_DEVICES
-          value: "all"
-        - name: NVIDIA_DRIVER_CAPABILITIES
-          value: "all"
-        - name: DOTNET_SYSTEM_IO_DISABLEFILELOCKING
-          value: "true"
+        # env:
+        # - name: DOTNET_SYSTEM_IO_DISABLEFILELOCKING
+        #   value: "true"
         name: jellyfin
         ports:
         - containerPort: 8096
@@ -62,6 +58,8 @@ spec:
           name: config
         - mountPath: /media
           name: cronenberg
+        - mountPath: /local-config
+          name: config-local
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -73,6 +71,9 @@ spec:
       - name: config
         persistentVolumeClaim:
           claimName: jellyfin-config
+      - name: config-local
+        persistentVolumeClaim:
+          claimName: jellyfin-config-local
       - name: cronenberg
         nfs:
           path: /mnt/cronenberg
