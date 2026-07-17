@@ -55,11 +55,9 @@ spec:
         terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /config
-          name: config
+          name: config-local
         - mountPath: /media
           name: cronenberg
-        - mountPath: /local-config
-          name: config-local
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -68,9 +66,6 @@ spec:
       serviceAccountName: jellyfin
       terminationGracePeriodSeconds: 30
       volumes:
-      - name: config
-        persistentVolumeClaim:
-          claimName: jellyfin-config
       - name: config-local
         persistentVolumeClaim:
           claimName: jellyfin-config-local
