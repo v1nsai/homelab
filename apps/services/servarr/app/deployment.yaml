@@ -124,9 +124,9 @@ spec:
         - name: radarr-config
           persistentVolumeClaim:
             claimName: radarr-config
-        # - name: bazarr-config
-        #   persistentVolumeClaim:
-        #     claimName: bazarr-config
+        - name: bazarr-config
+          persistentVolumeClaim:
+            claimName: bazarr-config
         - name: cronenberg
           nfs:
             server: 192.168.1.182
