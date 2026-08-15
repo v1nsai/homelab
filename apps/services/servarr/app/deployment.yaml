@@ -93,23 +93,23 @@ spec:
             - name: cronenberg
               mountPath: /downloads
 
-        # - name: bazarr
-        #   image: lscr.io/linuxserver/bazarr:latest
-        #   imagePullPolicy: Always
-        #   env:
-        #     - name: PUID
-        #       value: "1000"
-        #     - name: PGID
-        #       value: "1000"
-        #     - name: TZ
-        #       value: "America/New_York"
-        #   ports:
-        #     - containerPort: 7878
-        #   volumeMounts:
-        #     - name: bazarr-config
-        #       mountPath: /config
-        #     - name: cronenberg
-        #       mountPath: /downloads
+        - name: bazarr
+          image: lscr.io/linuxserver/bazarr:latest
+          imagePullPolicy: Always
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "America/New_York"
+          ports:
+            - containerPort: 7878
+          volumeMounts:
+            - name: bazarr-config
+              mountPath: /config
+            - name: cronenberg
+              mountPath: /downloads
 
       volumes:
         - name: prowlarr-config
