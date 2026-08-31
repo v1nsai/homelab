@@ -1,0 +1,28 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: open-webui
+  annotations:
+    gethomepage.dev/description: Talk to local chat bots
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Data Science
+    gethomepage.dev/icon: open-webui.png
+    gethomepage.dev/name: Open WebUI
+    cert-manager.io/cluster-issuer: homelab-issuer
+spec:
+  rules:
+    - host: open-webui.internal
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: open-webui
+                port:
+                  number: 3000
+  tls:
+    - hosts:
+        - open-webui.internal
+      secretName: homelab-tls-bazarr

@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: open-webui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: open-webui
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: open-webui
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: Always
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - image: ghcr.io/open-webui/open-webui:main
+          name: open-webui
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: false
+            capabilities:
+              drop: ["ALL"]
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /app/backend/data
+              name: open-webui-data
+          env:
+            - name: ENABLE_OLLAMA_API
+              value: "false"
+            - name: ENABLE_OPENAI_API
+              value: "true"
+            - name: OPENAI_API_BASE_URL
+              value: "http://192.168.1.165:8008/v1"
+            - name: OPENAI_API_KEY
+              value: "sk-anything"      # can't be blank
+            - name: WEBUI_SECRET_KEY
+              value: "notblank"         # can't be blank
+            - name: OPENAI_API_CONFIGS
+              value: '{"http://192.168.1.165:8008/v1": {"name": "Drews Steam Deck", "prefix_id": ""}}'
+      restartPolicy: Always
+      volumes:
+        - name: open-webui-data
+          persistentVolumeClaim:
+            claimName: open-webui-data
