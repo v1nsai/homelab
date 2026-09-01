@@ -14,22 +14,22 @@ spec:
       labels:
         app: open-webui
     spec:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: Always
-        seccompProfile:
-          type: RuntimeDefault
+      # securityContext:
+      #   runAsNonRoot: true
+      #   runAsUser: 1000
+      #   runAsGroup: 1000
+      #   fsGroup: 1000
+      #   fsGroupChangePolicy: Always
+      #   seccompProfile:
+      #     type: RuntimeDefault
       containers:
         - image: ghcr.io/open-webui/open-webui:main
           name: open-webui
-          securityContext:
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: false
-            capabilities:
-              drop: ["ALL"]
+          # securityContext:
+          #   allowPrivilegeEscalation: false
+          #   readOnlyRootFilesystem: false
+          #   capabilities:
+          #     drop: ["ALL"]
           ports:
             - containerPort: 8080
               protocol: TCP
@@ -49,6 +49,14 @@ spec:
               value: "notblank"         # can't be blank
             - name: OPENAI_API_CONFIGS
               value: '{"http://192.168.1.165:8008/v1": {"name": "Drews Steam Deck", "prefix_id": ""}}'
+            - name: ENABLE_WEB_SEARCH
+              value: "true"
+            - name: WEB_SEARCH_ENGINE
+              value: "duckduckgo"
+            - name: WEB_SEARCH_RESULT_COUNT
+              value: "3"
+            - name: WEB_SEARCH_CONCURRENT_REQUESTS
+              value: "10"
       restartPolicy: Always
       volumes:
         - name: open-webui-data
