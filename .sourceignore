@@ -34,7 +34,6 @@ plex/
 monitoring/
 opensearch/
 jellyseerr/
-kubevirt/
 harbor/
 hound/
 velero/
