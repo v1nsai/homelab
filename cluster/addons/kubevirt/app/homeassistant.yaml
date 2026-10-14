@@ -1,0 +1,99 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: homeassistant
+spec:
+  runStrategy: Manual
+  template:
+    metadata:
+      labels:
+        kubevirt.io/vm: homeassistant
+    spec:
+      domain:
+        firmware:
+          bootloader:
+            efi:
+              secureBoot: false   # HAOS needs UEFI; SB off as a precaution
+        cpu:
+          cores: 4
+        memory:
+          guest: 2Gi
+        devices:
+          disks:
+            - name: rootdisk
+              disk: { bus: scsi } # allows TRIM
+          interfaces:
+            - name: default
+              masquerade: {}
+        features:
+          smm:
+            enabled: true         # required for EFI in KubeVirt
+      networks:
+        - name: default
+          pod: {}
+      volumes:
+        - name: rootdisk
+          dataVolume:
+            name: homeassistant-rootdisk
+  dataVolumeTemplates:
+    - metadata:
+        name: homeassistant-rootdisk
+      spec:
+        storage:
+          resources:
+            requests:
+              storage: 100Gi
+          storageClassName: blueberry-nfs-kubevirt
+        source:
+          http:
+            url: https://github.com/home-assistant/operating-system/releases/download/18.3/haos_ova-18.3.qcow2.xz
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    kubevirt.io/vm: homeassistant
+  name: homeassistant-svc
+spec:
+  ports:
+  - name: ssh
+    port: 22
+    targetPort: 22222
+    protocol: TCP
+  - name: http
+    port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    kubevirt.io/vm: homeassistant
+  type: LoadBalancer
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: homeassistant
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Home Automation System
+    gethomepage.dev/group: Automation
+    gethomepage.dev/icon: home-assistant.png
+    gethomepage.dev/name: Home Assistant OS
+    cert-manager.io/cluster-issuer: homelab-issuer
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_set_header X-Forwarded-For "";
+spec:
+  rules:
+    - host: homeassistant.internal
+      http:
+        paths:
+          - backend:
+              service:
+                name: homeassistant-svc
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - homeassistant.internal
+      secretName: homelab-tls
