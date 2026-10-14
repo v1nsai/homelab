@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: kubevirt
-  path: ./apps/services/kubevirt/app
+  path: ./cluster/addons/kubevirt/app
   prune: true
   sourceRef:
     kind: GitRepository
